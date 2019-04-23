@@ -48,8 +48,9 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "cellIdentifier") as? Cell else {
             fatalError("The dequeued cell instance is incorrect.")
         }
-        
-        cell.textLabel?.text = "\(pace[indexPath.row]) \(finish[indexPath.row])"
+
+        cell.paceLabel.text = pace[indexPath.row]
+        cell.raceLabel.text = finish[indexPath.row]
         return cell
     }
     
