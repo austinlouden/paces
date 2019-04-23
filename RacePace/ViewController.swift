@@ -33,6 +33,7 @@ class ViewController: UIViewController {
         tableView.backgroundColor = UIColor.white
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.showsVerticalScrollIndicator = false
         tableView.register(Cell.self, forCellReuseIdentifier: "cellIdentifier")
         view.addSubview(tableView)
     }
@@ -50,6 +51,10 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         
         cell.textLabel?.text = "\(pace[indexPath.row]) \(finish[indexPath.row])"
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return self.view.bounds.size.height / 12.0
     }
 }
 
