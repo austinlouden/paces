@@ -30,6 +30,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         tableView.frame = view.frame
+        tableView.tableHeaderView = Header(frame: CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: Header.height))
         tableView.backgroundColor = UIColor.white
         tableView.delegate = self
         tableView.dataSource = self
@@ -54,7 +55,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return self.view.bounds.size.height / 12.0
+        return (self.view.bounds.size.height - Header.height) / 12.0
     }
 }
 

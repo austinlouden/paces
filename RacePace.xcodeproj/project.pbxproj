@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		283D2DF8226EC6920059773D /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283D2DF7226EC6920059773D /* Cell.swift */; };
 		283D2DFA226ECA220059773D /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283D2DF9226ECA220059773D /* State.swift */; };
+		283D2DFC226EE0C20059773D /* Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283D2DFB226EE0C20059773D /* Header.swift */; };
 		28A2BCFA226EB31E006CD3A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A2BCF9226EB31E006CD3A0 /* AppDelegate.swift */; };
 		28A2BCFC226EB31E006CD3A0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A2BCFB226EB31E006CD3A0 /* ViewController.swift */; };
 		28A2BD01226EB31F006CD3A0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 28A2BD00226EB31F006CD3A0 /* Assets.xcassets */; };
@@ -18,6 +19,7 @@
 /* Begin PBXFileReference section */
 		283D2DF7226EC6920059773D /* Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cell.swift; sourceTree = "<group>"; };
 		283D2DF9226ECA220059773D /* State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
+		283D2DFB226EE0C20059773D /* Header.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Header.swift; sourceTree = "<group>"; };
 		28A2BCF6226EB31E006CD3A0 /* RacePace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RacePace.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		28A2BCF9226EB31E006CD3A0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		28A2BCFB226EB31E006CD3A0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -63,6 +65,7 @@
 				28A2BD00226EB31F006CD3A0 /* Assets.xcassets */,
 				28A2BD02226EB31F006CD3A0 /* LaunchScreen.storyboard */,
 				28A2BD05226EB31F006CD3A0 /* Info.plist */,
+				283D2DFB226EE0C20059773D /* Header.swift */,
 			);
 			path = RacePace;
 			sourceTree = "<group>";
@@ -137,6 +140,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				283D2DFC226EE0C20059773D /* Header.swift in Sources */,
 				28A2BCFC226EB31E006CD3A0 /* ViewController.swift in Sources */,
 				283D2DF8226EC6920059773D /* Cell.swift in Sources */,
 				28A2BCFA226EB31E006CD3A0 /* AppDelegate.swift in Sources */,
