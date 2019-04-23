@@ -11,9 +11,21 @@ import UIKit
 class ViewController: UIViewController {
     
     let tableView = UITableView()
+    var state = State()
     
-    var pace = paces(with: State())
-
+    let pace: [String]
+    let finish: [String]
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        pace = paces(with: state)
+        finish = finishTimes(with: state)
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -36,7 +48,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
             fatalError("The dequeued cell instance is incorrect.")
         }
         
-        cell.textLabel?.text = pace[indexPath.row]
+        cell.textLabel?.text = "\(pace[indexPath.row]) \(finish[indexPath.row])"
         return cell
     }
 }
