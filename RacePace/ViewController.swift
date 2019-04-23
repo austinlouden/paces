@@ -11,14 +11,13 @@ import UIKit
 class ViewController: UIViewController {
     
     let tableView = UITableView()
-    var state = State()
-    
+
     let pace: [String]
     let finish: [String]
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        pace = paces(with: state)
-        finish = finishTimes(with: state)
+        pace = paces(with: appState)
+        finish = finishTimes(with: appState)
         super.init(nibName: nil, bundle: nil)
     }
     

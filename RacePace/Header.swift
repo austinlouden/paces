@@ -23,7 +23,7 @@ class Header: UIView {
         addSubview(paceLabel)
         
         raceLabel.frame = CGRect(x: frame.size.width/2.0, y: 0, width: frame.size.width/2.0, height: frame.size.height)
-        raceLabel.text = "Race" // depends on state
+        raceLabel.text = headerText(with: appState)
         addSubview(raceLabel)
     }
     

@@ -8,18 +8,21 @@
 
 import Foundation
 
+
 // TODO: Add custom length when users tap on this
-enum Race: Double {
+public enum Race: Double {
     case fiveK = 3.10686
     case tenK = 6.21371
     case halfMarathon = 13.1094
     case marathon = 26.2188
 }
 
-struct State {
+public struct State {
     let pace = 7
     let race = Race.fiveK
 }
+
+fileprivate(set) public var appState = State()
 
 func paces(with state: State) -> [String] {
     return [Int](0...12).map { "\(state.pace):\(String(format: "%02d", $0 * 5))" }
