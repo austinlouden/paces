@@ -55,7 +55,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return (self.view.bounds.size.height - Header.height) / 12.0
+        return (self.view.bounds.size.height - Header.height - view.safeAreaInsets.top) / 12.0
     }
 }
 
