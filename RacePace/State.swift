@@ -8,6 +8,7 @@
 
 import Foundation
 
+// TODO: Add custom length when users tap on this
 enum Race: Double {
     case fiveK = 3.10686
     case tenK = 6.21371
@@ -35,4 +36,17 @@ func finishTimes(with state: State) -> [String] {
 
         return "\(String(format: "%02d", hours)):\(String(format: "%02d", minutes)):\(String(format: "%02d", seconds))"
     })
+}
+
+func headerText(with state: State) -> String {
+    switch state.race {
+    case .fiveK:
+        return "5K"
+    case .tenK:
+        return "10K"
+    case .halfMarathon:
+        return "Half-Marathon"
+    case .marathon:
+        return "Marathon"
+    }
 }
