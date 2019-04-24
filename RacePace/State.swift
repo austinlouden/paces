@@ -19,7 +19,7 @@ public enum Race: Double {
 
 public struct State {
     let pace = 7
-    let race = Race.fiveK
+    let race = Race.marathon
 }
 
 fileprivate(set) public var appState = State()

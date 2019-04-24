@@ -18,13 +18,25 @@ class Header: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
     
-        paceLabel.frame = CGRect(x: 0, y: 0, width: frame.size.width/2.0, height: frame.size.height)
         paceLabel.text = NSLocalizedString("Pace", comment: "The time per mile or km.")
+        paceLabel.font = UIFont.boldSystemFont(ofSize: 24)
+        paceLabel.backgroundColor = UIColor.white
+        paceLabel.translatesAutoresizingMaskIntoConstraints = false
         addSubview(paceLabel)
-        
-        raceLabel.frame = CGRect(x: frame.size.width/2.0, y: 0, width: frame.size.width/2.0, height: frame.size.height)
+
         raceLabel.text = headerText(with: appState)
+        raceLabel.font = UIFont.boldSystemFont(ofSize: 24)
+        raceLabel.backgroundColor = UIColor.white
+        raceLabel.translatesAutoresizingMaskIntoConstraints = false
         addSubview(raceLabel)
+
+        NSLayoutConstraint.activate([
+            paceLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            raceLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            paceLabel.leadingAnchor.constraint(equalTo: self.layoutMarginsGuide.leadingAnchor),
+            raceLabel.leadingAnchor.constraint(equalTo: self.centerXAnchor)
+        ])
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
