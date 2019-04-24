@@ -25,11 +25,11 @@ public struct State {
 fileprivate(set) public var appState = State()
 
 func paces(with state: State) -> [String] {
-    return [Int](0...12).map { "\(state.pace):\(String(format: "%02d", $0 * 5))" }
+    return [Int](0..<12).map { "\(state.pace):\(String(format: "%02d", $0 * 5))" }
 }
 
 func finishTimes(with state: State) -> [String] {
-    return [Int](0...12).map({ (i) -> String in
+    return [Int](0..<12).map({ (i) -> String in
         let paceInSeconds = 60 * state.pace + i * 5
         let finishTimeInSeconds = Int(round(state.race.rawValue * Double(paceInSeconds)))
         
