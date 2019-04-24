@@ -13,12 +13,10 @@ class ViewController: UIViewController {
     let tableView = UITableView()
 
     // TODO: make this into an array of one object
-    var pace: [String]
-    var finish: [String]
+    var data: [CellData]
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        pace = paces(with: appState)
-        finish = finishTimes(with: appState)
+        data = buildCellData(with: appState)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -50,7 +48,7 @@ class ViewController: UIViewController {
 
 extension ViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return pace.count
+        return data.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -58,8 +56,8 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
             fatalError("The dequeued cell instance is incorrect.")
         }
 
-        cell.paceLabel.text = pace[indexPath.row]
-        cell.raceLabel.text = finish[indexPath.row]
+        cell.paceLabel.text = data[indexPath.row].paceString()
+        cell.raceLabel.text = data[indexPath.row].finishTimeString()
         return cell
     }
     
@@ -70,24 +68,25 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // https://developer.apple.com/library/archive/documentation/UserExperience/Conceptual/TableView_iPhone/ManageInsertDeleteRow/ManageInsertDeleteRow.html#//apple_ref/doc/uid/TP40007451-CH10-SW9
 
-        let currentPace = pace[indexPath.row]
-        let nextPace = pace[indexPath.row + 1]
-        
-        let currentFinish = finish[indexPath.row]
-        let nextFinish = finish[indexPath.row + 1]
-        
-        pace.removeAll { $0 != currentPace && $0 != nextPace }
-        finish.removeAll { $0 != currentFinish && $0 != nextFinish }
+        let currentCell = data[indexPath.row]
+        let nextCell = data[indexPath.row + 1]
+        data.removeAll { $0 != currentCell && $0 != nextCell }
+        data = buildIntervalCellData(with: data, state: appState)
         
         guard let currentRow = tableView.indexPathForSelectedRow else { return }
         let nextRow = IndexPath(row: currentRow.row + 1, section: 0)
 
-        let indexPaths = tableView.visibleCells
+        let indexPathsToDelete = tableView.visibleCells
             .compactMap { tableView.indexPath(for: $0) }
             .filter { $0 != currentRow && $0 != nextRow }
         
+        let indexPathsToAdd = [Int](1 ..< data.count - 1).map {
+            IndexPath(row: $0, section: 0)
+        }
+
         tableView.beginUpdates()
-        tableView.deleteRows(at: indexPaths, with: .none)
+        tableView.deleteRows(at: indexPathsToDelete, with: .none)
+        tableView.insertRows(at: indexPathsToAdd, with: .none)
         tableView.endUpdates()
         
     }
