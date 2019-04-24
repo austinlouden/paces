@@ -18,14 +18,25 @@ class Cell: UITableViewCell {
         
         backgroundColor = UIColor.white
 
-        paceLabel.frame = CGRect(x: 0, y: 0, width: frame.size.width/2.0, height: frame.size.height)
+        //paceLabel.frame = CGRect(x: 0, y: 0, width: frame.size.width/2.0, height: frame.size.height)
         paceLabel.font = UIFont.boldSystemFont(ofSize: 18)
+        paceLabel.translatesAutoresizingMaskIntoConstraints = false
+        paceLabel.backgroundColor = UIColor.white
 
-        raceLabel.frame = CGRect(x: frame.size.width/2.0, y: 0, width: frame.size.width/2.0, height: frame.size.height)
+        //raceLabel.frame = CGRect(x: frame.size.width/2.0, y: 0, width: frame.size.width/2.0, height: frame.size.height)
         raceLabel.font = UIFont.systemFont(ofSize: 18)
+        raceLabel.translatesAutoresizingMaskIntoConstraints = false
+        raceLabel.backgroundColor = UIColor.white
 
         addSubview(paceLabel)
         addSubview(raceLabel)
+        
+        NSLayoutConstraint.activate([
+            paceLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            raceLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            paceLabel.leadingAnchor.constraint(equalTo: self.layoutMarginsGuide.leadingAnchor),
+            raceLabel.leadingAnchor.constraint(equalTo: self.centerXAnchor)
+            ])
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -36,14 +36,6 @@ class ViewController: UIViewController {
         tableView.showsVerticalScrollIndicator = false
         tableView.register(Cell.self, forCellReuseIdentifier: "cellIdentifier")
         view.addSubview(tableView)
-        
-        tableView.panGestureRecognizer.addTarget(self, action: #selector(self.handlePanGesture(panGesture:)))
-    }
-    
-    @objc func handlePanGesture(panGesture: UIPanGestureRecognizer) {
-        // get translation
-        let translation = panGesture.translation(in: view)
-        //print(translation)
     }
 }
 

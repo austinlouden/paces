@@ -60,12 +60,12 @@
 			children = (
 				28A2BCF9226EB31E006CD3A0 /* AppDelegate.swift */,
 				28A2BCFB226EB31E006CD3A0 /* ViewController.swift */,
+				283D2DFB226EE0C20059773D /* Header.swift */,
 				283D2DF7226EC6920059773D /* Cell.swift */,
 				283D2DF9226ECA220059773D /* State.swift */,
 				28A2BD00226EB31F006CD3A0 /* Assets.xcassets */,
 				28A2BD02226EB31F006CD3A0 /* LaunchScreen.storyboard */,
 				28A2BD05226EB31F006CD3A0 /* Info.plist */,
-				283D2DFB226EE0C20059773D /* Header.swift */,
 			);
 			path = RacePace;
 			sourceTree = "<group>";

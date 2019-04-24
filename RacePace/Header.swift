@@ -33,7 +33,7 @@ class Header: UIView {
         NSLayoutConstraint.activate([
             paceLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             raceLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            paceLabel.leadingAnchor.constraint(equalTo: self.layoutMarginsGuide.leadingAnchor),
+            paceLabel.leadingAnchor.constraint(equalTo: self.layoutMarginsGuide.leadingAnchor, constant: 10),
             raceLabel.leadingAnchor.constraint(equalTo: self.centerXAnchor)
         ])
         
