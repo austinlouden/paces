@@ -9,11 +9,13 @@
 import Foundation
 
 public struct State {
-    let pace = 7
-    let race = Race.marathon
+    var pace = 7
+    var race = Race.marathon
+    var expanded = false
 }
 
-fileprivate(set) public var appState = State()
+// TODO: redux-ify all of this
+public var appState = State()
 
 func headerText(with state: State) -> String {
     switch state.race {
