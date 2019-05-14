@@ -11,6 +11,7 @@ import UIKit
 class ViewController: UIViewController {
     
     let tableView = UITableView()
+    let increaseButton = UIButton(type: .roundedRect)
 
     // TODO: make this into an array of one object
     var data: [CellData]
@@ -37,11 +38,26 @@ class ViewController: UIViewController {
         tableView.register(Cell.self, forCellReuseIdentifier: "cellIdentifier")
         view.addSubview(tableView)
         
+        increaseButton.translatesAutoresizingMaskIntoConstraints = false
+        increaseButton.setTitle("+1m", for: .normal)
+        increaseButton.backgroundColor = UIColor(displayP3Red: 59.0/255.0, green: 78.0/255.0, blue: 224.0/255.0, alpha: 1.0)
+        increaseButton.setTitleColor(UIColor.white, for: .normal)
+        view.addSubview(increaseButton)
+        
+        increaseButton.clipsToBounds = true
+        increaseButton.layer.cornerRadius = 20
+        increaseButton.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner]
+        
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+
+            increaseButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            increaseButton.widthAnchor.constraint(equalToConstant: increaseButton.titleLabel!.intrinsicContentSize.width + 8.0 * 2.0),
+            increaseButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: Header.height/2.0),
+            increaseButton.heightAnchor.constraint(equalToConstant: 256)
         ])
     }
 }

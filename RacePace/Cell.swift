@@ -34,7 +34,7 @@ class Cell: UITableViewCell {
         NSLayoutConstraint.activate([
             paceLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             raceLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            paceLabel.leadingAnchor.constraint(equalTo: self.layoutMarginsGuide.leadingAnchor),
+            paceLabel.trailingAnchor.constraint(equalTo: self.layoutMarginsGuide.centerXAnchor, constant: -28),
             raceLabel.leadingAnchor.constraint(equalTo: self.centerXAnchor)
             ])
     }
