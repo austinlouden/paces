@@ -17,7 +17,9 @@ class Header: UIView {
     
     let leftBackground = UIView()
     let rightBackground = UIView()
-    
+
+    let tapRecognizer = UITapGestureRecognizer()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -43,6 +45,9 @@ class Header: UIView {
         raceLabel.translatesAutoresizingMaskIntoConstraints = false
         addSubview(raceLabel)
 
+        tapRecognizer.addTarget(self, action: #selector(headerTapped))
+        self.addGestureRecognizer(tapRecognizer)
+
         NSLayoutConstraint.activate([
             leftBackground.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             leftBackground.heightAnchor.constraint(equalTo: self.heightAnchor),
@@ -62,6 +67,10 @@ class Header: UIView {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    @objc func headerTapped() {
+        _ = reduce(action: .toggleDistanceSelection, state: appState)
     }
     
 }

@@ -15,16 +15,17 @@ public struct State {
     var pace = 7
     var race = Race.marathon
     var expanded = false
+    var selectingDistance = false
 }
 
 enum Action {
     case incrementPace
     case decrementPace
     case toggleExpansion
+    case toggleDistanceSelection
 }
 
 func reduce(action: Action, state: State?) -> State {
-    
     var state = state ?? State()
     
     switch action {
@@ -33,15 +34,18 @@ func reduce(action: Action, state: State?) -> State {
     case .decrementPace:
         state.pace -= 1
     case .toggleExpansion:
-        if (state.expanded) {
-            state.expanded = false
-        } else {
-            state.expanded = true
-        }
+        state.expanded = !state.expanded
+    case .toggleDistanceSelection:
+        state.selectingDistance = !state.selectingDistance
     }
     
     appState = state
+    NotificationCenter.default.post(name: .stateDidChange, object: nil)
     return appState
+}
+
+extension Notification.Name {
+    static let stateDidChange = Notification.Name("stateDidChange")
 }
 
 func headerText(with state: State) -> String {

@@ -23,6 +23,7 @@ class ViewController: UIViewController {
     let rightBottomBackground = UIView()
 
     var data: [CellData]
+    let distanceData = Race.allCases.map({ $0.string })
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         data = buildCellData(with: appState)
@@ -33,9 +34,15 @@ class ViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: .stateDidChange, object: nil)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(stateDidChange(_:)), name: .stateDidChange, object: nil)
         
         // backgrounds
         leftTopBackground.translatesAutoresizingMaskIntoConstraints = false
@@ -58,6 +65,7 @@ class ViewController: UIViewController {
         tableView.dataSource = self
         tableView.showsVerticalScrollIndicator = false
         tableView.register(Cell.self, forCellReuseIdentifier: "cellIdentifier")
+        tableView.register(DistanceCell.self, forCellReuseIdentifier: "distanceCellIdentifier")
         view.addSubview(tableView)
         
         setupButton(with: increaseButton, increasing: true)
@@ -109,6 +117,10 @@ class ViewController: UIViewController {
         ])
     }
     
+    @objc func stateDidChange(_ notification:Notification) {
+        print("state")
+    }
+    
     func setupButton(with button: UIButton, increasing: Bool) {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = buttonColor
@@ -138,17 +150,26 @@ class ViewController: UIViewController {
 
 extension ViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return data.count
+        return appState.selectingDistance ? distanceData.count : data.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "cellIdentifier") as? Cell else {
-            fatalError("The dequeued cell instance is incorrect.")
-        }
+        if (appState.selectingDistance) {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "distanceCellIdentifier") as? DistanceCell else {
+                fatalError("The dequeued cell instance is incorrect.")
+            }
 
-        cell.paceLabel.text = data[indexPath.row].paceString()
-        cell.raceLabel.text = data[indexPath.row].finishTimeString()
-        return cell
+            cell.distanceLabel.text = distanceData[indexPath.row]
+            return cell
+        } else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "cellIdentifier") as? Cell else {
+                fatalError("The dequeued cell instance is incorrect.")
+            }
+            
+            cell.paceLabel.text = data[indexPath.row].paceString()
+            cell.raceLabel.text = data[indexPath.row].finishTimeString()
+            return cell
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
