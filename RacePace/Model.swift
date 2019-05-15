@@ -19,7 +19,6 @@ public enum Race: Double {
 }
 
 func finishTime(with pace:Pace, distance: Double) -> FinishTime {
-    
     let paceInSeconds = 60 * pace.minutes + pace.seconds
     let finishTimeInSeconds = Int(round(distance * Double(paceInSeconds)))
     
@@ -28,14 +27,12 @@ func finishTime(with pace:Pace, distance: Double) -> FinishTime {
     let seconds = finishTimeInSeconds % 60
 
     return (hours, minutes, seconds)
-    
 }
 
 struct CellData: Equatable {
     let pace: Pace
     let finishTime: FinishTime
-    
-    
+
     func paceString() -> String {
         return "\(pace.minutes):\(String(format: "%02d", pace.seconds))"
     }
@@ -70,8 +67,7 @@ func buildIntervalCellData(with data: [CellData], state: State) -> [CellData] {
         let finish = finishTime(with: pace, distance: state.race.rawValue)
         return CellData(pace: pace, finishTime: finish)
     }
-    
-    
+
     newData.insert(first, at: 0)
     newData.append(last)
     return newData

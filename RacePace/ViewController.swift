@@ -53,7 +53,7 @@ class ViewController: UIViewController {
 
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.tableHeaderView = Header(frame: CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: Header.height))
-        tableView.backgroundColor = UIColor.white
+        tableView.backgroundColor = UIColor(displayP3Red: 0, green: 0, blue: 0, alpha: 0)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.showsVerticalScrollIndicator = false
@@ -62,6 +62,8 @@ class ViewController: UIViewController {
         
         setupButton(with: increaseButton, increasing: true)
         setupButton(with: decreaseButton, increasing: false)
+        increaseButton.addTarget(self, action: #selector(increment), for: .touchUpInside)
+        decreaseButton.addTarget(self, action: #selector(decrement), for: .touchUpInside)
         view.addSubview(increaseButton)
         view.addSubview(decreaseButton)
 
@@ -111,10 +113,9 @@ class ViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = buttonColor
         button.setTitleColor(UIColor.white, for: .normal)
-        
         button.clipsToBounds = true
         button.layer.cornerRadius = 20
-        
+
         if (increasing) {
             button.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner]
             button.setTitle("+1m", for: .normal)
@@ -122,7 +123,18 @@ class ViewController: UIViewController {
             button.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMaxXMaxYCorner]
             button.setTitle("-1m", for: .normal)
         }
-        
+    }
+
+    @objc func increment() {
+        appState.pace += 1
+        data = buildCellData(with: appState)
+        tableView.reloadData()
+    }
+
+    @objc func decrement() {
+        appState.pace -= 1
+        data = buildCellData(with: appState)
+        tableView.reloadData()
     }
 }
 
