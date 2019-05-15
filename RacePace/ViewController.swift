@@ -126,14 +126,12 @@ class ViewController: UIViewController {
     }
 
     @objc func increment() {
-        appState.pace += 1
-        data = buildCellData(with: appState)
+        data = buildCellData(with: reduce(action: .incrementPace, state: appState))
         tableView.reloadData()
     }
 
     @objc func decrement() {
-        appState.pace -= 1
-        data = buildCellData(with: appState)
+        data = buildCellData(with: reduce(action: .decrementPace, state: appState))
         tableView.reloadData()
     }
 }
@@ -185,7 +183,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
             tableView.reloadRows(at: [firstRow, newLastRow], with: .fade)
             tableView.endUpdates()
             
-            appState.expanded = false
+            _ = reduce(action: .toggleExpansion, state: appState)
         } else {
             // TODO: handle case where the last cell is tapped
             let currentCell = data[indexPath.row]
@@ -209,7 +207,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
             tableView.insertRows(at: indexPathsToAdd, with: .none)
             tableView.endUpdates()
             
-            appState.expanded = true
+            _ = reduce(action: .toggleExpansion, state: appState)
         }
     }
 }
