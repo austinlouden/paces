@@ -12,8 +12,16 @@ class ViewController: UIViewController {
     
     let tableView = UITableView()
     let increaseButton = UIButton(type: .roundedRect)
+    let decreaseButton = UIButton(type: .roundedRect)
+    
+    let buttonColor = UIColor(displayP3Red: 180.0/255.0, green: 83.0/255.0, blue: 76.0/255.0, alpha: 1.0)
+    let buttonHeight: CGFloat = 256.0
 
-    // TODO: make this into an array of one object
+    let leftTopBackground = UIView()
+    let rightTopBackground = UIView()
+    let leftBottomBackground = UIView()
+    let rightBottomBackground = UIView()
+
     var data: [CellData]
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -28,6 +36,20 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
+        
+        // backgrounds
+        leftTopBackground.translatesAutoresizingMaskIntoConstraints = false
+        rightTopBackground.translatesAutoresizingMaskIntoConstraints = false
+        leftBottomBackground.translatesAutoresizingMaskIntoConstraints = false
+        rightBottomBackground.translatesAutoresizingMaskIntoConstraints = false
+        leftTopBackground.backgroundColor = UIColor.leftHeaderBackgroundColor
+        rightTopBackground.backgroundColor = UIColor.rightHeaderBackgroundColor
+        leftBottomBackground.backgroundColor = UIColor.leftBackgroundColor
+        rightBottomBackground.backgroundColor = UIColor.rightBackgroundColor
+        view.addSubview(leftTopBackground)
+        view.addSubview(rightTopBackground)
+        view.addSubview(leftBottomBackground)
+        view.addSubview(rightBottomBackground)
 
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.tableHeaderView = Header(frame: CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: Header.height))
@@ -38,27 +60,69 @@ class ViewController: UIViewController {
         tableView.register(Cell.self, forCellReuseIdentifier: "cellIdentifier")
         view.addSubview(tableView)
         
-        increaseButton.translatesAutoresizingMaskIntoConstraints = false
-        increaseButton.setTitle("+1m", for: .normal)
-        increaseButton.backgroundColor = UIColor(displayP3Red: 59.0/255.0, green: 78.0/255.0, blue: 224.0/255.0, alpha: 1.0)
-        increaseButton.setTitleColor(UIColor.white, for: .normal)
+        setupButton(with: increaseButton, increasing: true)
+        setupButton(with: decreaseButton, increasing: false)
         view.addSubview(increaseButton)
-        
-        increaseButton.clipsToBounds = true
-        increaseButton.layer.cornerRadius = 20
-        increaseButton.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner]
-        
+        view.addSubview(decreaseButton)
+
         NSLayoutConstraint.activate([
+            // backgrounds
+            leftTopBackground.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            leftTopBackground.trailingAnchor.constraint(equalTo: view.centerXAnchor),
+            leftTopBackground.topAnchor.constraint(equalTo: view.topAnchor),
+            leftTopBackground.bottomAnchor.constraint(equalTo: view.centerYAnchor),
+            
+            leftBottomBackground.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            leftBottomBackground.trailingAnchor.constraint(equalTo: view.centerXAnchor),
+            leftBottomBackground.topAnchor.constraint(equalTo: view.centerYAnchor),
+            leftBottomBackground.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            rightTopBackground.leadingAnchor.constraint(equalTo: view.centerXAnchor),
+            rightTopBackground.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            rightTopBackground.topAnchor.constraint(equalTo: view.topAnchor),
+            rightTopBackground.bottomAnchor.constraint(equalTo: view.centerYAnchor),
+            
+            rightBottomBackground.leadingAnchor.constraint(equalTo: view.centerXAnchor),
+            rightBottomBackground.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            rightBottomBackground.topAnchor.constraint(equalTo: view.centerYAnchor),
+            rightBottomBackground.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+
+            // table
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
 
-            increaseButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            // + button
+            increaseButton.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             increaseButton.widthAnchor.constraint(equalToConstant: increaseButton.titleLabel!.intrinsicContentSize.width + 8.0 * 2.0),
             increaseButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: Header.height/2.0),
-            increaseButton.heightAnchor.constraint(equalToConstant: 256)
+            increaseButton.heightAnchor.constraint(equalToConstant: buttonHeight),
+            
+            // - button
+            decreaseButton.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            decreaseButton.widthAnchor.constraint(equalToConstant: increaseButton.titleLabel!.intrinsicContentSize.width + 8.0 * 2.0),
+            decreaseButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: Header.height/2.0),
+            decreaseButton.heightAnchor.constraint(equalToConstant: buttonHeight)
         ])
+    }
+    
+    func setupButton(with button: UIButton, increasing: Bool) {
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = buttonColor
+        button.setTitleColor(UIColor.white, for: .normal)
+        
+        button.clipsToBounds = true
+        button.layer.cornerRadius = 20
+        
+        if (increasing) {
+            button.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner]
+            button.setTitle("+1m", for: .normal)
+        } else {
+            button.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMaxXMaxYCorner]
+            button.setTitle("-1m", for: .normal)
+        }
+        
     }
 }
 

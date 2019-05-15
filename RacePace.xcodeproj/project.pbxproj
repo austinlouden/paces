@@ -15,6 +15,7 @@
 		28A2BCFC226EB31E006CD3A0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A2BCFB226EB31E006CD3A0 /* ViewController.swift */; };
 		28A2BD01226EB31F006CD3A0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 28A2BD00226EB31F006CD3A0 /* Assets.xcassets */; };
 		28A2BD04226EB31F006CD3A0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 28A2BD02226EB31F006CD3A0 /* LaunchScreen.storyboard */; };
+		28B33CC9228B9E3100C5120C /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B33CC8228B9E3100C5120C /* Colors.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		28A2BD00226EB31F006CD3A0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		28A2BD03226EB31F006CD3A0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		28A2BD05226EB31F006CD3A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		28B33CC8228B9E3100C5120C /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 				283D2DF7226EC6920059773D /* Cell.swift */,
 				283D2DF9226ECA220059773D /* State.swift */,
 				283D2DFD2270B7650059773D /* Model.swift */,
+				28B33CC8228B9E3100C5120C /* Colors.swift */,
 				28A2BD00226EB31F006CD3A0 /* Assets.xcassets */,
 				28A2BD02226EB31F006CD3A0 /* LaunchScreen.storyboard */,
 				28A2BD05226EB31F006CD3A0 /* Info.plist */,
@@ -146,6 +149,7 @@
 				283D2DFC226EE0C20059773D /* Header.swift in Sources */,
 				28A2BCFC226EB31E006CD3A0 /* ViewController.swift in Sources */,
 				283D2DF8226EC6920059773D /* Cell.swift in Sources */,
+				28B33CC9228B9E3100C5120C /* Colors.swift in Sources */,
 				283D2DFE2270B7650059773D /* Model.swift in Sources */,
 				28A2BCFA226EB31E006CD3A0 /* AppDelegate.swift in Sources */,
 				283D2DFA226ECA220059773D /* State.swift in Sources */,
