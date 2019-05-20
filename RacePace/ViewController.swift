@@ -22,12 +22,13 @@ class ViewController: UIViewController {
     let leftBottomBackground = UIView()
     let rightBottomBackground = UIView()
 
-    //state
+    // Local state
     var data: [CellData]
     let distanceData = Race.allCases.map({ $0.string })
     var expanded = false
     var selectingDistance = false
     var pace = 7
+    var race = Race.marathon
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         data = buildCellData(with: appState)
@@ -131,6 +132,10 @@ class ViewController: UIViewController {
         } else if (pace != appState.pace) {
             pace = appState.pace
             tableView.reloadData()
+        } else if (race != appState.race) {
+            race = appState.race
+            data = buildCellData(with: appState)
+            tableView.reloadData()
         }
     }
     
@@ -190,7 +195,12 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // https://developer.apple.com/library/archive/documentation/UserExperience/Conceptual/TableView_iPhone/ManageInsertDeleteRow/ManageInsertDeleteRow.html#//apple_ref/doc/uid/TP40007451-CH10-SW9
         
-        if (expanded) {
+        if (selectingDistance) {
+            if let race = Race(rawValue: indexPath.row) {
+                _ = reduce(action: .toggleDistanceSelection, state: appState)
+                _ = reduce(action: .selectRace(race: race), state: appState)
+            }
+        } else if (expanded) {
             let firstRow = IndexPath(row: 0, section: 0)
             let lastRow = IndexPath(row: data.count - 1, section: 0)
     

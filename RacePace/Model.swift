@@ -11,11 +11,24 @@ import Foundation
 typealias Pace = (minutes: Int, seconds: Int)
 typealias FinishTime = (hours: Int, minutes: Int, seconds: Int)
 
-public enum Race: Double, CaseIterable {
-    case fiveK = 3.10686
-    case tenK = 6.21371
-    case halfMarathon = 13.1094
-    case marathon = 26.2188
+public enum Race: Int, CaseIterable {
+    case fiveK
+    case tenK
+    case halfMarathon
+    case marathon
+
+    var distance: Double {
+        switch self {
+        case .fiveK:
+            return 3.10686
+        case .tenK:
+            return 6.21371
+        case .halfMarathon:
+            return 13.1094
+        case .marathon:
+            return 26.2188
+        }
+    }
 
     var string: String {
         switch self {
@@ -62,7 +75,7 @@ struct CellData: Equatable {
 func buildCellData(with state: State) -> [CellData] {
     return [Int](0..<12).map({ (i) -> CellData in
         let pace = (state.pace, i * 5)
-        let finish = finishTime(with: pace, distance: state.race.rawValue)
+        let finish = finishTime(with: pace, distance: state.race.distance)
 
         return CellData(pace: pace, finishTime: finish)
     })
@@ -77,7 +90,7 @@ func buildIntervalCellData(with data: [CellData], state: State) -> [CellData] {
 
     newData += [Int](first.pace.seconds + 1 ..< last.pace.seconds).map { i -> CellData in
         let pace = (first.pace.minutes, i)
-        let finish = finishTime(with: pace, distance: state.race.rawValue)
+        let finish = finishTime(with: pace, distance: state.race.distance)
         return CellData(pace: pace, finishTime: finish)
     }
 

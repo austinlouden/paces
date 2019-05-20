@@ -38,7 +38,7 @@ class Header: UIView {
         paceLabel.translatesAutoresizingMaskIntoConstraints = false
         addSubview(paceLabel)
 
-        raceLabel.text = headerText(with: appState)
+        raceLabel.text = appState.race.string
         raceLabel.font = UIFont.boldSystemFont(ofSize: 24)
         raceLabel.textColor = UIColor.white
         raceLabel.backgroundColor = UIColor.rightHeaderBackgroundColor

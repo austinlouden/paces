@@ -18,6 +18,7 @@ public struct State {
 }
 
 enum Action {
+    case selectRace(race: Race)
     case incrementPace
     case decrementPace
     case toggleExpansion
@@ -28,6 +29,8 @@ func reduce(action: Action, state: State?) -> State {
     var state = state ?? State()
     
     switch action {
+    case .selectRace(let race):
+        state.race = race
     case .incrementPace:
         state.pace += 1
     case .decrementPace:
@@ -45,17 +48,4 @@ func reduce(action: Action, state: State?) -> State {
 
 extension Notification.Name {
     static let stateDidChange = Notification.Name("stateDidChange")
-}
-
-func headerText(with state: State) -> String {
-    switch state.race {
-    case .fiveK:
-        return "5K"
-    case .tenK:
-        return "10K"
-    case .halfMarathon:
-        return "Half-Marathon"
-    case .marathon:
-        return "Marathon"
-    }
 }

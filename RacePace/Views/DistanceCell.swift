@@ -14,17 +14,17 @@ class DistanceCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        backgroundColor = UIColor.white
+        backgroundColor = UIColor.clear
 
         distanceLabel.font = UIFont.boldSystemFont(ofSize: 20)
         distanceLabel.textColor = UIColor.white
         distanceLabel.translatesAutoresizingMaskIntoConstraints = false
-        distanceLabel.backgroundColor = UIColor.leftBackgroundColor
+        distanceLabel.backgroundColor = UIColor.rightHeaderBackgroundColor
         contentView.addSubview(distanceLabel)
         
         NSLayoutConstraint.activate([
             distanceLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            distanceLabel.centerXAnchor.constraint(equalTo: contentView.layoutMarginsGuide.centerXAnchor, constant: -12),
+            distanceLabel.leadingAnchor.constraint(equalTo: contentView.centerXAnchor, constant: 12)
             ])
     }
     
