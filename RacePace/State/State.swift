@@ -8,7 +8,6 @@
 
 import Foundation
 
-// TODO: redux-ify all of this
 fileprivate(set) public var appState = State()
 
 public struct State {

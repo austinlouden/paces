@@ -22,9 +22,13 @@ class ViewController: UIViewController {
     let leftBottomBackground = UIView()
     let rightBottomBackground = UIView()
 
+    //state
     var data: [CellData]
     let distanceData = Race.allCases.map({ $0.string })
-    
+    var expanded = false
+    var selectingDistance = false
+    var pace = 7
+
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         data = buildCellData(with: appState)
         super.init(nibName: nil, bundle: nil)
@@ -118,7 +122,16 @@ class ViewController: UIViewController {
     }
     
     @objc func stateDidChange(_ notification:Notification) {
-        print("state")
+        if (expanded != appState.expanded) {
+            expanded = appState.expanded
+            tableView.reloadData()
+        } else if (selectingDistance != appState.selectingDistance) {
+            selectingDistance = appState.selectingDistance
+            tableView.reloadData()
+        } else if (pace != appState.pace) {
+            pace = appState.pace
+            tableView.reloadData()
+        }
     }
     
     func setupButton(with button: UIButton, increasing: Bool) {
@@ -139,22 +152,20 @@ class ViewController: UIViewController {
 
     @objc func increment() {
         data = buildCellData(with: reduce(action: .incrementPace, state: appState))
-        tableView.reloadData()
     }
 
     @objc func decrement() {
         data = buildCellData(with: reduce(action: .decrementPace, state: appState))
-        tableView.reloadData()
     }
 }
 
 extension ViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return appState.selectingDistance ? distanceData.count : data.count
+        return selectingDistance ? distanceData.count : data.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if (appState.selectingDistance) {
+        if (selectingDistance) {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "distanceCellIdentifier") as? DistanceCell else {
                 fatalError("The dequeued cell instance is incorrect.")
             }
@@ -179,7 +190,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // https://developer.apple.com/library/archive/documentation/UserExperience/Conceptual/TableView_iPhone/ManageInsertDeleteRow/ManageInsertDeleteRow.html#//apple_ref/doc/uid/TP40007451-CH10-SW9
         
-        if (appState.expanded) {
+        if (expanded) {
             let firstRow = IndexPath(row: 0, section: 0)
             let lastRow = IndexPath(row: data.count - 1, section: 0)
     
