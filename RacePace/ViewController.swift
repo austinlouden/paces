@@ -21,6 +21,8 @@ class ViewController: UIViewController {
     let rightTopBackground = UIView()
     let leftBottomBackground = UIView()
     let rightBottomBackground = UIView()
+    
+    let header = Header()
 
     // Local state
     var data: [CellData]
@@ -62,9 +64,12 @@ class ViewController: UIViewController {
         view.addSubview(rightTopBackground)
         view.addSubview(leftBottomBackground)
         view.addSubview(rightBottomBackground)
+        
+        header.frame = CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: Header.height)
+        header.raceLabel.text = appState.race.string
 
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.tableHeaderView = Header(frame: CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: Header.height))
+        tableView.tableHeaderView = header
         tableView.backgroundColor = UIColor(displayP3Red: 0, green: 0, blue: 0, alpha: 0)
         tableView.delegate = self
         tableView.dataSource = self
@@ -134,6 +139,7 @@ class ViewController: UIViewController {
             tableView.reloadData()
         } else if (race != appState.race) {
             race = appState.race
+            header.raceLabel.text = race.string
             data = buildCellData(with: appState)
             tableView.reloadData()
         }
@@ -176,12 +182,14 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
             }
 
             cell.distanceLabel.text = distanceData[indexPath.row]
+            cell.selectionStyle = .none
             return cell
         } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "cellIdentifier") as? Cell else {
                 fatalError("The dequeued cell instance is incorrect.")
             }
             
+            cell.selectionStyle = .none
             cell.paceLabel.text = data[indexPath.row].paceString()
             cell.raceLabel.text = data[indexPath.row].finishTimeString()
             return cell
