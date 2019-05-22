@@ -39,6 +39,7 @@ func reduce(action: Action, state: State?) -> State {
         state.expanded = !state.expanded
     case .toggleDistanceSelection:
         state.selectingDistance = !state.selectingDistance
+        state.expanded = false
     }
     
     appState = state

@@ -128,11 +128,14 @@ class ViewController: UIViewController {
     }
     
     @objc func stateDidChange(_ notification:Notification) {
-        if (expanded != appState.expanded) {
-            expanded = appState.expanded
-            tableView.reloadData()
-        } else if (selectingDistance != appState.selectingDistance) {
+        if (selectingDistance != appState.selectingDistance) {
             selectingDistance = appState.selectingDistance
+            expanded = false
+            toggleButtonVisibility()
+            tableView.reloadData()
+        } else if (expanded != appState.expanded) {
+            expanded = appState.expanded
+            toggleButtonVisibility()
             tableView.reloadData()
         } else if (pace != appState.pace) {
             pace = appState.pace
@@ -158,6 +161,20 @@ class ViewController: UIViewController {
         } else {
             button.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMaxXMaxYCorner]
             button.setTitle("-1m", for: .normal)
+        }
+    }
+    
+    func toggleButtonVisibility() {
+        if (!expanded && !selectingDistance) {
+            UIView.animate(withDuration: 0.25) { [unowned self] in
+                self.decreaseButton.transform = .identity
+                self.increaseButton.transform = .identity
+            }
+        } else {
+            UIView.animate(withDuration: 0.25) { [unowned self] in
+                self.decreaseButton.transform = CGAffineTransform(translationX: -self.decreaseButton.frame.width, y: 0)
+                self.increaseButton.transform = CGAffineTransform(translationX: self.increaseButton.frame.width, y: 0)
+            }
         }
     }
 
@@ -253,8 +270,8 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
             }
             
             tableView.beginUpdates()
-            tableView.deleteRows(at: indexPathsToDelete, with: .none)
-            tableView.insertRows(at: indexPathsToAdd, with: .none)
+            tableView.deleteRows(at: indexPathsToDelete, with: .fade)
+            tableView.insertRows(at: indexPathsToAdd, with: .fade)
             tableView.endUpdates()
             
             _ = reduce(action: .toggleExpansion, state: appState)
