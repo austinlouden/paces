@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 fileprivate(set) public var appState = State()
 
@@ -30,14 +31,19 @@ func reduce(action: Action, state: State?) -> State {
     
     switch action {
     case .selectRace(let race):
+        UIImpactFeedbackGenerator().impactOccurred()
         state.race = race
     case .incrementPace:
-        state.pace += 1
+        UIImpactFeedbackGenerator().impactOccurred()
+        state.pace = updatePace(pace: state.pace, increment: true)
     case .decrementPace:
-        state.pace -= 1
+        UIImpactFeedbackGenerator().impactOccurred()
+        state.pace = updatePace(pace: state.pace, increment: false)
     case .toggleExpansion:
+        UIImpactFeedbackGenerator().impactOccurred()
         state.expanded = !state.expanded
     case .toggleDistanceSelection:
+        UIImpactFeedbackGenerator().impactOccurred()
         state.selectingDistance = !state.selectingDistance
         state.expanded = false
     }
@@ -45,6 +51,17 @@ func reduce(action: Action, state: State?) -> State {
     appState = state
     NotificationCenter.default.post(name: .stateDidChange, object: nil)
     return appState
+}
+
+func updatePace(pace: Int, increment: Bool) -> Int {
+    let newPace = increment ? pace + 1 : pace - 1
+    
+    if (newPace > -1 && newPace < 31) {
+        return newPace
+    }
+
+    UINotificationFeedbackGenerator().notificationOccurred(.error)
+    return pace
 }
 
 extension Notification.Name {
