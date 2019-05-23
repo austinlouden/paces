@@ -1,5 +1,7 @@
 # Xcode
 .DS_Store
+fastlane/report.xml
+*.app.dSYM.zip
 build/
 *.pbxuser
 !default.pbxuser
@@ -26,7 +28,7 @@ Podfile.local
 .github
 vendor/
 compiler_commands.json
-
+*.ipa
 .clang-format
 
 # Fastlane
