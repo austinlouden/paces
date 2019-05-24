@@ -11,8 +11,6 @@ import UIKit
 class ViewController: UIViewController {
     
     let tableView = UITableView()
-    let increaseButton = UIButton(type: .roundedRect)
-    let decreaseButton = UIButton(type: .roundedRect)
 
     let buttonHeight: CGFloat = 256.0
 
@@ -76,13 +74,6 @@ class ViewController: UIViewController {
         tableView.register(Cell.self, forCellReuseIdentifier: "cellIdentifier")
         tableView.register(DistanceCell.self, forCellReuseIdentifier: "distanceCellIdentifier")
         view.addSubview(tableView)
-        
-        setupButton(with: increaseButton, increasing: true)
-        setupButton(with: decreaseButton, increasing: false)
-        increaseButton.addTarget(self, action: #selector(increment), for: .touchUpInside)
-        decreaseButton.addTarget(self, action: #selector(decrement), for: .touchUpInside)
-        view.addSubview(increaseButton)
-        view.addSubview(decreaseButton)
 
         NSLayoutConstraint.activate([
             // backgrounds
@@ -110,19 +101,7 @@ class ViewController: UIViewController {
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-
-            // + button
-            increaseButton.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            increaseButton.widthAnchor.constraint(equalToConstant: increaseButton.titleLabel!.intrinsicContentSize.width + 8.0 * 2.0),
-            increaseButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: Header.height/2.0),
-            increaseButton.heightAnchor.constraint(equalToConstant: buttonHeight),
-            
-            // - button
-            decreaseButton.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            decreaseButton.widthAnchor.constraint(equalToConstant: increaseButton.titleLabel!.intrinsicContentSize.width + 8.0 * 2.0),
-            decreaseButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: Header.height/2.0),
-            decreaseButton.heightAnchor.constraint(equalToConstant: buttonHeight)
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
     }
     
@@ -130,14 +109,13 @@ class ViewController: UIViewController {
         if (selectingDistance != appState.selectingDistance) {
             selectingDistance = appState.selectingDistance
             expanded = false
-            toggleButtonVisibility()
             tableView.reloadData()
         } else if (expanded != appState.expanded) {
             expanded = appState.expanded
-            toggleButtonVisibility()
             tableView.reloadData()
         } else if (pace != appState.pace) {
             pace = appState.pace
+            data = buildCellData(with: appState)
             tableView.reloadData()
         } else if (race != appState.race) {
             race = appState.race
@@ -145,45 +123,6 @@ class ViewController: UIViewController {
             data = buildCellData(with: appState)
             tableView.reloadData()
         }
-    }
-    
-    func setupButton(with button: UIButton, increasing: Bool) {
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = UIColor.buttonColor
-        button.setTitleColor(UIColor.textColor, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-        button.clipsToBounds = true
-        button.layer.cornerRadius = 20
-
-        if (increasing) {
-            button.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner]
-            button.setTitle("+1m", for: .normal)
-        } else {
-            button.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMaxXMaxYCorner]
-            button.setTitle("-1m", for: .normal)
-        }
-    }
-    
-    func toggleButtonVisibility() {
-        if (!expanded && !selectingDistance) {
-            UIView.animate(withDuration: 0.25) { [unowned self] in
-                self.decreaseButton.transform = .identity
-                self.increaseButton.transform = .identity
-            }
-        } else {
-            UIView.animate(withDuration: 0.25) { [unowned self] in
-                self.decreaseButton.transform = CGAffineTransform(translationX: -self.decreaseButton.frame.width, y: 0)
-                self.increaseButton.transform = CGAffineTransform(translationX: self.increaseButton.frame.width, y: 0)
-            }
-        }
-    }
-
-    @objc func increment() {
-        data = buildCellData(with: reduce(action: .incrementPace, state: appState))
-    }
-
-    @objc func decrement() {
-        data = buildCellData(with: reduce(action: .decrementPace, state: appState))
     }
 }
 

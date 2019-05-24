@@ -12,6 +12,7 @@ class Cell: UITableViewCell {
     
     let paceLabel = UILabel()
     let raceLabel = UILabel()
+    let tagLabel = UILabel()
 
     let leftBackground = UIView()
     let rightBackground = UIView()
@@ -36,11 +37,18 @@ class Cell: UITableViewCell {
         raceLabel.textColor = UIColor.textColor
         raceLabel.translatesAutoresizingMaskIntoConstraints = false
         raceLabel.backgroundColor = UIColor.rightBackgroundColor
+        
+        tagLabel.font = UIFont.systemFont(ofSize: 14)
+        tagLabel.textColor = UIColor.textColor
+        tagLabel.text = "Boston M 18-34"
+        tagLabel.translatesAutoresizingMaskIntoConstraints = false
+        tagLabel.backgroundColor = UIColor.rightBackgroundColor
 
         contentView.addSubview(rightBackground)
         contentView.addSubview(leftBackground)
         contentView.addSubview(paceLabel)
         contentView.addSubview(raceLabel)
+        contentView.addSubview(tagLabel)
         
         NSLayoutConstraint.activate([
             leftBackground.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
@@ -54,7 +62,11 @@ class Cell: UITableViewCell {
             paceLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             raceLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             paceLabel.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.centerXAnchor, constant: -12),
-            raceLabel.leadingAnchor.constraint(equalTo: contentView.centerXAnchor, constant: 12)
+            raceLabel.leadingAnchor.constraint(equalTo: contentView.centerXAnchor, constant: 12),
+            
+            tagLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
+            tagLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -4)
+            
             ])
     }
     
