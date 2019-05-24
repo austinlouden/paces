@@ -129,8 +129,13 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
             }
             
             cell.selectionStyle = .none
-            cell.paceLabel.text = data[indexPath.row].paceString()
-            cell.raceLabel.text = data[indexPath.row].finishTimeString()
+            cell.paceLabel.text = data[indexPath.row].pace.paceString()
+            cell.raceLabel.text = data[indexPath.row].finishTime.finishTimeString()
+            
+            if (data[indexPath.row].tags.count > 0 && race == .marathon) {
+                cell.tagLabel.text = data[indexPath.row].tags[0]
+            }
+            
             return cell
         }
     }

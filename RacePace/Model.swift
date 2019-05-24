@@ -8,8 +8,24 @@
 
 import Foundation
 
-typealias Pace = (minutes: Int, seconds: Int)
-typealias FinishTime = (hours: Int, minutes: Int, seconds: Int)
+struct FinishTime {
+    let hours: Int
+    let minutes: Int
+    let seconds: Int
+    
+    func finishTimeString() -> String {
+        return "\(String(format: "%02d", self.hours)):\(String(format: "%02d", self.minutes)):\(String(format: "%02d", self.seconds))"
+    }
+}
+
+struct Pace {
+    let minutes: Int
+    let seconds: Int
+    
+    func paceString() -> String {
+        return "\(self.minutes):\(String(format: "%02d", self.seconds))"
+    }
+}
 
 public enum Race: Int, CaseIterable {
     case fiveK
@@ -52,20 +68,13 @@ func finishTime(with pace:Pace, distance: Double) -> FinishTime {
     let minutes = (finishTimeInSeconds % 3600) / 60
     let seconds = finishTimeInSeconds % 60
 
-    return (hours, minutes, seconds)
+    return FinishTime(hours: hours, minutes: minutes, seconds: seconds)
 }
 
 struct CellData: Equatable {
     let pace: Pace
     let finishTime: FinishTime
-
-    func paceString() -> String {
-        return "\(pace.minutes):\(String(format: "%02d", pace.seconds))"
-    }
-    
-    func finishTimeString() -> String {
-        return "\(String(format: "%02d", finishTime.hours)):\(String(format: "%02d", finishTime.minutes)):\(String(format: "%02d", finishTime.seconds))"
-    }
+    let tags: [String]
     
     static func ==(lhs: CellData, rhs: CellData) -> Bool {
         return lhs.pace.minutes == rhs.pace.minutes && lhs.pace.seconds == rhs.pace.seconds
@@ -74,10 +83,11 @@ struct CellData: Equatable {
 
 func buildCellData(with state: State) -> [CellData] {
     return [Int](0..<12).map({ (i) -> CellData in
-        let pace = (state.pace, i * 5)
+        let pace = Pace(minutes: state.pace, seconds: i * 5)
         let finish = finishTime(with: pace, distance: state.race.distance)
+        let tags = landmarks[pace.paceString()] ?? []
 
-        return CellData(pace: pace, finishTime: finish)
+        return CellData(pace: pace, finishTime: finish, tags: tags)
     })
 }
 
@@ -89,9 +99,10 @@ func buildIntervalCellData(with data: [CellData], state: State) -> [CellData] {
     guard let first = data.first, let last = data.last else { assertionFailure(); return data }
 
     newData += [Int](first.pace.seconds + 1 ..< last.pace.seconds).map { i -> CellData in
-        let pace = (first.pace.minutes, i)
+        let pace = Pace(minutes: first.pace.minutes, seconds: i)
         let finish = finishTime(with: pace, distance: state.race.distance)
-        return CellData(pace: pace, finishTime: finish)
+        let tags = landmarks[pace.paceString()] ?? []
+        return CellData(pace: pace, finishTime: finish, tags: tags)
     }
 
     newData.insert(first, at: 0)
