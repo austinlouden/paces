@@ -13,8 +13,7 @@ class ViewController: UIViewController {
     let tableView = UITableView()
     let increaseButton = UIButton(type: .roundedRect)
     let decreaseButton = UIButton(type: .roundedRect)
-    
-    let buttonColor = UIColor(displayP3Red: 180.0/255.0, green: 83.0/255.0, blue: 76.0/255.0, alpha: 1.0)
+
     let buttonHeight: CGFloat = 256.0
 
     let leftTopBackground = UIView()
@@ -150,8 +149,9 @@ class ViewController: UIViewController {
     
     func setupButton(with button: UIButton, increasing: Bool) {
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = buttonColor
-        button.setTitleColor(UIColor.white, for: .normal)
+        button.backgroundColor = UIColor.buttonColor
+        button.setTitleColor(UIColor.textColor, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         button.clipsToBounds = true
         button.layer.cornerRadius = 20
 

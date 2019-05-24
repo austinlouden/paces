@@ -28,12 +28,12 @@ class Cell: UITableViewCell {
         rightBackground.backgroundColor = UIColor.rightBackgroundColor
 
         paceLabel.font = UIFont.boldSystemFont(ofSize: 20)
-        paceLabel.textColor = UIColor.white
+        paceLabel.textColor = UIColor.textColor
         paceLabel.translatesAutoresizingMaskIntoConstraints = false
         paceLabel.backgroundColor = UIColor.leftBackgroundColor
 
         raceLabel.font = UIFont.systemFont(ofSize: 20)
-        raceLabel.textColor = UIColor.white
+        raceLabel.textColor = UIColor.textColor
         raceLabel.translatesAutoresizingMaskIntoConstraints = false
         raceLabel.backgroundColor = UIColor.rightBackgroundColor
 
