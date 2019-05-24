@@ -14,26 +14,17 @@ class Cell: UITableViewCell {
     let raceLabel = UILabel()
     let tagLabel = UILabel()
 
-    let leftBackground = UIView()
-    let rightBackground = UIView()
-
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         backgroundColor = UIColor.white
-        
-        leftBackground.translatesAutoresizingMaskIntoConstraints = false
-        leftBackground.backgroundColor = UIColor.leftBackgroundColor
-        
-        rightBackground.translatesAutoresizingMaskIntoConstraints = false
-        rightBackground.backgroundColor = UIColor.rightBackgroundColor
 
-        paceLabel.font = UIFont.boldSystemFont(ofSize: 20)
+        paceLabel.font = UIFont.boldSystemFont(ofSize: 18)
         paceLabel.textColor = UIColor.textColor
         paceLabel.translatesAutoresizingMaskIntoConstraints = false
         paceLabel.backgroundColor = UIColor.leftBackgroundColor
 
-        raceLabel.font = UIFont.systemFont(ofSize: 20)
+        raceLabel.font = UIFont.systemFont(ofSize: 18)
         raceLabel.textColor = UIColor.textColor
         raceLabel.translatesAutoresizingMaskIntoConstraints = false
         raceLabel.backgroundColor = UIColor.rightBackgroundColor
@@ -44,29 +35,18 @@ class Cell: UITableViewCell {
         tagLabel.translatesAutoresizingMaskIntoConstraints = false
         tagLabel.backgroundColor = UIColor.rightBackgroundColor
 
-        contentView.addSubview(rightBackground)
-        contentView.addSubview(leftBackground)
         contentView.addSubview(paceLabel)
         contentView.addSubview(raceLabel)
         contentView.addSubview(tagLabel)
         
         NSLayoutConstraint.activate([
-            leftBackground.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            leftBackground.heightAnchor.constraint(equalTo: contentView.heightAnchor),
-            leftBackground.trailingAnchor.constraint(equalTo: contentView.centerXAnchor),
-            
-            rightBackground.leadingAnchor.constraint(equalTo: contentView.centerXAnchor),
-            rightBackground.heightAnchor.constraint(equalTo: contentView.heightAnchor),
-            rightBackground.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-
             paceLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             raceLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            paceLabel.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.centerXAnchor, constant: -12),
-            raceLabel.leadingAnchor.constraint(equalTo: contentView.centerXAnchor, constant: 12),
+            paceLabel.trailingAnchor.constraint(equalTo: raceLabel.leadingAnchor, constant: -8),
+            raceLabel.trailingAnchor.constraint(equalTo: contentView.centerXAnchor, constant: -12),
             
-            tagLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
-            tagLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -4)
-            
+            tagLabel.leadingAnchor.constraint(equalTo: contentView.centerXAnchor, constant: 12),
+            tagLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
             ])
     }
     

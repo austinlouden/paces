@@ -16,8 +16,6 @@ class ViewController: UIViewController {
 
     let leftTopBackground = UIView()
     let rightTopBackground = UIView()
-    let leftBottomBackground = UIView()
-    let rightBottomBackground = UIView()
     
     let header = Header()
 
@@ -51,16 +49,11 @@ class ViewController: UIViewController {
         // backgrounds
         leftTopBackground.translatesAutoresizingMaskIntoConstraints = false
         rightTopBackground.translatesAutoresizingMaskIntoConstraints = false
-        leftBottomBackground.translatesAutoresizingMaskIntoConstraints = false
-        rightBottomBackground.translatesAutoresizingMaskIntoConstraints = false
         leftTopBackground.backgroundColor = UIColor.leftHeaderBackgroundColor
         rightTopBackground.backgroundColor = UIColor.rightHeaderBackgroundColor
-        leftBottomBackground.backgroundColor = UIColor.leftBackgroundColor
-        rightBottomBackground.backgroundColor = UIColor.rightBackgroundColor
+
         view.addSubview(leftTopBackground)
         view.addSubview(rightTopBackground)
-        view.addSubview(leftBottomBackground)
-        view.addSubview(rightBottomBackground)
         
         header.frame = CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: Header.height)
         header.raceLabel.text = appState.race.string
@@ -82,20 +75,10 @@ class ViewController: UIViewController {
             leftTopBackground.topAnchor.constraint(equalTo: view.topAnchor),
             leftTopBackground.bottomAnchor.constraint(equalTo: view.centerYAnchor),
             
-            leftBottomBackground.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            leftBottomBackground.trailingAnchor.constraint(equalTo: view.centerXAnchor),
-            leftBottomBackground.topAnchor.constraint(equalTo: view.centerYAnchor),
-            leftBottomBackground.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
             rightTopBackground.leadingAnchor.constraint(equalTo: view.centerXAnchor),
             rightTopBackground.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             rightTopBackground.topAnchor.constraint(equalTo: view.topAnchor),
             rightTopBackground.bottomAnchor.constraint(equalTo: view.centerYAnchor),
-            
-            rightBottomBackground.leadingAnchor.constraint(equalTo: view.centerXAnchor),
-            rightBottomBackground.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            rightBottomBackground.topAnchor.constraint(equalTo: view.centerYAnchor),
-            rightBottomBackground.bottomAnchor.constraint(equalTo: view.bottomAnchor),
 
             // table
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
