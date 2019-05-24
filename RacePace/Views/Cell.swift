@@ -12,7 +12,7 @@ class Cell: UITableViewCell {
     
     let paceLabel = UILabel()
     let raceLabel = UILabel()
-    let tagLabel = UILabel()
+    let tagButton = UIButton()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -22,21 +22,21 @@ class Cell: UITableViewCell {
         paceLabel.font = UIFont.boldSystemFont(ofSize: 18)
         paceLabel.textColor = UIColor.textColor
         paceLabel.translatesAutoresizingMaskIntoConstraints = false
-        paceLabel.backgroundColor = UIColor.leftBackgroundColor
+        paceLabel.backgroundColor = UIColor.white
 
         raceLabel.font = UIFont.systemFont(ofSize: 18)
         raceLabel.textColor = UIColor.textColor
         raceLabel.translatesAutoresizingMaskIntoConstraints = false
-        raceLabel.backgroundColor = UIColor.rightBackgroundColor
+        raceLabel.backgroundColor = UIColor.white
         
-        tagLabel.font = UIFont.systemFont(ofSize: 14)
-        tagLabel.textColor = UIColor.textColor
-        tagLabel.translatesAutoresizingMaskIntoConstraints = false
-        tagLabel.backgroundColor = UIColor.rightBackgroundColor
+        tagButton.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        tagButton.setTitleColor(UIColor.textColor, for: .normal)
+        tagButton.translatesAutoresizingMaskIntoConstraints = false
+        tagButton.backgroundColor = UIColor.white
 
         contentView.addSubview(paceLabel)
         contentView.addSubview(raceLabel)
-        contentView.addSubview(tagLabel)
+        contentView.addSubview(tagButton)
         
         NSLayoutConstraint.activate([
             paceLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
@@ -44,8 +44,8 @@ class Cell: UITableViewCell {
             paceLabel.trailingAnchor.constraint(equalTo: raceLabel.leadingAnchor, constant: -8),
             raceLabel.trailingAnchor.constraint(equalTo: contentView.centerXAnchor, constant: -12),
             
-            tagLabel.leadingAnchor.constraint(equalTo: contentView.centerXAnchor, constant: 12),
-            tagLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+            tagButton.leadingAnchor.constraint(equalTo: contentView.centerXAnchor, constant: 12),
+            tagButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
             ])
     }
     
@@ -55,6 +55,6 @@ class Cell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        tagLabel.text = ""
+        tagButton.isHidden = true
     }
 }

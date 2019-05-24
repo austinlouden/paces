@@ -14,9 +14,6 @@ class Header: UIView {
     
     let paceLabel = UILabel()
     let raceLabel = UILabel()
-    
-    let leftBackground = UIView()
-    let rightBackground = UIView()
 
     let tapRecognizer = UITapGestureRecognizer()
 
@@ -25,26 +22,17 @@ class Header: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        leftBackground.translatesAutoresizingMaskIntoConstraints = false
-        leftBackground.backgroundColor = UIColor.leftHeaderBackgroundColor
-        addSubview(leftBackground)
-        
-        rightBackground.translatesAutoresizingMaskIntoConstraints = false
-        rightBackground.backgroundColor = UIColor.rightHeaderBackgroundColor
-        addSubview(rightBackground)
-    
-        paceLabel.text = NSLocalizedString("Pace", comment: "The time per mile or km.")
-        paceLabel.font = UIFont.boldSystemFont(ofSize: 24)
-        paceLabel.textColor = UIColor.white
-        paceLabel.backgroundColor = UIColor.leftHeaderBackgroundColor
+
+        paceLabel.text = NSLocalizedString("PACE", comment: "The time per mile or km.")
+        paceLabel.font = UIFont.boldSystemFont(ofSize: 14)
+        paceLabel.textColor = UIColor.textColor
+        paceLabel.backgroundColor = UIColor.white
         paceLabel.translatesAutoresizingMaskIntoConstraints = false
         addSubview(paceLabel)
 
-        raceLabel.text = appState.race.string
-        raceLabel.font = UIFont.boldSystemFont(ofSize: 24)
-        raceLabel.textColor = UIColor.white
-        raceLabel.backgroundColor = UIColor.rightHeaderBackgroundColor
+        raceLabel.font = UIFont.boldSystemFont(ofSize: 14)
+        raceLabel.textColor = UIColor.textColor
+        raceLabel.backgroundColor = UIColor.white
         raceLabel.translatesAutoresizingMaskIntoConstraints = false
         addSubview(raceLabel)
         
@@ -58,15 +46,7 @@ class Header: UIView {
         tapRecognizer.addTarget(self, action: #selector(headerTapped))
         self.addGestureRecognizer(tapRecognizer)
 
-        NSLayoutConstraint.activate([
-            leftBackground.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            leftBackground.heightAnchor.constraint(equalTo: self.heightAnchor),
-            leftBackground.trailingAnchor.constraint(equalTo: self.centerXAnchor),
-            
-            rightBackground.leadingAnchor.constraint(equalTo: self.centerXAnchor),
-            rightBackground.heightAnchor.constraint(equalTo: self.heightAnchor),
-            rightBackground.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            
+        NSLayoutConstraint.activate([            
             paceLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             raceLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             paceLabel.trailingAnchor.constraint(equalTo: decreaseButton.leadingAnchor, constant: -12),
@@ -89,7 +69,7 @@ class Header: UIView {
 
     func setupButton(with button: UIButton, increasing: Bool) {
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = UIColor.leftHeaderBackgroundColor
+        button.backgroundColor = UIColor.white
         button.setTitleColor(UIColor.white, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         button.clipsToBounds = true

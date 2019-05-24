@@ -13,9 +13,6 @@ class ViewController: UIViewController {
     let tableView = UITableView()
 
     let buttonHeight: CGFloat = 256.0
-
-    let leftTopBackground = UIView()
-    let rightTopBackground = UIView()
     
     let header = Header()
 
@@ -45,18 +42,9 @@ class ViewController: UIViewController {
         view.backgroundColor = UIColor.white
         
         NotificationCenter.default.addObserver(self, selector: #selector(stateDidChange(_:)), name: .stateDidChange, object: nil)
-        
-        // backgrounds
-        leftTopBackground.translatesAutoresizingMaskIntoConstraints = false
-        rightTopBackground.translatesAutoresizingMaskIntoConstraints = false
-        leftTopBackground.backgroundColor = UIColor.leftHeaderBackgroundColor
-        rightTopBackground.backgroundColor = UIColor.rightHeaderBackgroundColor
 
-        view.addSubview(leftTopBackground)
-        view.addSubview(rightTopBackground)
-        
         header.frame = CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: Header.height)
-        header.raceLabel.text = appState.race.string
+        header.raceLabel.text = appState.race.string.uppercased()
 
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.tableHeaderView = header
@@ -69,18 +57,6 @@ class ViewController: UIViewController {
         view.addSubview(tableView)
 
         NSLayoutConstraint.activate([
-            // backgrounds
-            leftTopBackground.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            leftTopBackground.trailingAnchor.constraint(equalTo: view.centerXAnchor),
-            leftTopBackground.topAnchor.constraint(equalTo: view.topAnchor),
-            leftTopBackground.bottomAnchor.constraint(equalTo: view.centerYAnchor),
-            
-            rightTopBackground.leadingAnchor.constraint(equalTo: view.centerXAnchor),
-            rightTopBackground.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            rightTopBackground.topAnchor.constraint(equalTo: view.topAnchor),
-            rightTopBackground.bottomAnchor.constraint(equalTo: view.centerYAnchor),
-
-            // table
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -133,7 +109,8 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
             cell.raceLabel.text = data[indexPath.row].finishTime.finishTimeString()
             
             if (data[indexPath.row].tags.count > 0 && race == .marathon) {
-                cell.tagLabel.text = data[indexPath.row].tags[0]
+                cell.tagButton.setTitle(data[indexPath.row].tags[0], for: .normal)
+                cell.tagButton.isHidden = false
             }
             
             return cell
@@ -179,7 +156,6 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
             
             _ = reduce(action: .toggleExpansion, state: appState)
         } else {
-            // TODO: handle case where the last cell is tapped
             let currentCell = data[indexPath.row]
             let nextCell = data[indexPath.row + 1]
             data.removeAll { $0 != currentCell && $0 != nextCell }

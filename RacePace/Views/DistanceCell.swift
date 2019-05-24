@@ -19,7 +19,7 @@ class DistanceCell: UITableViewCell {
         distanceLabel.font = UIFont.boldSystemFont(ofSize: 20)
         distanceLabel.textColor = UIColor.white
         distanceLabel.translatesAutoresizingMaskIntoConstraints = false
-        distanceLabel.backgroundColor = UIColor.rightHeaderBackgroundColor
+        distanceLabel.backgroundColor = UIColor.white
         contentView.addSubview(distanceLabel)
         
         NSLayoutConstraint.activate([
