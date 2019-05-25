@@ -15,6 +15,7 @@
 		285B4F8622989C200056B999 /* Landmarks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285B4F8522989C200056B999 /* Landmarks.swift */; };
 		285B4F882298DE930056B999 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285B4F872298DE930056B999 /* TabBarController.swift */; };
 		285B4F8B2298DF1E0056B999 /* ProjectionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285B4F8A2298DF1E0056B999 /* ProjectionsViewController.swift */; };
+		285B4F8D229915EC0056B999 /* TrainingPaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285B4F8C229915EC0056B999 /* TrainingPaceCell.swift */; };
 		28A2BCFA226EB31E006CD3A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A2BCF9226EB31E006CD3A0 /* AppDelegate.swift */; };
 		28A2BCFC226EB31E006CD3A0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A2BCFB226EB31E006CD3A0 /* ViewController.swift */; };
 		28A2BD01226EB31F006CD3A0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 28A2BD00226EB31F006CD3A0 /* Assets.xcassets */; };
@@ -31,6 +32,7 @@
 		285B4F8522989C200056B999 /* Landmarks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Landmarks.swift; sourceTree = "<group>"; };
 		285B4F872298DE930056B999 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		285B4F8A2298DF1E0056B999 /* ProjectionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectionsViewController.swift; sourceTree = "<group>"; };
+		285B4F8C229915EC0056B999 /* TrainingPaceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingPaceCell.swift; sourceTree = "<group>"; };
 		28A2BCF6226EB31E006CD3A0 /* RacePace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RacePace.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		28A2BCF9226EB31E006CD3A0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		28A2BCFB226EB31E006CD3A0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -64,6 +66,7 @@
 			isa = PBXGroup;
 			children = (
 				285B4F8A2298DF1E0056B999 /* ProjectionsViewController.swift */,
+				285B4F8C229915EC0056B999 /* TrainingPaceCell.swift */,
 			);
 			path = Projections;
 			sourceTree = "<group>";
@@ -192,6 +195,7 @@
 			files = (
 				28B33CD5228BD6E500C5120C /* DistanceCell.swift in Sources */,
 				285B4F8422989BD40056B999 /* Colors.swift in Sources */,
+				285B4F8D229915EC0056B999 /* TrainingPaceCell.swift in Sources */,
 				285B4F8B2298DF1E0056B999 /* ProjectionsViewController.swift in Sources */,
 				283D2DFC226EE0C20059773D /* Header.swift in Sources */,
 				285B4F882298DE930056B999 /* TabBarController.swift in Sources */,

@@ -16,8 +16,8 @@ class TabBarController: UITabBarController {
         let viewController = ViewController()
         let projections = ProjectionsViewController()
         
-        projections.tabBarItem = UITabBarItem(title: "Projections", image: nil, selectedImage: nil)
-        viewController.tabBarItem = UITabBarItem(title: "Paces", image: nil, selectedImage: nil)
+        projections.tabBarItem = UITabBarItem(title: "Your paces", image: nil, selectedImage: nil)
+        viewController.tabBarItem = UITabBarItem(title: "Race tables", image: nil, selectedImage: nil)
         
         viewControllers = [projections, viewController]
     }
