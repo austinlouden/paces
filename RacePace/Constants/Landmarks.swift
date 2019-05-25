@@ -8,6 +8,7 @@
 
 import Foundation
 
+// TODO: map these to tag structs. e.g. "6:51": Tag(title, color, etc.)
 
 let landmarks =
     ["6:51": ["Boston M 18-34"], // 03:00:00

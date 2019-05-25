@@ -84,7 +84,6 @@ class Header: UIView {
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         button.clipsToBounds = true
         button.layer.cornerRadius = 8;
-        
         button.layer.borderWidth = 1;
         button.layer.borderColor = UIColor.textColor.cgColor
         
@@ -96,11 +95,15 @@ class Header: UIView {
     }
 
     @objc func increment() {
-        _ = reduce(action: .incrementPace, state: appState)
+        if (!appState.expanded) {
+            _ = reduce(action: .incrementPace, state: appState)
+        }
     }
     
     @objc func decrement() {
-        _ = reduce(action: .decrementPace, state: appState)
+        if (!appState.expanded) {
+            _ = reduce(action: .decrementPace, state: appState)
+        }
     }
     
     @objc func headerTapped() {

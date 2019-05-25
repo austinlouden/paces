@@ -30,9 +30,13 @@ class Cell: UITableViewCell {
         raceLabel.backgroundColor = UIColor.white
         
         tagButton.titleLabel?.font = UIFont.systemFont(ofSize: 14)
-        tagButton.setTitleColor(UIColor.textColor, for: .normal)
+        tagButton.isHidden = true
+        tagButton.setTitleColor(UIColor.white, for: .normal)
         tagButton.translatesAutoresizingMaskIntoConstraints = false
-        tagButton.backgroundColor = UIColor.white
+        tagButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: spacing + 2, bottom: 0, right: spacing + 2)
+        tagButton.backgroundColor = UIColor.bostonBlue
+        tagButton.clipsToBounds = true
+        tagButton.layer.cornerRadius = 8;
 
         contentView.addSubview(paceLabel)
         contentView.addSubview(raceLabel)
@@ -44,7 +48,7 @@ class Cell: UITableViewCell {
             paceLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: appMargin + 4),
             raceLabel.leadingAnchor.constraint(equalTo: paceLabel.trailingAnchor, constant: 8),
             
-            tagButton.leadingAnchor.constraint(equalTo: contentView.centerXAnchor, constant: 12),
+            tagButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -appMargin),
             tagButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
             ])
     }
@@ -56,5 +60,16 @@ class Cell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         tagButton.isHidden = true
+    }
+}
+
+extension UIButton {
+    override open var intrinsicContentSize: CGSize {
+        let intrinsicContentSize = super.intrinsicContentSize
+        
+        let adjustedWidth = intrinsicContentSize.width + titleEdgeInsets.left + titleEdgeInsets.right
+        let adjustedHeight = intrinsicContentSize.height + titleEdgeInsets.top + titleEdgeInsets.bottom
+        
+        return CGSize(width: adjustedWidth, height: adjustedHeight)
     }
 }
