@@ -157,28 +157,45 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
             _ = reduce(action: .toggleExpansion, state: appState)
         } else {
             let currentCell = data[indexPath.row]
-            let nextCell = data[indexPath.row + 1]
-            data.removeAll { $0 != currentCell && $0 != nextCell }
-            data = buildIntervalCellData(with: data, state: appState)
-            
             guard let currentRow = tableView.indexPathForSelectedRow else { return }
-            let nextRow = IndexPath(row: currentRow.row + 1, section: 0)
             
-            let indexPathsToDelete = tableView.visibleCells
-                .compactMap { tableView.indexPath(for: $0) }
-                .filter { $0 != currentRow && $0 != nextRow }
-            
-            let indexPathsToAdd = [Int](1 ..< data.count - 1).map {
-                IndexPath(row: $0, section: 0)
+            // selected the last cell
+            if (indexPath.row == data.count - 1) {
+                data.removeAll { $0 != currentCell }
+
+                let indexPathsToDelete = tableView.visibleCells
+                    .compactMap { tableView.indexPath(for: $0) }
+                    .filter { $0 != currentRow }
+
+                updateIntervalTable(indexPathsToDelete)
+            } else {
+                let nextCell = data[indexPath.row + 1]
+                data.removeAll { $0 != currentCell && $0 != nextCell }
+                
+                let nextRow = IndexPath(row: currentRow.row + 1, section: 0)
+                let indexPathsToDelete = tableView.visibleCells
+                    .compactMap { tableView.indexPath(for: $0) }
+                    .filter { $0 != currentRow && $0 != nextRow }
+
+                updateIntervalTable(indexPathsToDelete)
             }
-            
-            tableView.beginUpdates()
-            tableView.deleteRows(at: indexPathsToDelete, with: .fade)
-            tableView.insertRows(at: indexPathsToAdd, with: .fade)
-            tableView.endUpdates()
             
             _ = reduce(action: .toggleExpansion, state: appState)
         }
+    }
+    
+    func updateIntervalTable(_ indexPathsToRemove: [IndexPath]) {
+        data = buildIntervalCellData(with: data, state: appState)
+        let offset = data.count == 6 ? 1 : 0
+  
+        let indexPathsToAdd = [Int](1 ..< data.count - offset).map {
+            IndexPath(row: $0, section: 0)
+        }
+
+        tableView.beginUpdates()
+        tableView.deleteRows(at: indexPathsToRemove, with: .fade)
+        tableView.insertRows(at: indexPathsToAdd, with: .fade)
+        tableView.endUpdates()
     }
 }
 

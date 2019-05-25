@@ -95,6 +95,7 @@ class Header: UIView {
     }
 
     @objc func increment() {
+        // TODO: make these buttons work in the expanded state
         if (!appState.expanded) {
             _ = reduce(action: .incrementPace, state: appState)
         }

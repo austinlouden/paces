@@ -92,21 +92,18 @@ func buildCellData(with state: State) -> [CellData] {
 }
 
 func buildIntervalCellData(with data: [CellData], state: State) -> [CellData] {
-    assert(data.count == 2, "This method builds the interval between 2 data points.")
-    
     var newData = [CellData]()
+    guard let first = data.first else { assertionFailure(); return data }
     
-    guard let first = data.first, let last = data.last else { assertionFailure(); return data }
+    let interval = data.count == 2 ? 5 : 4
 
-    newData += [Int](first.pace.seconds + 1 ..< last.pace.seconds).map { i -> CellData in
+    newData += [Int](first.pace.seconds ... first.pace.seconds + interval).map { i -> CellData in
         let pace = Pace(minutes: first.pace.minutes, seconds: i)
         let finish = finishTime(with: pace, distance: state.race.distance)
         let tags = landmarks[pace.paceString()] ?? []
         return CellData(pace: pace, finishTime: finish, tags: tags)
     }
 
-    newData.insert(first, at: 0)
-    newData.append(last)
     return newData
 }
 
