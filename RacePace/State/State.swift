@@ -12,7 +12,7 @@ import UIKit
 fileprivate(set) public var appState = State()
 
 public struct State {
-    var pace = 7
+    var pace = 8
     var race = Race.marathon
     var expanded = false
     var selectingDistance = false

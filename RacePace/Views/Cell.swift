@@ -41,8 +41,8 @@ class Cell: UITableViewCell {
         NSLayoutConstraint.activate([
             paceLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             raceLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            paceLabel.trailingAnchor.constraint(equalTo: raceLabel.leadingAnchor, constant: -8),
-            raceLabel.trailingAnchor.constraint(equalTo: contentView.centerXAnchor, constant: -12),
+            paceLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: appMargin + 4),
+            raceLabel.leadingAnchor.constraint(equalTo: paceLabel.trailingAnchor, constant: 8),
             
             tagButton.leadingAnchor.constraint(equalTo: contentView.centerXAnchor, constant: 12),
             tagButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)

@@ -10,12 +10,12 @@ import UIKit
 
 class Header: UIView {
 
-    static let height: CGFloat = 60.0
+    static let height: CGFloat = 72.0
     
     let paceLabel = UILabel()
     let raceLabel = UILabel()
-
     let tapRecognizer = UITapGestureRecognizer()
+    let bottomBorder = UIView()
 
     let increaseButton = UIButton(type: .roundedRect)
     let decreaseButton = UIButton(type: .roundedRect)
@@ -35,7 +35,7 @@ class Header: UIView {
         raceLabel.backgroundColor = UIColor.white
         raceLabel.translatesAutoresizingMaskIntoConstraints = false
         addSubview(raceLabel)
-        
+    
         setupButton(with: increaseButton, increasing: true)
         setupButton(with: decreaseButton, increasing: false)
         increaseButton.addTarget(self, action: #selector(increment), for: .touchUpInside)
@@ -43,22 +43,32 @@ class Header: UIView {
         addSubview(increaseButton)
         addSubview(decreaseButton)
 
+        bottomBorder.backgroundColor = UIColor.lightTextColor
+        bottomBorder.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(bottomBorder)
+
         tapRecognizer.addTarget(self, action: #selector(headerTapped))
         self.addGestureRecognizer(tapRecognizer)
 
         NSLayoutConstraint.activate([            
-            paceLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            raceLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            paceLabel.trailingAnchor.constraint(equalTo: decreaseButton.leadingAnchor, constant: -12),
-            raceLabel.leadingAnchor.constraint(equalTo: self.centerXAnchor, constant: 12),
+            paceLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
+            raceLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
+
+            paceLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: appMargin + spacing),
+            raceLabel.leadingAnchor.constraint(equalTo: paceLabel.trailingAnchor, constant: spacing * 2),
             
             // + button
-            increaseButton.trailingAnchor.constraint(equalTo: self.centerXAnchor, constant: -12),
-            increaseButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            increaseButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -appMargin),
+            increaseButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -spacing),
 
             // - button
-            decreaseButton.trailingAnchor.constraint(equalTo: increaseButton.leadingAnchor, constant: -4),
-            decreaseButton.centerYAnchor.constraint(equalTo: self.centerYAnchor)
+            decreaseButton.trailingAnchor.constraint(equalTo: increaseButton.leadingAnchor, constant: -spacing),
+            decreaseButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -spacing),
+            
+            bottomBorder.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            bottomBorder.heightAnchor.constraint(equalToConstant: 2),
+            bottomBorder.trailingAnchor.constraint(equalTo: raceLabel.trailingAnchor, constant: spacing),
+            bottomBorder.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: appMargin)
         ])
         
     }
@@ -70,13 +80,13 @@ class Header: UIView {
     func setupButton(with button: UIButton, increasing: Bool) {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = UIColor.white
-        button.setTitleColor(UIColor.white, for: .normal)
+        button.setTitleColor(UIColor.textColor, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         button.clipsToBounds = true
         button.layer.cornerRadius = 8;
         
         button.layer.borderWidth = 1;
-        button.layer.borderColor = UIColor.white.cgColor
+        button.layer.borderColor = UIColor.textColor.cgColor
         
         if (increasing) {
             button.setTitle("+", for: .normal)

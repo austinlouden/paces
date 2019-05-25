@@ -78,7 +78,7 @@ class ViewController: UIViewController {
             tableView.reloadData()
         } else if (race != appState.race) {
             race = appState.race
-            header.raceLabel.text = race.string
+            header.raceLabel.text = race.string.uppercased()
             data = buildCellData(with: appState)
             tableView.reloadData()
         }

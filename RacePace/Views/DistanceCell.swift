@@ -16,8 +16,8 @@ class DistanceCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         backgroundColor = UIColor.clear
 
-        distanceLabel.font = UIFont.boldSystemFont(ofSize: 20)
-        distanceLabel.textColor = UIColor.white
+        distanceLabel.font = UIFont.boldSystemFont(ofSize: 18)
+        distanceLabel.textColor = UIColor.textColor
         distanceLabel.translatesAutoresizingMaskIntoConstraints = false
         distanceLabel.backgroundColor = UIColor.white
         contentView.addSubview(distanceLabel)
