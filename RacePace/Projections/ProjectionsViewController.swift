@@ -31,6 +31,7 @@ class ProjectionsViewController: UIViewController {
 
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
         segmentedControl.selectedSegmentIndex = 0
+        segmentedControl.tintColor = UIColor.textColor
         segmentedControl.addTarget(self, action: #selector(indexChanged), for: .valueChanged)
         view.addSubview(segmentedControl)
 
