@@ -14,6 +14,7 @@ class Header: UIView {
     
     let paceLabel = UILabel()
     let raceLabel = UILabel()
+    let distanceLabel = UILabel()
     let tapRecognizer = UITapGestureRecognizer()
     let bottomBorder = UIView()
 
@@ -30,11 +31,18 @@ class Header: UIView {
         paceLabel.translatesAutoresizingMaskIntoConstraints = false
         addSubview(paceLabel)
 
+        raceLabel.text = NSLocalizedString("FINISH TIME", comment: "The time it takes to complete the race.")
         raceLabel.font = UIFont.boldSystemFont(ofSize: 14)
         raceLabel.textColor = UIColor.textColor
         raceLabel.backgroundColor = UIColor.white
         raceLabel.translatesAutoresizingMaskIntoConstraints = false
         addSubview(raceLabel)
+        
+        distanceLabel.font = UIFont.boldSystemFont(ofSize: 14)
+        distanceLabel.textColor = UIColor.mediumTextColor
+        distanceLabel.backgroundColor = UIColor.white
+        distanceLabel.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(distanceLabel)
     
         setupButton(with: increaseButton, increasing: true)
         setupButton(with: decreaseButton, increasing: false)
@@ -53,9 +61,11 @@ class Header: UIView {
         NSLayoutConstraint.activate([            
             paceLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
             raceLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
+            distanceLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
 
             paceLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: appMargin + spacing),
             raceLabel.leadingAnchor.constraint(equalTo: paceLabel.trailingAnchor, constant: spacing * 2),
+            distanceLabel.leadingAnchor.constraint(equalTo: raceLabel.trailingAnchor, constant: spacing),
             
             // + button
             increaseButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -appMargin),

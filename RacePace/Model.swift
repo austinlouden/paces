@@ -53,9 +53,9 @@ public enum Race: Int, CaseIterable {
         case .tenK:
             return "10K"
         case .halfMarathon:
-            return "Half Marathon"
+            return "13.1"
         case .marathon:
-            return "Marathon"
+            return "26.2"
         }
     }
 }

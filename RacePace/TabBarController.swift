@@ -10,11 +10,14 @@ import UIKit
 
 class TabBarController: UITabBarController {
     override func viewDidLoad() {
+        view.backgroundColor = UIColor.white
+        tabBar.isTranslucent = false
+
         let viewController = ViewController()
         let projections = ProjectionsViewController()
         
-        projections.tabBarItem = UITabBarItem(tabBarSystemItem: .downloads, tag: 0)
-        viewController.tabBarItem = UITabBarItem(tabBarSystemItem: .featured, tag: 1)
+        projections.tabBarItem = UITabBarItem(title: "Projections", image: nil, selectedImage: nil)
+        viewController.tabBarItem = UITabBarItem(title: "Paces", image: nil, selectedImage: nil)
         
         viewControllers = [projections, viewController]
     }

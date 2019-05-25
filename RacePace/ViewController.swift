@@ -44,7 +44,7 @@ class ViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(stateDidChange(_:)), name: .stateDidChange, object: nil)
 
         header.frame = CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: Header.height)
-        header.raceLabel.text = appState.race.string.uppercased()
+        header.distanceLabel.text = race.string.uppercased()
 
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.tableHeaderView = header
@@ -78,7 +78,7 @@ class ViewController: UIViewController {
             tableView.reloadData()
         } else if (race != appState.race) {
             race = appState.race
-            header.raceLabel.text = race.string.uppercased()
+            header.distanceLabel.text = race.string.uppercased()
             data = buildCellData(with: appState)
             tableView.reloadData()
         }

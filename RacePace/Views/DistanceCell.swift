@@ -24,7 +24,7 @@ class DistanceCell: UITableViewCell {
         
         NSLayoutConstraint.activate([
             distanceLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            distanceLabel.leadingAnchor.constraint(equalTo: contentView.centerXAnchor, constant: 12)
+            distanceLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
             ])
     }
     
