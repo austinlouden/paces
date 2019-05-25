@@ -10,27 +10,25 @@ import UIKit
 
 struct TrainingPace {
     let name: String
-    let pace: Pace
+    let pace: Pace?
 }
 
 
 class ProjectionsViewController: UIViewController {
     
     let tableView = UITableView()
-    let titleLabel = UILabel()
+    let welcomeView = WelcomeView()
     let segmentedControl = UISegmentedControl(items: ["Training", "Race", "Goal"])
     var data = [TrainingPace]()
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nil, bundle: nil)
         
-        titleLabel.text = NSLocalizedString("Calculate your next race", comment: "The time it takes to complete the race.")
-        titleLabel.font = UIFont.boldSystemFont(ofSize: 18)
-        titleLabel.textColor = UIColor.textColor
-        titleLabel.backgroundColor = UIColor.white
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(titleLabel)
-        
+        welcomeView.translatesAutoresizingMaskIntoConstraints = false
+        welcomeView.clipsToBounds = true
+        welcomeView.layer.cornerRadius = 8;
+        view.addSubview(welcomeView)
+
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
         segmentedControl.selectedSegmentIndex = 0
         segmentedControl.addTarget(self, action: #selector(indexChanged), for: .valueChanged)
@@ -45,10 +43,11 @@ class ProjectionsViewController: UIViewController {
         view.addSubview(tableView)
         
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: appMargin * 2),
-            titleLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: appMargin),
+            welcomeView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: appMargin * 2),
+            welcomeView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: appMargin),
+            welcomeView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -appMargin),
 
-            segmentedControl.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: spacing * 2),
+            segmentedControl.topAnchor.constraint(equalTo: welcomeView.bottomAnchor, constant: spacing * 4),
             segmentedControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: appMargin),
             segmentedControl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -appMargin),
             
@@ -60,10 +59,10 @@ class ProjectionsViewController: UIViewController {
         
         // add example data
         data.append(TrainingPace(name: "Easy", pace: Pace(minutes: 10, seconds: 51)))
-        data.append(TrainingPace(name: "Tempo", pace: Pace(minutes: 8, seconds: 51)))
-        data.append(TrainingPace(name: "Lactate Threshold", pace: Pace(minutes: 8, seconds: 51)))
+        data.append(TrainingPace(name: "Tempo", pace: nil))
+        data.append(TrainingPace(name: "Lactate Threshold", pace: nil))
         data.append(TrainingPace(name: "VO₂ Max", pace: Pace(minutes: 6, seconds: 51)))
-        data.append(TrainingPace(name: "Long", pace: Pace(minutes: 8, seconds: 51)))
+        data.append(TrainingPace(name: "Long", pace: nil))
         data.append(TrainingPace(name: "Speed", pace: Pace(minutes: 8, seconds: 51)))
     }
     
@@ -93,7 +92,13 @@ extension ProjectionsViewController: UITableViewDataSource, UITableViewDelegate 
 
         cell.selectionStyle = .none
         cell.nameLabel.text = data[indexPath.row].name
-        cell.paceLabel.text = data[indexPath.row].pace.paceString()
+        
+        if let pace = data[indexPath.row].pace {
+            cell.paceLabel.text = pace.paceString()
+        } else {
+            cell.paceLabel.text = NSLocalizedString("Not set", comment: "Not set")
+        }
+        
         return cell
     }
     
