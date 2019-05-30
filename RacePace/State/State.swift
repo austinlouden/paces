@@ -18,15 +18,16 @@ public struct State {
     var selectingDistance = false
 }
 
-enum Action {
+enum Action: Equatable {
     case selectRace(race: Race)
     case incrementPace
     case decrementPace
     case toggleExpansion
     case toggleDistanceSelection
+    case presentProjectionsNUX
 }
 
-func reduce(action: Action, state: State?) -> State {
+func reduce(action: Action, state: State?) {
     var state = state ?? State()
     
     switch action {
@@ -46,11 +47,12 @@ func reduce(action: Action, state: State?) -> State {
         UIImpactFeedbackGenerator().impactOccurred()
         state.selectingDistance = !state.selectingDistance
         state.expanded = false
+    case .presentProjectionsNUX:
+        break
     }
     
     appState = state
-    NotificationCenter.default.post(name: .stateDidChange, object: nil)
-    return appState
+    NotificationCenter.default.post(name: .stateDidChange, object: action)
 }
 
 func updatePace(pace: Int, increment: Bool) -> Int {

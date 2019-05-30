@@ -126,8 +126,8 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         
         if (selectingDistance) {
             if let race = Race(rawValue: indexPath.row) {
-                _ = reduce(action: .toggleDistanceSelection, state: appState)
-                _ = reduce(action: .selectRace(race: race), state: appState)
+                reduce(action: .toggleDistanceSelection, state: appState)
+                reduce(action: .selectRace(race: race), state: appState)
             }
         } else if (expanded) {
             let firstRow = IndexPath(row: 0, section: 0)
@@ -154,7 +154,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
             tableView.reloadRows(at: [firstRow, newLastRow], with: .fade)
             tableView.endUpdates()
             
-            _ = reduce(action: .toggleExpansion, state: appState)
+            reduce(action: .toggleExpansion, state: appState)
         } else {
             let currentCell = data[indexPath.row]
             guard let currentRow = tableView.indexPathForSelectedRow else { return }
@@ -180,7 +180,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
                 updateIntervalTable(indexPathsToDelete)
             }
             
-            _ = reduce(action: .toggleExpansion, state: appState)
+            reduce(action: .toggleExpansion, state: appState)
         }
     }
     

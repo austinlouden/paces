@@ -24,17 +24,32 @@ class ProjectionsViewController: UIViewController {
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nil, bundle: nil)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(stateDidChange(_:)), name: .stateDidChange, object: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: .stateDidChange, object: nil)
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = UIColor.white
+        
         welcomeView.translatesAutoresizingMaskIntoConstraints = false
         welcomeView.clipsToBounds = true
         welcomeView.layer.cornerRadius = 8;
         view.addSubview(welcomeView)
-
+        
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
         segmentedControl.selectedSegmentIndex = 0
         segmentedControl.tintColor = UIColor.textColor
         segmentedControl.addTarget(self, action: #selector(indexChanged), for: .valueChanged)
         view.addSubview(segmentedControl)
-
+        
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.backgroundColor = UIColor(displayP3Red: 0, green: 0, blue: 0, alpha: 0)
         tableView.delegate = self
@@ -47,7 +62,7 @@ class ProjectionsViewController: UIViewController {
             welcomeView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: appMargin * 2),
             welcomeView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: appMargin),
             welcomeView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -appMargin),
-
+            
             segmentedControl.topAnchor.constraint(equalTo: welcomeView.bottomAnchor, constant: spacing * 4),
             segmentedControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: appMargin),
             segmentedControl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -appMargin),
@@ -56,7 +71,7 @@ class ProjectionsViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-        ])
+            ])
         
         // add example data
         data.append(TrainingPace(name: "Easy", pace: Pace(minutes: 10, seconds: 51)))
@@ -67,13 +82,14 @@ class ProjectionsViewController: UIViewController {
         data.append(TrainingPace(name: "Speed", pace: Pace(minutes: 8, seconds: 51)))
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = UIColor.white
+    @objc func stateDidChange(_ notification:Notification) {
+        guard let action = notification.object as? Action else {
+            return
+        }
+        
+        if action == .presentProjectionsNUX {
+            present(PriorRaceViewController(), animated: true, completion: nil)
+        }
     }
     
     @objc func indexChanged(sender: UISegmentedControl) {
