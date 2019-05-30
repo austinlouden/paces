@@ -46,7 +46,7 @@ public enum Race: Int, CaseIterable {
         }
     }
 
-    var string: String {
+    var shortString: String {
         switch self {
         case .fiveK:
             return "5K"
@@ -56,6 +56,19 @@ public enum Race: Int, CaseIterable {
             return "13.1"
         case .marathon:
             return "26.2"
+        }
+    }
+    
+    var longString: String {
+        switch self {
+        case .fiveK:
+            return "5K"
+        case .tenK:
+            return "10K"
+        case .halfMarathon:
+            return "Half Marathon"
+        case .marathon:
+            return "Marathon"
         }
     }
 }
@@ -108,5 +121,5 @@ func buildIntervalCellData(with data: [CellData], state: State) -> [CellData] {
 }
 
 func buildDataForRaces() -> [String] {
-    return Race.allCases.map({ $0.string })
+    return Race.allCases.map({ $0.longString })
 }

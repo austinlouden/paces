@@ -15,7 +15,7 @@ class ViewController: UIViewController {
 
     // Local state
     var data: [CellData]
-    let distanceData = Race.allCases.map({ $0.string })
+    let distanceData = Race.allCases.map({ $0.longString })
     var expanded = false
     var selectingDistance = false
     var pace = 7
@@ -42,7 +42,7 @@ class ViewController: UIViewController {
         navigationController?.isNavigationBarHidden = true
 
         header.frame = CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: Header.height)
-        header.distanceLabel.text = race.string.uppercased()
+        header.distanceLabel.text = race.shortString.uppercased()
 
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.tableHeaderView = header
@@ -76,7 +76,7 @@ class ViewController: UIViewController {
             tableView.reloadData()
         } else if (race != appState.race) {
             race = appState.race
-            header.distanceLabel.text = race.string.uppercased()
+            header.distanceLabel.text = race.shortString.uppercased()
             data = buildCellData(with: appState)
             tableView.reloadData()
         }
