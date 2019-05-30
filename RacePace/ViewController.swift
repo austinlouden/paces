@@ -11,9 +11,6 @@ import UIKit
 class ViewController: UIViewController {
     
     let tableView = UITableView()
-
-    let buttonHeight: CGFloat = 256.0
-    
     let header = Header()
 
     // Local state
@@ -27,6 +24,8 @@ class ViewController: UIViewController {
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         data = buildCellData(with: appState)
         super.init(nibName: nil, bundle: nil)
+        self.title = NSLocalizedString("Pace tables", comment: "Shows paces and finish times by race.")
+        NotificationCenter.default.addObserver(self, selector: #selector(stateDidChange(_:)), name: .stateDidChange, object: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -40,8 +39,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(stateDidChange(_:)), name: .stateDidChange, object: nil)
+        navigationController?.isNavigationBarHidden = true
 
         header.frame = CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: Header.height)
         header.distanceLabel.text = race.string.uppercased()

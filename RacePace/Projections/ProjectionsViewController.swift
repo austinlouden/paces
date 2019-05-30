@@ -23,7 +23,7 @@ class ProjectionsViewController: UIViewController {
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nil, bundle: nil)
-        
+        self.title = NSLocalizedString("Your paces", comment: "Tab to store and generate paces")
         NotificationCenter.default.addObserver(self, selector: #selector(stateDidChange(_:)), name: .stateDidChange, object: nil)
     }
     
@@ -38,6 +38,7 @@ class ProjectionsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
+        navigationController?.isNavigationBarHidden = true
         
         welcomeView.translatesAutoresizingMaskIntoConstraints = false
         welcomeView.clipsToBounds = true
@@ -88,7 +89,7 @@ class ProjectionsViewController: UIViewController {
         }
         
         if action == .presentProjectionsNUX {
-            present(PriorRaceViewController(), animated: true, completion: nil)
+            navigationController?.pushViewController(PriorRaceViewController(), animated: true)
         }
     }
     

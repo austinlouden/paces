@@ -19,6 +19,6 @@ class TabBarController: UITabBarController {
         projections.tabBarItem = UITabBarItem(title: "Your paces", image: nil, selectedImage: nil)
         viewController.tabBarItem = UITabBarItem(title: "Race tables", image: nil, selectedImage: nil)
         
-        viewControllers = [projections, viewController]
+        viewControllers = [projections, viewController].map { UINavigationController(rootViewController: $0) }
     }
 }
