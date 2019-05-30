@@ -10,6 +10,7 @@ import UIKit
 
 let appMargin: CGFloat = 24.0
 let spacing: CGFloat = 4.0
+let cornerRadius: CGFloat = 8.0
 
 extension UIColor {
     static let buttonColor = UIColor(white: 229.0/255.0, alpha: 1.0)
