@@ -10,8 +10,9 @@ import UIKit
 
 class WelcomeView: UIView {
     
-    let titleLabel = UILabel()
-    let detailLabel = UILabel()
+    let welcomeLabel = Label.titleLabel(with: NSLocalizedString("Welcome!", comment: "Welcome"))
+    let detailLabel = Label.detailLabel(with: NSLocalizedString("Enter a finish time from a previous race to calculate your training paces. " +
+        "You can manually override any generated value if you choose to later.", comment: "Prompt to enter time from a previous race."))
     let getStartedButton = UIButton()
     let bottomBorder = UIView()
 
@@ -19,22 +20,8 @@ class WelcomeView: UIView {
         super.init(frame: frame)
         
         backgroundColor = UIColor.white
-        
-        titleLabel.text = NSLocalizedString("Welcome!", comment: "Welcome")
-        titleLabel.numberOfLines = 1
-        titleLabel.font = UIFont.boldSystemFont(ofSize: 18)
-        titleLabel.textColor = UIColor.textColor
-        titleLabel.backgroundColor = UIColor.white
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(titleLabel)
-        
-        detailLabel.text = NSLocalizedString("Enter a finish time from a previous race to calculate your training paces. " +
-            "You can manually override any generated value if you choose to later.", comment: "Prompt to enter time from a previous race.")
-        detailLabel.numberOfLines = 0
-        detailLabel.font = UIFont.systemFont(ofSize: 14)
-        detailLabel.textColor = UIColor.mediumTextColor
-        detailLabel.backgroundColor = UIColor.white
-        detailLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        addSubview(welcomeLabel)
         addSubview(detailLabel)
 
         getStartedButton.addTarget(self, action: #selector(getStartedTapped), for: .touchUpInside)
@@ -53,11 +40,11 @@ class WelcomeView: UIView {
         addSubview(bottomBorder)
         
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: spacing),
-            titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: spacing),
-            titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -spacing),
+            welcomeLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: spacing),
+            welcomeLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: spacing),
+            welcomeLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -spacing),
             
-            detailLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: spacing),
+            detailLabel.topAnchor.constraint(equalTo: welcomeLabel.bottomAnchor, constant: spacing),
             detailLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: spacing),
             detailLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -spacing),
             

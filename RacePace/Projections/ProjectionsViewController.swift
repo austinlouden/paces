@@ -89,7 +89,7 @@ class ProjectionsViewController: UIViewController {
         }
         
         if action == .presentProjectionsNUX {
-            navigationController?.pushViewController(PriorRaceViewController(), animated: true)
+            navigationController?.pushViewController(RaceTimeViewController(), animated: true)
         }
     }
     

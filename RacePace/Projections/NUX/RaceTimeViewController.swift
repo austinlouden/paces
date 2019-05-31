@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PriorRaceViewController: UIViewController {
+class RaceTimeViewController: UIViewController {
     
     let racePickerView = UIPickerView()
     let races = Race.allCases.map({ $0.longString })
@@ -51,7 +51,7 @@ class PriorRaceViewController: UIViewController {
     }
 }
 
-extension PriorRaceViewController: UIPickerViewDataSource, UIPickerViewDelegate {
+extension RaceTimeViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return pickerView.tag == 0 ? 1 : 3
     }
