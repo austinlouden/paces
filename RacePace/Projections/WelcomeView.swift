@@ -13,7 +13,7 @@ class WelcomeView: UIView {
     let welcomeLabel = Label.titleLabel(with: NSLocalizedString("Welcome!", comment: "Welcome"))
     let detailLabel = Label.detailLabel(with: NSLocalizedString("Enter a finish time from a previous race to calculate your training paces. " +
         "You can manually override any generated value if you choose to later.", comment: "Prompt to enter time from a previous race."))
-    let getStartedButton = UIButton()
+    let getStartedButton = Button.button(with: "Get started")
     let bottomBorder = UIView()
 
     override init(frame: CGRect) {
@@ -25,14 +25,6 @@ class WelcomeView: UIView {
         addSubview(detailLabel)
 
         getStartedButton.addTarget(self, action: #selector(getStartedTapped), for: .touchUpInside)
-        getStartedButton.translatesAutoresizingMaskIntoConstraints = false
-        getStartedButton.backgroundColor = UIColor.lightTextColor
-        getStartedButton.setTitleColor(UIColor.textColor, for: .normal)
-        getStartedButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-        getStartedButton.setTitle("Get started", for: .normal)
-        getStartedButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: spacing * 2, bottom: 0, right: spacing * 2)
-        getStartedButton.clipsToBounds = true
-        getStartedButton.layer.cornerRadius = cornerRadius;
         addSubview(getStartedButton)
         
         bottomBorder.backgroundColor = UIColor.lightTextColor

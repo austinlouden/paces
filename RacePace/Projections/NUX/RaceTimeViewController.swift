@@ -12,19 +12,20 @@ class RaceTimeViewController: UIViewController {
     
     let titleLabel = Label.titleLabel(with: NSLocalizedString("Your last race", comment: "The last race you ran in."))
     let detailLabel = Label.detailLabel(with: NSLocalizedString("Enter the finish time from your last competitive race.", comment: "The last race you ran in."))
-    
     let hmsLabel = Label.detailLabel(with: "")
     
     let racePickerView = UIPickerView()
+    let timePickerView = UIPickerView()
+    
+    let continueButton = Button.button(with: "Continue")
+
     let races = Race.allCases.map({ $0.longString })
     let times = Array(0...59).map{ String($0) }
     
-    var race = Race.fiveK
-    var hours = 0
-    var minutes = 22
+    var race = Race.halfMarathon
+    var hours = 1
+    var minutes = 26
     var seconds = 12
-    
-    let timePickerView = UIPickerView()
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nil, bundle: nil)
@@ -61,6 +62,8 @@ class RaceTimeViewController: UIViewController {
         timePickerView.selectRow(seconds, inComponent: 2, animated: false) // 25 seconds
         view.addSubview(timePickerView)
         
+        view.addSubview(continueButton)
+        
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: appMargin * 2),
             titleLabel.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: appMargin),
@@ -70,16 +73,20 @@ class RaceTimeViewController: UIViewController {
             detailLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             detailLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
 
+            hmsLabel.topAnchor.constraint(equalTo: detailLabel.bottomAnchor, constant: spacing * 2),
+            hmsLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+
             racePickerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             racePickerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            racePickerView.topAnchor.constraint(equalTo: detailLabel.bottomAnchor),
-            
-            hmsLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            hmsLabel.topAnchor.constraint(equalTo: racePickerView.bottomAnchor, constant: spacing),
+            racePickerView.topAnchor.constraint(equalTo: hmsLabel.bottomAnchor),
 
             timePickerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             timePickerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            timePickerView.topAnchor.constraint(equalTo: hmsLabel.bottomAnchor, constant: spacing)
+            timePickerView.topAnchor.constraint(equalTo: racePickerView.bottomAnchor, constant: spacing),
+            
+            continueButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -appMargin),
+            continueButton.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: appMargin),
+            continueButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -appMargin),
         ])
     }
     

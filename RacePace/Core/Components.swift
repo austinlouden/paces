@@ -1,5 +1,5 @@
 //
-//  Label.swift
+//  Components.swift
 //  RacePace
 //
 //  Created by Austin Louden on 5/31/19.
@@ -28,6 +28,21 @@ class Label {
         label.backgroundColor = UIColor.white
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
+    }
+}
+
+class Button {
+    static func button(with title: String) -> UIButton {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = UIColor.lightTextColor
+        button.setTitleColor(UIColor.textColor, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: standardFontSize)
+        button.setTitle(title, for: .normal)
+        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: spacing * 2, bottom: 0, right: spacing * 2)
+        button.clipsToBounds = true
+        button.layer.cornerRadius = cornerRadius;
+        return button
     }
 }
 
