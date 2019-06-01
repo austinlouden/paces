@@ -8,16 +8,46 @@
 
 import UIKit
 
+final class LastRaceViewController: RaceTimeViewController {
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nil, bundle: nil)
+        
+        titleLabel.text = NSLocalizedString("Your last race", comment: "The last race you ran in.")
+        detailLabel.text = NSLocalizedString("Enter the finish time from your last competitive race.", comment: "The last race you ran in.")
+        completeButton.setTitle(NSLocalizedString("Continue", comment: "Continue"), for: .normal)
+        completeButton.tag = 0
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+final class GoalViewController: RaceTimeViewController {
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nil, bundle: nil)
+        
+        titleLabel.text = NSLocalizedString("Your goal race", comment: "The last race you ran in.")
+        detailLabel.text = NSLocalizedString("Enter your goal", comment: "The last race you ran in.")
+        completeButton.setTitle(NSLocalizedString("Finish", comment: "Finish"), for: .normal)
+        completeButton.tag = 1
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
 class RaceTimeViewController: UIViewController {
     
-    let titleLabel = Label.titleLabel(with: NSLocalizedString("Your last race", comment: "The last race you ran in."))
-    let detailLabel = Label.detailLabel(with: NSLocalizedString("Enter the finish time from your last competitive race.", comment: "The last race you ran in."))
+    let titleLabel = Label.titleLabel(with: "")
+    let detailLabel = Label.detailLabel(with: "")
     let hmsLabel = Label.detailLabel(with: "")
     
     let racePickerView = UIPickerView()
     let timePickerView = UIPickerView()
     
-    let continueButton = Button.button(with: "Continue")
+    let completeButton = Button.button(with: "")
 
     let races = Race.allCases.map({ $0.longString })
     let times = Array(0...59).map{ String($0) }
@@ -26,18 +56,11 @@ class RaceTimeViewController: UIViewController {
     var hours = 1
     var minutes = 26
     var seconds = 12
-
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
+        navigationController?.navigationBar.isHidden = true
 
         view.addSubview(titleLabel)
         view.addSubview(detailLabel)
@@ -61,8 +84,9 @@ class RaceTimeViewController: UIViewController {
         timePickerView.selectRow(minutes, inComponent: 1, animated: false) // 46 minutes
         timePickerView.selectRow(seconds, inComponent: 2, animated: false) // 25 seconds
         view.addSubview(timePickerView)
-        
-        view.addSubview(continueButton)
+    
+        completeButton.addTarget(self, action: #selector(completePressed(_:)), for: .touchUpInside)
+        view.addSubview(completeButton)
         
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: appMargin * 2),
@@ -84,9 +108,9 @@ class RaceTimeViewController: UIViewController {
             timePickerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             timePickerView.topAnchor.constraint(equalTo: racePickerView.bottomAnchor, constant: spacing),
             
-            continueButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -appMargin),
-            continueButton.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: appMargin),
-            continueButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -appMargin),
+            completeButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -appMargin),
+            completeButton.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: appMargin),
+            completeButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -appMargin),
         ])
     }
     
@@ -94,6 +118,14 @@ class RaceTimeViewController: UIViewController {
         hmsLabel.text = String.localizedStringWithFormat(NSLocalizedString("A %@ in %dH:%dM:%dS ",
                                                                            comment: "A race (e.g. a half marathon) in hours minutes and seconds (e.g. 1H:45M:25S)"),
                                                          race.longString.lowercased(), hours, minutes, seconds)
+    }
+    
+    @objc func completePressed(_ sender: UIButton) {
+        if sender.tag == 0 {
+            navigationController?.pushViewController(GoalViewController(), animated: true)
+        } else {
+            navigationController?.dismiss(animated: true, completion: nil)
+        }
     }
 }
 
