@@ -18,6 +18,7 @@ class ProjectionsViewController: UIViewController {
     
     let tableView = UITableView()
     let welcomeView = WelcomeView()
+    let projectionsView = ProjectionsView()
     let segmentedControl = UISegmentedControl(items: ["Training", "Race", "Goal"])
     var data = [TrainingPace]()
 
@@ -41,9 +42,12 @@ class ProjectionsViewController: UIViewController {
         navigationController?.isNavigationBarHidden = true
         
         welcomeView.translatesAutoresizingMaskIntoConstraints = false
-        welcomeView.clipsToBounds = true
-        welcomeView.layer.cornerRadius = 8;
+        welcomeView.isHidden = false
         view.addSubview(welcomeView)
+        
+        projectionsView.translatesAutoresizingMaskIntoConstraints = false
+        projectionsView.isHidden = true
+        view.addSubview(projectionsView)
         
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
         segmentedControl.selectedSegmentIndex = 0
@@ -63,6 +67,11 @@ class ProjectionsViewController: UIViewController {
             welcomeView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: kAppMargin * 2),
             welcomeView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: kAppMargin),
             welcomeView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -kAppMargin),
+            
+            projectionsView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: kAppMargin * 2),
+            projectionsView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: kAppMargin),
+            projectionsView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -kAppMargin),
+            projectionsView.heightAnchor.constraint(equalTo: welcomeView.heightAnchor),
             
             segmentedControl.topAnchor.constraint(equalTo: welcomeView.bottomAnchor, constant: kSpacing * 4),
             segmentedControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: kAppMargin),
@@ -85,7 +94,16 @@ class ProjectionsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print(appState.goalRace, appState.lastRace)
+        
+        reduce(action: .getRaces, state: appState)
+
+        if let lastRace = appState.lastRace, let goalRace = appState.goalRace {
+            welcomeView.isHidden = true
+            
+            projectionsView.lastTimeLabel.text = "\(lastRace.time.finishTimeString()) \(lastRace.race.longString)"
+            projectionsView.goalTimeLabel.text = "\(goalRace.time.finishTimeString()) \(goalRace.race.longString)"
+            projectionsView.isHidden = false
+        }
     }
     
     @objc func stateDidChange(_ notification:Notification) {
