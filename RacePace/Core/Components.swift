@@ -39,9 +39,9 @@ class Button {
         button.setTitleColor(UIColor.textColor, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: standardFontSize)
         button.setTitle(title, for: .normal)
-        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: spacing * 2, bottom: 0, right: spacing * 2)
+        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: kSpacing * 2, bottom: 0, right: kSpacing * 2)
         button.clipsToBounds = true
-        button.layer.cornerRadius = cornerRadius;
+        button.layer.cornerRadius = kCornerRadius;
         return button
     }
 }

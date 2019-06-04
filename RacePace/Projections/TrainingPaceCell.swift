@@ -30,10 +30,10 @@ class TrainingPaceCell: UITableViewCell {
         contentView.addSubview(paceLabel)
         
         NSLayoutConstraint.activate([
-            nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: spacing * 2),
-            paceLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: spacing * 2),
-            nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: appMargin + spacing),
-            paceLabel.leadingAnchor.constraint(equalTo: nameLabel.trailingAnchor, constant: spacing)
+            nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: kSpacing * 2),
+            paceLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: kSpacing * 2),
+            nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: kAppMargin + kSpacing),
+            paceLabel.leadingAnchor.constraint(equalTo: nameLabel.trailingAnchor, constant: kSpacing)
             ])
     }
     

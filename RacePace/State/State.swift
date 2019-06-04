@@ -19,10 +19,8 @@ public struct State {
     var selectingDistance = false
 
     // projections
-    var lastRace: Race?
-    var lastTime: FinishTime?
-    var goalRace: Race?
-    var goalTime: FinishTime?
+    var lastRace: Event?
+    var goalRace: Event?
 }
 
 enum Action: Equatable {
@@ -37,6 +35,7 @@ enum Action: Equatable {
     case presentProjectionsNUX
     case setGoalRace(race: Race, time: FinishTime)
     case setLastRace(race: Race, time: FinishTime)
+    case getRaces
 }
 
 func reduce(action: Action, state: State?) {
@@ -64,14 +63,16 @@ func reduce(action: Action, state: State?) {
     case .presentProjectionsNUX:
         break
     case .setGoalRace(let race, let time):
-        state.goalRace = race
-        state.goalTime = time
+        state.goalRace = Event(race: race, time: time)
         storeRace(race, time, true)
     case .setLastRace(let race, let time):
-        state.lastRace = race
-        state.lastTime = time
+        state.lastRace = Event(race: race, time: time)
         storeRace(race, time, false)
-    
+    case .getRaces:
+        if let races = retrieveRaces() {
+            state.lastRace = races.0
+            state.goalRace = races.1
+        }
     }
     
     appState = state
@@ -90,7 +91,19 @@ private func updatePace(pace: Int, increment: Bool) -> Int {
 }
 
 private func storeRace(_ race: Race, _ time: FinishTime, _ isGoal: Bool) {
-    print(race, time, isGoal)
+    let event = Event(race: race, time: time)
+    let key = isGoal ? kGoalRaceKey : kLastRaceKey
+    UserDefaults.standard.set(try? PropertyListEncoder().encode(event), forKey:key)
+}
+
+private func retrieveRaces() -> (Event, Event)? {
+    guard let goalData = UserDefaults.standard.value(forKey:kGoalRaceKey) as? Data else { return nil }
+    guard let lastData = UserDefaults.standard.value(forKey:kLastRaceKey) as? Data else { return nil }
+    
+    guard let goal = try? PropertyListDecoder().decode(Event.self, from: goalData) else { return nil }
+    guard let last = try? PropertyListDecoder().decode(Event.self, from: lastData) else { return nil }
+
+    return (last, goal)
 }
 
 extension Notification.Name {

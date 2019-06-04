@@ -8,7 +8,12 @@
 
 import Foundation
 
-struct FinishTime: Equatable {
+struct Event: Codable {
+    let race: Race
+    let time: FinishTime
+}
+
+struct FinishTime: Equatable, Codable {
     let hours: Int
     let minutes: Int
     let seconds: Int
@@ -27,7 +32,7 @@ struct Pace {
     }
 }
 
-public enum Race: Int, CaseIterable {
+public enum Race: Int, CaseIterable, Codable {
     case fiveK
     case tenK
     case halfMarathon

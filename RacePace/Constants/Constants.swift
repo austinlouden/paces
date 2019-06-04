@@ -8,12 +8,15 @@
 
 import UIKit
 
-let appMargin: CGFloat = 24.0
-let spacing: CGFloat = 4.0
-let cornerRadius: CGFloat = 8.0
+let kAppMargin: CGFloat = 24.0
+let kSpacing: CGFloat = 4.0
+let kCornerRadius: CGFloat = 8.0
 
 let titleFontSize: CGFloat = 18.0
 let standardFontSize: CGFloat = 14.0
+
+let kLastRaceKey = "kLastRaceKey"
+let kGoalRaceKey = "kGoalRaceKey"
 
 extension UIColor {
     static let buttonColor = UIColor(white: 229.0/255.0, alpha: 1.0)

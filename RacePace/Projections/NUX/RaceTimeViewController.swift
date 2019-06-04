@@ -104,15 +104,15 @@ class RaceTimeViewController: UIViewController {
         view.addSubview(completeButton)
         
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: appMargin * 2),
-            titleLabel.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: appMargin),
-            titleLabel.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -appMargin),
+            titleLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: kAppMargin * 2),
+            titleLabel.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: kAppMargin),
+            titleLabel.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -kAppMargin),
             
-            detailLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: spacing),
+            detailLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: kSpacing),
             detailLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             detailLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
 
-            hmsLabel.topAnchor.constraint(equalTo: detailLabel.bottomAnchor, constant: spacing * 2),
+            hmsLabel.topAnchor.constraint(equalTo: detailLabel.bottomAnchor, constant: kSpacing * 2),
             hmsLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
 
             racePickerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -121,11 +121,11 @@ class RaceTimeViewController: UIViewController {
 
             timePickerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             timePickerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            timePickerView.topAnchor.constraint(equalTo: racePickerView.bottomAnchor, constant: spacing),
+            timePickerView.topAnchor.constraint(equalTo: racePickerView.bottomAnchor, constant: kSpacing),
             
-            completeButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -appMargin),
-            completeButton.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: appMargin),
-            completeButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -appMargin),
+            completeButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -kAppMargin),
+            completeButton.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: kAppMargin),
+            completeButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -kAppMargin),
         ])
     }
     

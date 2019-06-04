@@ -33,7 +33,7 @@ class Cell: UITableViewCell {
         tagButton.isHidden = true
         tagButton.setTitleColor(UIColor.white, for: .normal)
         tagButton.translatesAutoresizingMaskIntoConstraints = false
-        tagButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: spacing + 2, bottom: 0, right: spacing + 2)
+        tagButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: kSpacing + 2, bottom: 0, right: kSpacing + 2)
         tagButton.backgroundColor = UIColor.bostonBlue
         tagButton.clipsToBounds = true
         tagButton.layer.cornerRadius = 8;
@@ -45,10 +45,10 @@ class Cell: UITableViewCell {
         NSLayoutConstraint.activate([
             paceLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             raceLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            paceLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: appMargin + 4),
+            paceLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: kAppMargin + 4),
             raceLabel.leadingAnchor.constraint(equalTo: paceLabel.trailingAnchor, constant: 8),
             
-            tagButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -appMargin),
+            tagButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -kAppMargin),
             tagButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
             ])
     }

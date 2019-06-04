@@ -60,15 +60,15 @@ class ProjectionsViewController: UIViewController {
         view.addSubview(tableView)
         
         NSLayoutConstraint.activate([
-            welcomeView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: appMargin * 2),
-            welcomeView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: appMargin),
-            welcomeView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -appMargin),
+            welcomeView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: kAppMargin * 2),
+            welcomeView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: kAppMargin),
+            welcomeView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -kAppMargin),
             
-            segmentedControl.topAnchor.constraint(equalTo: welcomeView.bottomAnchor, constant: spacing * 4),
-            segmentedControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: appMargin),
-            segmentedControl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -appMargin),
+            segmentedControl.topAnchor.constraint(equalTo: welcomeView.bottomAnchor, constant: kSpacing * 4),
+            segmentedControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: kAppMargin),
+            segmentedControl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -kAppMargin),
             
-            tableView.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: spacing * 2),
+            tableView.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: kSpacing * 2),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
@@ -81,6 +81,11 @@ class ProjectionsViewController: UIViewController {
         data.append(TrainingPace(name: "VO₂ Max", pace: Pace(minutes: 6, seconds: 51)))
         data.append(TrainingPace(name: "Long", pace: nil))
         data.append(TrainingPace(name: "Speed", pace: Pace(minutes: 8, seconds: 51)))
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print(appState.goalRace, appState.lastRace)
     }
     
     @objc func stateDidChange(_ notification:Notification) {

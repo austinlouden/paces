@@ -32,19 +32,19 @@ class WelcomeView: UIView {
         addSubview(bottomBorder)
         
         NSLayoutConstraint.activate([
-            welcomeLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: spacing),
-            welcomeLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: spacing),
-            welcomeLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -spacing),
+            welcomeLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: kSpacing),
+            welcomeLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: kSpacing),
+            welcomeLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -kSpacing),
             
-            detailLabel.topAnchor.constraint(equalTo: welcomeLabel.bottomAnchor, constant: spacing),
-            detailLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: spacing),
-            detailLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -spacing),
+            detailLabel.topAnchor.constraint(equalTo: welcomeLabel.bottomAnchor, constant: kSpacing),
+            detailLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: kSpacing),
+            detailLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -kSpacing),
             
-            getStartedButton.topAnchor.constraint(equalTo: detailLabel.bottomAnchor, constant: spacing * 2),
-            getStartedButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: spacing),
-            getStartedButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -spacing),
+            getStartedButton.topAnchor.constraint(equalTo: detailLabel.bottomAnchor, constant: kSpacing * 2),
+            getStartedButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: kSpacing),
+            getStartedButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -kSpacing),
 
-            bottomBorder.topAnchor.constraint(equalTo: getStartedButton.bottomAnchor, constant: spacing * 3),
+            bottomBorder.topAnchor.constraint(equalTo: getStartedButton.bottomAnchor, constant: kSpacing * 3),
             bottomBorder.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             bottomBorder.heightAnchor.constraint(equalToConstant: 1),
             bottomBorder.trailingAnchor.constraint(equalTo: self.trailingAnchor),

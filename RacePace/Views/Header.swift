@@ -63,22 +63,22 @@ class Header: UIView {
             raceLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
             distanceLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
 
-            paceLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: appMargin + spacing),
-            raceLabel.leadingAnchor.constraint(equalTo: paceLabel.trailingAnchor, constant: spacing * 2),
-            distanceLabel.leadingAnchor.constraint(equalTo: raceLabel.trailingAnchor, constant: spacing),
+            paceLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: kAppMargin + kSpacing),
+            raceLabel.leadingAnchor.constraint(equalTo: paceLabel.trailingAnchor, constant: kSpacing * 2),
+            distanceLabel.leadingAnchor.constraint(equalTo: raceLabel.trailingAnchor, constant: kSpacing),
             
             // + button
-            increaseButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -appMargin),
-            increaseButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -spacing),
+            increaseButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -kAppMargin),
+            increaseButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -kSpacing),
 
             // - button
-            decreaseButton.trailingAnchor.constraint(equalTo: increaseButton.leadingAnchor, constant: -spacing),
-            decreaseButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -spacing),
+            decreaseButton.trailingAnchor.constraint(equalTo: increaseButton.leadingAnchor, constant: -kSpacing),
+            decreaseButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -kSpacing),
             
             bottomBorder.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             bottomBorder.heightAnchor.constraint(equalToConstant: 2),
-            bottomBorder.trailingAnchor.constraint(equalTo: raceLabel.trailingAnchor, constant: spacing),
-            bottomBorder.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: appMargin)
+            bottomBorder.trailingAnchor.constraint(equalTo: raceLabel.trailingAnchor, constant: kSpacing),
+            bottomBorder.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: kAppMargin)
         ])
         
     }
