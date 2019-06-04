@@ -28,9 +28,15 @@ final class GoalViewController: RaceTimeViewController {
         super.init(nibName: nil, bundle: nil)
         
         titleLabel.text = NSLocalizedString("Your goal race", comment: "The last race you ran in.")
-        detailLabel.text = NSLocalizedString("Enter your goal", comment: "The last race you ran in.")
+        detailLabel.text = NSLocalizedString("Enter your goal race and finish time. " +
+            "It's okay if you don't know right now, you can always edit this later.", comment: "Goal race description.")
         completeButton.setTitle(NSLocalizedString("Finish", comment: "Finish"), for: .normal)
         completeButton.tag = 1
+        
+        race = Race.marathon
+        hours = 3
+        minutes = 35
+        seconds = 14
     }
     
     required init?(coder aDecoder: NSCoder) {
