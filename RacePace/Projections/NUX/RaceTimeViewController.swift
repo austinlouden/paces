@@ -15,23 +15,28 @@ final class LastRaceViewController: RaceTimeViewController {
         titleLabel.text = NSLocalizedString("Your last race", comment: "The last race you ran in.")
         detailLabel.text = NSLocalizedString("Enter the finish time from your last competitive race.", comment: "The last race you ran in.")
         completeButton.setTitle(NSLocalizedString("Continue", comment: "Continue"), for: .normal)
-        completeButton.tag = 0
+        completeButton.addTarget(self, action: #selector(continuePressed(_:)), for: .touchUpInside)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    @objc func continuePressed(_ sender: UIButton) {
+        reduce(action: .setLastRace(race: race, time: FinishTime(hours: hours, minutes: minutes, seconds: seconds)), state: appState)
+        navigationController?.pushViewController(GoalViewController(), animated: true)
     }
 }
 
 final class GoalViewController: RaceTimeViewController {
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nil, bundle: nil)
-        
+
         titleLabel.text = NSLocalizedString("Your goal race", comment: "The last race you ran in.")
         detailLabel.text = NSLocalizedString("Enter your goal race and finish time. " +
             "It's okay if you don't know right now, you can always edit this later.", comment: "Goal race description.")
         completeButton.setTitle(NSLocalizedString("Finish", comment: "Finish"), for: .normal)
-        completeButton.tag = 1
+        completeButton.addTarget(self, action: #selector(completePressed(_:)), for: .touchUpInside)
         
         race = Race.marathon
         hours = 3
@@ -41,6 +46,11 @@ final class GoalViewController: RaceTimeViewController {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    @objc func completePressed(_ sender: UIButton) {
+        reduce(action: .setGoalRace(race: race, time: FinishTime(hours: hours, minutes: minutes, seconds: seconds)), state: appState)
+        navigationController?.dismiss(animated: true, completion: nil)
     }
 }
 
@@ -90,8 +100,7 @@ class RaceTimeViewController: UIViewController {
         timePickerView.selectRow(minutes, inComponent: 1, animated: false) // 46 minutes
         timePickerView.selectRow(seconds, inComponent: 2, animated: false) // 25 seconds
         view.addSubview(timePickerView)
-    
-        completeButton.addTarget(self, action: #selector(completePressed(_:)), for: .touchUpInside)
+
         view.addSubview(completeButton)
         
         NSLayoutConstraint.activate([
@@ -124,14 +133,6 @@ class RaceTimeViewController: UIViewController {
         hmsLabel.text = String.localizedStringWithFormat(NSLocalizedString("A %@ in %dH:%dM:%dS ",
                                                                            comment: "A race (e.g. a half marathon) in hours minutes and seconds (e.g. 1H:45M:25S)"),
                                                          race.longString.lowercased(), hours, minutes, seconds)
-    }
-    
-    @objc func completePressed(_ sender: UIButton) {
-        if sender.tag == 0 {
-            navigationController?.pushViewController(GoalViewController(), animated: true)
-        } else {
-            navigationController?.dismiss(animated: true, completion: nil)
-        }
     }
 }
 

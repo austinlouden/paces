@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct FinishTime {
+struct FinishTime: Equatable {
     let hours: Int
     let minutes: Int
     let seconds: Int
