@@ -20,6 +20,7 @@
 		285B4F92229F9ED70056B999 /* RaceTimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285B4F91229F9ED70056B999 /* RaceTimeViewController.swift */; };
 		285B4F9522A176240056B999 /* Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285B4F9422A176240056B999 /* Components.swift */; };
 		285B4F9722A6BC680056B999 /* ProjectionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285B4F9622A6BC680056B999 /* ProjectionsView.swift */; };
+		285B4F9922A816F20056B999 /* Calculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285B4F9822A816F20056B999 /* Calculator.swift */; };
 		28A2BCFA226EB31E006CD3A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A2BCF9226EB31E006CD3A0 /* AppDelegate.swift */; };
 		28A2BCFC226EB31E006CD3A0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A2BCFB226EB31E006CD3A0 /* ViewController.swift */; };
 		28A2BD01226EB31F006CD3A0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 28A2BD00226EB31F006CD3A0 /* Assets.xcassets */; };
@@ -41,6 +42,7 @@
 		285B4F91229F9ED70056B999 /* RaceTimeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceTimeViewController.swift; sourceTree = "<group>"; };
 		285B4F9422A176240056B999 /* Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Components.swift; sourceTree = "<group>"; };
 		285B4F9622A6BC680056B999 /* ProjectionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectionsView.swift; sourceTree = "<group>"; };
+		285B4F9822A816F20056B999 /* Calculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calculator.swift; sourceTree = "<group>"; };
 		28A2BCF6226EB31E006CD3A0 /* RacePace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RacePace.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		28A2BCF9226EB31E006CD3A0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		28A2BCFB226EB31E006CD3A0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -78,6 +80,7 @@
 				285B4F8E229928C80056B999 /* WelcomeView.swift */,
 				285B4F9622A6BC680056B999 /* ProjectionsView.swift */,
 				285B4F8C229915EC0056B999 /* TrainingPaceCell.swift */,
+				285B4F9822A816F20056B999 /* Calculator.swift */,
 			);
 			path = Projections;
 			sourceTree = "<group>";
@@ -228,6 +231,7 @@
 				285B4F8B2298DF1E0056B999 /* ProjectionsViewController.swift in Sources */,
 				283D2DFC226EE0C20059773D /* Header.swift in Sources */,
 				285B4F882298DE930056B999 /* TabBarController.swift in Sources */,
+				285B4F9922A816F20056B999 /* Calculator.swift in Sources */,
 				28A2BCFC226EB31E006CD3A0 /* ViewController.swift in Sources */,
 				285B4F9522A176240056B999 /* Components.swift in Sources */,
 				285B4F8F229928C80056B999 /* WelcomeView.swift in Sources */,

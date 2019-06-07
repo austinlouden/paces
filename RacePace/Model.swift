@@ -21,11 +21,16 @@ struct FinishTime: Equatable, Codable {
     func finishTimeString() -> String {
         return "\(String(format: "%02d", self.hours)):\(String(format: "%02d", self.minutes)):\(String(format: "%02d", self.seconds))"
     }
+    
+    func timeInMinutes() -> Double {
+        return Double(hours) * 60.0 + Double(minutes) + Double(seconds) / 60.0
+    }
 }
 
 struct Pace {
     let minutes: Int
     let seconds: Int
+    let name: String?
     
     func paceString() -> String {
         return "\(self.minutes):\(String(format: "%02d", self.seconds))"
@@ -101,7 +106,7 @@ struct CellData: Equatable {
 
 func buildCellData(with state: State) -> [CellData] {
     return [Int](0..<12).map({ (i) -> CellData in
-        let pace = Pace(minutes: state.pace, seconds: i * 5)
+        let pace = Pace(minutes: state.pace, seconds: i * 5, name: nil)
         let finish = finishTime(with: pace, distance: state.race.distance)
         let tags = landmarks[pace.paceString()] ?? []
 
@@ -116,7 +121,7 @@ func buildIntervalCellData(with data: [CellData], state: State) -> [CellData] {
     let interval = data.count == 2 ? 5 : 4
 
     newData += [Int](first.pace.seconds ... first.pace.seconds + interval).map { i -> CellData in
-        let pace = Pace(minutes: first.pace.minutes, seconds: i)
+        let pace = Pace(minutes: first.pace.minutes, seconds: i, name: nil)
         let finish = finishTime(with: pace, distance: state.race.distance)
         let tags = landmarks[pace.paceString()] ?? []
         return CellData(pace: pace, finishTime: finish, tags: tags)

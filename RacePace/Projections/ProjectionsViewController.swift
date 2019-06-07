@@ -8,19 +8,13 @@
 
 import UIKit
 
-struct TrainingPace {
-    let name: String
-    let pace: Pace?
-}
-
-
 class ProjectionsViewController: UIViewController {
     
     let tableView = UITableView()
     let welcomeView = WelcomeView()
     let projectionsView = ProjectionsView()
     let segmentedControl = UISegmentedControl(items: ["Training", "Race", "Goal"])
-    var data = [TrainingPace]()
+    var data = [Pace]()
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nil, bundle: nil)
@@ -84,12 +78,7 @@ class ProjectionsViewController: UIViewController {
             ])
         
         // add example data
-        data.append(TrainingPace(name: "Easy", pace: Pace(minutes: 10, seconds: 51)))
-        data.append(TrainingPace(name: "Tempo", pace: nil))
-        data.append(TrainingPace(name: "Lactate Threshold", pace: nil))
-        data.append(TrainingPace(name: "VO₂ Max", pace: Pace(minutes: 6, seconds: 51)))
-        data.append(TrainingPace(name: "Long", pace: nil))
-        data.append(TrainingPace(name: "Speed", pace: Pace(minutes: 8, seconds: 51)))
+        data.append(Pace(minutes: 10, seconds: 51, name: "Easy"))
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -99,10 +88,15 @@ class ProjectionsViewController: UIViewController {
 
         if let lastRace = appState.lastRace, let goalRace = appState.goalRace {
             welcomeView.isHidden = true
-            
+
             projectionsView.lastTimeLabel.text = "\(lastRace.time.finishTimeString()) \(lastRace.race.longString)"
             projectionsView.goalTimeLabel.text = "\(goalRace.time.finishTimeString()) \(goalRace.race.longString)"
             projectionsView.isHidden = false
+            
+            // TODO: Don't put this in view will appear
+            data = PaceCalculator.calculatePaces(with: lastRace)
+            self.tableView.reloadData()
+            
         }
     }
     
@@ -133,13 +127,7 @@ extension ProjectionsViewController: UITableViewDataSource, UITableViewDelegate 
 
         cell.selectionStyle = .none
         cell.nameLabel.text = data[indexPath.row].name
-        
-        if let pace = data[indexPath.row].pace {
-            cell.paceLabel.text = pace.paceString()
-        } else {
-            cell.paceLabel.text = NSLocalizedString("Not set", comment: "Not set")
-        }
-        
+        cell.paceLabel.text = data[indexPath.row].paceString()
         return cell
     }
     
