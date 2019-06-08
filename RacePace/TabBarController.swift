@@ -16,8 +16,8 @@ class TabBarController: UITabBarController {
         let viewController = ViewController()
         let projections = ProjectionsViewController()
         
-        projections.tabBarItem = UITabBarItem(title: NSLocalizedString("Your paces", comment: "Your paces"), image: nil, selectedImage: nil)
-        viewController.tabBarItem = UITabBarItem(title: NSLocalizedString("Pace tables", comment: "Pace tables"), image: nil, selectedImage: nil)
+        projections.tabBarItem = UITabBarItem(title: NSLocalizedString("Your paces", comment: "Your paces"), image: UIImage(named: "icon-watch"), selectedImage: nil)
+        viewController.tabBarItem = UITabBarItem(title: NSLocalizedString("Pace tables", comment: "Pace tables"), image: UIImage(named: "icon-clipboard"), selectedImage: nil)
         
         viewControllers = [projections, viewController].map { UINavigationController(rootViewController: $0) }
     }
