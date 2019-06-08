@@ -16,6 +16,8 @@ class ProjectionsView: UIView {
     
     let goalTimeLabel = Label.detailLabel(with: "")
     let lastTimeLabel = Label.detailLabel(with: "")
+    
+    let settingsButton = UIButton()
 
     let bottomBorder = UIView()
     
@@ -26,11 +28,16 @@ class ProjectionsView: UIView {
         goalTimeLabel.textColor = UIColor.textColor
         lastTimeLabel.textColor = UIColor.textColor
         
+        settingsButton.translatesAutoresizingMaskIntoConstraints = false
+        settingsButton.setImage(UIImage(named: "button-settings"), for: .normal)
+        settingsButton.addTarget(self, action: #selector(settingsTapped), for: .touchUpInside)
+        
         addSubview(titleLabel)
         addSubview(goalLabel)
         addSubview(goalTimeLabel)
         addSubview(lastLabel)
         addSubview(lastTimeLabel)
+        addSubview(settingsButton)
         
         bottomBorder.backgroundColor = UIColor.lightTextColor
         bottomBorder.translatesAutoresizingMaskIntoConstraints = false
@@ -40,6 +47,11 @@ class ProjectionsView: UIView {
             titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: kSpacing),
             titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: kSpacing),
             titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -kSpacing),
+            
+            settingsButton.topAnchor.constraint(equalTo: titleLabel.centerYAnchor),
+            settingsButton.heightAnchor.constraint(equalToConstant: 20),
+            settingsButton.widthAnchor.constraint(equalToConstant: 20),
+            settingsButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -kSpacing),
             
             goalLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: kSpacing),
             goalLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: kSpacing),
@@ -67,5 +79,9 @@ class ProjectionsView: UIView {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    @objc func settingsTapped() {
+        reduce(action: .presentProjectionsNUX, state: appState)
     }
 }
