@@ -25,6 +25,18 @@ struct FinishTime: Equatable, Codable {
     func timeInMinutes() -> Double {
         return Double(hours) * 60.0 + Double(minutes) + Double(seconds) / 60.0
     }
+    
+    func timeInSeconds() -> Int {
+        return hours * 3600 + minutes * 60 + seconds
+    }
+    
+    static func finishTime(with seconds: Int) -> FinishTime {
+        let hours = seconds / 3600
+        let minutes = (seconds % 3600) / 60
+        let seconds = seconds % 60
+
+        return FinishTime(hours: hours, minutes: minutes, seconds: seconds)
+    }
 }
 
 struct Pace {
@@ -86,12 +98,7 @@ public enum Race: Int, CaseIterable, Codable {
 func finishTime(with pace:Pace, distance: Double) -> FinishTime {
     let paceInSeconds = 60 * pace.minutes + pace.seconds
     let finishTimeInSeconds = Int(round(distance * Double(paceInSeconds)))
-    
-    let hours = finishTimeInSeconds / 3600
-    let minutes = (finishTimeInSeconds % 3600) / 60
-    let seconds = finishTimeInSeconds % 60
-
-    return FinishTime(hours: hours, minutes: minutes, seconds: seconds)
+    return FinishTime.finishTime(with: finishTimeInSeconds)
 }
 
 struct CellData: Equatable {

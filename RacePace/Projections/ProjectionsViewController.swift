@@ -13,8 +13,11 @@ class ProjectionsViewController: UIViewController {
     let tableView = UITableView()
     let welcomeView = WelcomeView()
     let projectionsView = ProjectionsView()
-    let segmentedControl = UISegmentedControl(items: ["Training", "Race", "Goal"])
-    var data = [Pace]()
+    let segmentedControl = UISegmentedControl(items: ["Training", "Predictions", "Goal"])
+
+    var trainingData = [Pace]()
+    var predictionData = [Event]()
+    var goalData = [Event]()
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nil, bundle: nil)
@@ -58,11 +61,11 @@ class ProjectionsViewController: UIViewController {
         view.addSubview(tableView)
         
         NSLayoutConstraint.activate([
-            welcomeView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: kAppMargin * 2),
+            welcomeView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: kAppMargin),
             welcomeView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: kAppMargin),
             welcomeView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -kAppMargin),
             
-            projectionsView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: kAppMargin * 2),
+            projectionsView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: kAppMargin),
             projectionsView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: kAppMargin),
             projectionsView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -kAppMargin),
             projectionsView.heightAnchor.constraint(equalTo: welcomeView.heightAnchor),
@@ -76,9 +79,6 @@ class ProjectionsViewController: UIViewController {
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
             ])
-        
-        // add example data
-        data.append(Pace(minutes: 10, seconds: 51, name: "Easy"))
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -94,7 +94,9 @@ class ProjectionsViewController: UIViewController {
             projectionsView.isHidden = false
             
             // TODO: Don't put this in view will appear
-            data = PaceCalculator.calculatePaces(with: lastRace)
+            trainingData = PaceCalculator.calculatePaces(with: lastRace)
+            predictionData = PaceCalculator.calculateRaces(with: lastRace)
+            goalData = PaceCalculator.calculateRaces(with: goalRace)
             self.tableView.reloadData()
             
         }
@@ -111,13 +113,17 @@ class ProjectionsViewController: UIViewController {
     }
     
     @objc func indexChanged(sender: UISegmentedControl) {
-        print("TODO: change")
+        self.tableView.reloadData()
     }
 }
 
 extension ProjectionsViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return data.count
+        if segmentedControl.selectedSegmentIndex == 0 {
+            return trainingData.count
+        } else {
+            return predictionData.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -126,8 +132,18 @@ extension ProjectionsViewController: UITableViewDataSource, UITableViewDelegate 
         }
 
         cell.selectionStyle = .none
-        cell.nameLabel.text = data[indexPath.row].name
-        cell.paceLabel.text = data[indexPath.row].paceString()
+        
+        if (segmentedControl.selectedSegmentIndex == 0) {
+            cell.nameLabel.text = trainingData[indexPath.row].name
+            cell.paceLabel.text = trainingData[indexPath.row].paceString()
+        } else if (segmentedControl.selectedSegmentIndex == 1) {
+            cell.nameLabel.text = predictionData[indexPath.row].race.longString
+            cell.paceLabel.text = predictionData[indexPath.row].time.finishTimeString()
+        } else if (segmentedControl.selectedSegmentIndex == 2) {
+            cell.nameLabel.text = goalData[indexPath.row].race.longString
+            cell.paceLabel.text = goalData[indexPath.row].time.finishTimeString()
+        }
+
         return cell
     }
     

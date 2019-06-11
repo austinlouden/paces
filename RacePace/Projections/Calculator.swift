@@ -42,4 +42,9 @@ class PaceCalculator {
         let seconds = floor((ans - minutes) * 60)
         return Pace(minutes: Int(minutes), seconds: Int(seconds), name: name)
     }
+    
+    static func calculateRaces(with event: Event) -> [Event] {
+        return Race.allCases
+            .map { Event(race: $0, time: FinishTime.finishTime(with: Int(round(Double(event.time.timeInSeconds()) * pow($0.distance / event.race.distance, 1.06))))) }
+    }
 }
