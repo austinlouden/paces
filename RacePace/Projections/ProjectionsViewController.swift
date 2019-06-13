@@ -57,6 +57,8 @@ class ProjectionsViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.showsVerticalScrollIndicator = false
+        tableView.estimatedRowHeight = 85
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.register(TrainingPaceCell.self, forCellReuseIdentifier: "projectionCellIdentifier")
         view.addSubview(tableView)
         
@@ -145,10 +147,6 @@ extension ProjectionsViewController: UITableViewDataSource, UITableViewDelegate 
         }
 
         return cell
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

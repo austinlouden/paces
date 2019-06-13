@@ -18,8 +18,8 @@ class Header: UIView {
     let tapRecognizer = UITapGestureRecognizer()
     let bottomBorder = UIView()
 
-    let increaseButton = UIButton(type: .roundedRect)
-    let decreaseButton = UIButton(type: .roundedRect)
+    let increaseButton = Button.button(with: "+1m")
+    let decreaseButton = Button.button(with: "-1m")
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -43,9 +43,7 @@ class Header: UIView {
         distanceLabel.backgroundColor = UIColor.white
         distanceLabel.translatesAutoresizingMaskIntoConstraints = false
         addSubview(distanceLabel)
-    
-        setupButton(with: increaseButton, increasing: true)
-        setupButton(with: decreaseButton, increasing: false)
+
         increaseButton.addTarget(self, action: #selector(increment), for: .touchUpInside)
         decreaseButton.addTarget(self, action: #selector(decrement), for: .touchUpInside)
         addSubview(increaseButton)
@@ -85,23 +83,6 @@ class Header: UIView {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    func setupButton(with button: UIButton, increasing: Bool) {
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = UIColor.white
-        button.setTitleColor(UIColor.textColor, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-        button.clipsToBounds = true
-        button.layer.cornerRadius = 8;
-        button.layer.borderWidth = 1;
-        button.layer.borderColor = UIColor.textColor.cgColor
-        
-        if (increasing) {
-            button.setTitle("+", for: .normal)
-        } else {
-            button.setTitle("-", for: .normal)
-        }
     }
 
     @objc func increment() {
