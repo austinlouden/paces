@@ -13,7 +13,7 @@ class TabBarController: UITabBarController {
         view.backgroundColor = UIColor.white
         tabBar.isTranslucent = false
 
-        let viewController = ViewController()
+        let viewController = PaceViewController()
         let projections = ProjectionsViewController()
         
         projections.tabBarItem = UITabBarItem(title: NSLocalizedString("Your paces", comment: "Your paces"), image: UIImage(named: "icon-watch"), selectedImage: nil)
