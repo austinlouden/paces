@@ -40,6 +40,8 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
         navigationController?.isNavigationBarHidden = true
+        
+        header.distanceLabel.text = race.longString
 
         tableView.sectionHeaderHeight = UITableView.automaticDimension
         tableView.estimatedSectionHeaderHeight = 80;
@@ -74,7 +76,6 @@ class ViewController: UIViewController {
             tableView.reloadData()
         } else if (race != appState.race) {
             race = appState.race
-            header.distanceLabel.text = race.longString
             data = buildCellData(with: appState)
             tableView.reloadData()
         }
@@ -118,7 +119,6 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        header.distanceLabel.text = race.longString
         return header
     }
     
@@ -131,6 +131,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         
         if (selectingDistance) {
             if let race = Race(rawValue: indexPath.row) {
+                header.distanceLabel.text = race.longString
                 reduce(action: .toggleDistanceSelection, state: appState)
                 reduce(action: .selectRace(race: race), state: appState)
             }
