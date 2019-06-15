@@ -12,6 +12,7 @@ let kAppMargin: CGFloat = 24.0
 let kSpacing: CGFloat = 4.0
 let kCornerRadius: CGFloat = 8.0
 
+let extraLargeFontSize: CGFloat = 24.0
 let titleFontSize: CGFloat = 18.0
 let standardFontSize: CGFloat = 14.0
 

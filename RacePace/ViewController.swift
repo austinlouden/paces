@@ -41,11 +41,9 @@ class ViewController: UIViewController {
         view.backgroundColor = UIColor.white
         navigationController?.isNavigationBarHidden = true
 
-        header.frame = CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: Header.height)
-        header.distanceLabel.text = race.shortString.uppercased()
-
+        tableView.sectionHeaderHeight = UITableView.automaticDimension
+        tableView.estimatedSectionHeaderHeight = 80;
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.tableHeaderView = header
         tableView.backgroundColor = UIColor(displayP3Red: 0, green: 0, blue: 0, alpha: 0)
         tableView.delegate = self
         tableView.dataSource = self
@@ -76,7 +74,7 @@ class ViewController: UIViewController {
             tableView.reloadData()
         } else if (race != appState.race) {
             race = appState.race
-            header.distanceLabel.text = race.shortString.uppercased()
+            header.distanceLabel.text = race.longString
             data = buildCellData(with: appState)
             tableView.reloadData()
         }
@@ -116,7 +114,16 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return (self.view.bounds.size.height - Header.height - view.safeAreaInsets.top - view.safeAreaInsets.bottom) / 12.0
+        return (self.view.bounds.size.height - 100 - view.safeAreaInsets.top - view.safeAreaInsets.bottom) / 12.0
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        header.distanceLabel.text = race.longString
+        return header
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return Footer()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

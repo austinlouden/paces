@@ -10,11 +10,10 @@ import UIKit
 
 class Header: UIView {
 
-    static let height: CGFloat = 72.0
+    //static let height: CGFloat = 72.0
     
-    let paceLabel = UILabel()
-    let raceLabel = UILabel()
-    let distanceLabel = UILabel()
+    let paceLabel = Label.titleLabel(with: "Pace")
+    let distanceLabel = Label.titleLabel(with: "")
     let tapRecognizer = UITapGestureRecognizer()
     let bottomBorder = UIView()
 
@@ -24,78 +23,30 @@ class Header: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        paceLabel.text = NSLocalizedString("PACE", comment: "The time per mile or km.")
-        paceLabel.font = UIFont.boldSystemFont(ofSize: 14)
-        paceLabel.textColor = UIColor.textColor
-        paceLabel.backgroundColor = UIColor.white
-        paceLabel.translatesAutoresizingMaskIntoConstraints = false
+        paceLabel.font = UIFont.boldSystemFont(ofSize: extraLargeFontSize)
         addSubview(paceLabel)
 
-        raceLabel.text = NSLocalizedString("FINISH TIME", comment: "The time it takes to complete the race.")
-        raceLabel.font = UIFont.boldSystemFont(ofSize: 14)
-        raceLabel.textColor = UIColor.textColor
-        raceLabel.backgroundColor = UIColor.white
-        raceLabel.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(raceLabel)
-        
-        distanceLabel.font = UIFont.boldSystemFont(ofSize: 14)
+        distanceLabel.font = UIFont.boldSystemFont(ofSize: extraLargeFontSize)
         distanceLabel.textColor = UIColor.mediumTextColor
-        distanceLabel.backgroundColor = UIColor.white
-        distanceLabel.translatesAutoresizingMaskIntoConstraints = false
         addSubview(distanceLabel)
-
-        increaseButton.addTarget(self, action: #selector(increment), for: .touchUpInside)
-        decreaseButton.addTarget(self, action: #selector(decrement), for: .touchUpInside)
-        addSubview(increaseButton)
-        addSubview(decreaseButton)
-
-        bottomBorder.backgroundColor = UIColor.lightTextColor
-        bottomBorder.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(bottomBorder)
-
+    
         tapRecognizer.addTarget(self, action: #selector(headerTapped))
         self.addGestureRecognizer(tapRecognizer)
 
-        NSLayoutConstraint.activate([            
-            paceLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
-            raceLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
-            distanceLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
-
+        NSLayoutConstraint.activate([
+            paceLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: kAppMargin),
             paceLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: kAppMargin + kSpacing),
-            raceLabel.leadingAnchor.constraint(equalTo: paceLabel.trailingAnchor, constant: kSpacing * 2),
-            distanceLabel.leadingAnchor.constraint(equalTo: raceLabel.trailingAnchor, constant: kSpacing),
+    
+            distanceLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: kAppMargin),
+            distanceLabel.leadingAnchor.constraint(equalTo: paceLabel.trailingAnchor, constant: kSpacing),
             
-            // + button
-            increaseButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -kAppMargin),
-            increaseButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -kSpacing),
-
-            // - button
-            decreaseButton.trailingAnchor.constraint(equalTo: increaseButton.leadingAnchor, constant: -kSpacing),
-            decreaseButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -kSpacing),
-            
-            bottomBorder.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            bottomBorder.heightAnchor.constraint(equalToConstant: 2),
-            bottomBorder.trailingAnchor.constraint(equalTo: raceLabel.trailingAnchor, constant: kSpacing),
-            bottomBorder.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: kAppMargin)
+            distanceLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -kSpacing)
         ])
         
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    @objc func increment() {
-        // TODO: make these buttons work in the expanded state
-        if (!appState.expanded) {
-            reduce(action: .incrementPace, state: appState)
-        }
-    }
-    
-    @objc func decrement() {
-        if (!appState.expanded) {
-            reduce(action: .decrementPace, state: appState)
-        }
     }
     
     @objc func headerTapped() {

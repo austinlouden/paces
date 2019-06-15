@@ -26,6 +26,7 @@
 		28A2BD01226EB31F006CD3A0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 28A2BD00226EB31F006CD3A0 /* Assets.xcassets */; };
 		28A2BD04226EB31F006CD3A0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 28A2BD02226EB31F006CD3A0 /* LaunchScreen.storyboard */; };
 		28B33CD5228BD6E500C5120C /* DistanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B33CD4228BD6E500C5120C /* DistanceCell.swift */; };
+		28F42D7E22B3F73700381E2F /* Footer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28F42D7D22B3F73700381E2F /* Footer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +51,7 @@
 		28A2BD03226EB31F006CD3A0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		28A2BD05226EB31F006CD3A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		28B33CD4228BD6E500C5120C /* DistanceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistanceCell.swift; sourceTree = "<group>"; };
+		28F42D7D22B3F73700381E2F /* Footer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Footer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +152,7 @@
 				283D2DF7226EC6920059773D /* Cell.swift */,
 				28B33CD4228BD6E500C5120C /* DistanceCell.swift */,
 				283D2DFB226EE0C20059773D /* Header.swift */,
+				28F42D7D22B3F73700381E2F /* Footer.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -224,6 +227,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				28F42D7E22B3F73700381E2F /* Footer.swift in Sources */,
 				285B4F92229F9ED70056B999 /* RaceTimeViewController.swift in Sources */,
 				28B33CD5228BD6E500C5120C /* DistanceCell.swift in Sources */,
 				285B4F8422989BD40056B999 /* Constants.swift in Sources */,
