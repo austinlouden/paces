@@ -35,7 +35,7 @@ class Header: UIView {
 
         NSLayoutConstraint.activate([
             paceLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: kAppMargin),
-            paceLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: kAppMargin + kSpacing),
+            paceLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: kAppMargin),
     
             distanceLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: kAppMargin),
             distanceLabel.leadingAnchor.constraint(equalTo: paceLabel.trailingAnchor, constant: kSpacing),

@@ -12,6 +12,7 @@ class PaceViewController: UIViewController {
     
     let tableView = UITableView()
     let header = Header()
+    let footer = Footer()
 
     // Local state
     var data: [CellData]
@@ -52,6 +53,7 @@ class PaceViewController: UIViewController {
         tableView.showsVerticalScrollIndicator = false
         tableView.register(Cell.self, forCellReuseIdentifier: "cellIdentifier")
         tableView.register(DistanceCell.self, forCellReuseIdentifier: "distanceCellIdentifier")
+        tableView.register(CustomDistanceCell.self, forCellReuseIdentifier: "customDistanceCellIdentifier")
         view.addSubview(tableView)
 
         NSLayoutConstraint.activate([
@@ -65,6 +67,7 @@ class PaceViewController: UIViewController {
     @objc func stateDidChange(_ notification:Notification) {
         if (selectingDistance != appState.selectingDistance) {
             selectingDistance = appState.selectingDistance
+            footer.isHidden = !footer.isHidden
             expanded = false
             tableView.reloadData()
         } else if (expanded != appState.expanded) {
@@ -84,11 +87,19 @@ class PaceViewController: UIViewController {
 
 extension PaceViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return selectingDistance ? distanceData.count : data.count
+        return selectingDistance ? distanceData.count + 1 : data.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if (selectingDistance) {
+            if (indexPath.row == distanceData.count) {
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: "customDistanceCellIdentifier") as? CustomDistanceCell else {
+                    fatalError("The dequeued cell instance is incorrect.")
+                }
+                
+                return cell
+            }
+            
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "distanceCellIdentifier") as? DistanceCell else {
                 fatalError("The dequeued cell instance is incorrect.")
             }
@@ -123,7 +134,7 @@ extension PaceViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        return Footer()
+        return footer
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
