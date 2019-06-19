@@ -97,6 +97,7 @@ extension PaceViewController: UITableViewDataSource, UITableViewDelegate {
                     fatalError("The dequeued cell instance is incorrect.")
                 }
                 
+                cell.selectionStyle = .none
                 return cell
             }
             

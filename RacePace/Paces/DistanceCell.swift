@@ -28,30 +28,51 @@ class DistanceCell: UITableViewCell {
     }
 }
 
-class CustomDistanceCell: UITableViewCell, UITextFieldDelegate {
+class CustomDistanceCell: UITableViewCell {
     
     let textField = UITextField()
+    let unitSwitch = UISwitch()
     let saveButton = Button.button(with: "Save")
+    
+    let unitLabel = Label.detailLabel(with: "miles")
+    
+    var metric = false
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = NSLocalizedString("Custom distance (miles)", comment: "Choose a custom distance in miles.")
+        textField.placeholder = NSLocalizedString("Custom", comment: "Choose a custom distance.")
         textField.font = UIFont.boldSystemFont(ofSize: titleFontSize)
         textField.textColor = UIColor.textColor
         textField.keyboardType = .decimalPad
-        textField.delegate = self
+        textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         contentView.addSubview(textField)
         
+        unitLabel.isHidden = true
+        contentView.addSubview(unitLabel)
+        
+        unitSwitch.translatesAutoresizingMaskIntoConstraints = false
+        unitSwitch.onTintColor = UIColor.lightTextColor
+        unitSwitch.isHidden = true
+        unitSwitch.addTarget(self, action: #selector(toggleSwitch), for: .valueChanged)
+        contentView.addSubview(unitSwitch)
+        
         saveButton.isHidden = true
+        saveButton.addTarget(self, action: #selector(savePressed), for: .touchUpInside)
         contentView.addSubview(saveButton)
         
         NSLayoutConstraint.activate([
             textField.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             textField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: kAppMargin + kSpacing),
-            textField.trailingAnchor.constraint(equalTo: saveButton.leadingAnchor, constant: -kSpacing),
+            textField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -kAppMargin),
             
+            unitLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            unitLabel.trailingAnchor.constraint(equalTo: unitSwitch.leadingAnchor, constant: -kSpacing * 2),
+
+            unitSwitch.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            unitSwitch.trailingAnchor.constraint(equalTo: saveButton.leadingAnchor, constant: -kSpacing * 2),
+    
             saveButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             saveButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -kAppMargin)
             ])
@@ -60,18 +81,37 @@ class CustomDistanceCell: UITableViewCell, UITextFieldDelegate {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    @objc func savePressed() {
+        textField.resignFirstResponder()
+        toggleHiddenUI()
+        
+    }
     
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if let text = textField.text,
-            let textRange = Range(range, in: text) {
-            let updatedText = text.replacingCharacters(in: textRange,
-                                                       with: string)
-            
-            if updatedText.count > 0 && saveButton.isHidden {
-                saveButton.isHidden = false
-            }
-            
+    @objc func toggleSwitch() {
+        metric = !metric
+        unitLabel.text = metric ? "kilometers" : "miles"
+    }
+    
+    @objc func textFieldDidChange() {
+        guard let text = textField.text else { return }
+        
+        if (text.count == 0) {
+            toggleHiddenUI()
         }
-        return true
+
+        if text.count > 0 && saveButton.isHidden {
+            toggleHiddenUI()
+        }
+        
+        if text.count > 3 {
+            textField.text = String(text.dropLast())
+        }
+    }
+    
+    private func toggleHiddenUI() {
+        saveButton.isHidden = !saveButton.isHidden
+        unitSwitch.isHidden = !unitSwitch.isHidden
+        unitLabel.isHidden = !unitLabel.isHidden
     }
 }
