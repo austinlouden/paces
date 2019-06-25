@@ -28,11 +28,11 @@ class DistanceCell: UITableViewCell {
     }
 }
 
-class CustomDistanceCell: UITableViewCell {
+class CustomDistanceCell: UITableViewCell, UITextFieldDelegate {
     
     let textField = UITextField()
     let unitSwitch = UISwitch()
-    let saveButton = Button.button(with: "Save")
+    let saveButton = Button.button(with: "Select")
     
     let unitLabel = Label.detailLabel(with: "miles")
     
@@ -47,7 +47,18 @@ class CustomDistanceCell: UITableViewCell {
         textField.textColor = UIColor.textColor
         textField.keyboardType = .decimalPad
         textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+        textField.delegate = self
         contentView.addSubview(textField)
+
+        if let customRace = getCustomRace() {
+            metric = customRace.metric
+            textField.text = customRace.distanceString()
+
+            if metric {
+                unitSwitch.isOn = true
+                unitLabel.text = customRace.unitString()
+            }
+        }
         
         unitLabel.isHidden = true
         contentView.addSubview(unitLabel)
@@ -83,9 +94,15 @@ class CustomDistanceCell: UITableViewCell {
     }
 
     @objc func savePressed() {
-        textField.resignFirstResponder()
-        toggleHiddenUI()
-        
+        if let s = textField.text, let d = Double(s) {
+            textField.resignFirstResponder()
+            toggleHiddenUI()
+            let customRace = CustomRace(distance: d, metric: metric)
+            reduce(action: .saveCustomRace(race: customRace), state: appState)
+            textField.text = customRace.distanceString()
+        } else {
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
+        }
     }
     
     @objc func toggleSwitch() {
@@ -95,18 +112,20 @@ class CustomDistanceCell: UITableViewCell {
     
     @objc func textFieldDidChange() {
         guard let text = textField.text else { return }
-        
-        if (text.count == 0) {
-            toggleHiddenUI()
-        }
 
-        if text.count > 0 && saveButton.isHidden {
-            toggleHiddenUI()
-        }
-        
-        if text.count > 3 {
+        if text.count > 6 {
             textField.text = String(text.dropLast())
         }
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        guard let text = textField.text else { return }
+        
+        if (text.count > 3) {
+            textField.text = String(text.dropLast(3))
+        }
+
+        toggleHiddenUI()
     }
     
     private func toggleHiddenUI() {

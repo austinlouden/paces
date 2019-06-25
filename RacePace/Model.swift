@@ -49,6 +49,19 @@ struct Pace {
     }
 }
 
+struct CustomRace: Codable, Equatable {
+    let distance: Double
+    let metric: Bool
+    
+    func distanceString() -> String {
+        return "\(String(distance)) " + (metric ? "km" : "mi")
+    }
+    
+    func unitString() -> String {
+        return metric ? "kilometers" : "miles"
+    }
+}
+
 public enum Race: Int, CaseIterable, Codable {
     case fiveK
     case tenK

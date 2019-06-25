@@ -18,6 +18,7 @@ let standardFontSize: CGFloat = 14.0
 
 let kLastRaceKey = "kLastRaceKey"
 let kGoalRaceKey = "kGoalRaceKey"
+let kCustomRaceKey = "kCustomRaceKey"
 
 extension UIColor {
     static let buttonColor = UIColor(white: 229.0/255.0, alpha: 1.0)

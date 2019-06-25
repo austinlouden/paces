@@ -30,6 +30,7 @@ enum Action: Equatable {
     case decrementPace
     case toggleExpansion
     case toggleDistanceSelection
+    case saveCustomRace(race: CustomRace)
     
     // projections
     case presentProjectionsNUX
@@ -58,6 +59,9 @@ func reduce(action: Action, state: State?) {
         UIImpactFeedbackGenerator().impactOccurred()
         state.selectingDistance = !state.selectingDistance
         state.expanded = false
+    case .saveCustomRace(let race):
+        saveCustomRace(race)
+        
         
     // projections
     case .presentProjectionsNUX:
@@ -88,6 +92,16 @@ private func updatePace(pace: Int, increment: Bool) -> Int {
 
     UINotificationFeedbackGenerator().notificationOccurred(.error)
     return pace
+}
+
+private func saveCustomRace(_ race: CustomRace) {
+    UserDefaults.standard.set(try? PropertyListEncoder().encode(race), forKey:kCustomRaceKey)
+}
+
+func getCustomRace() -> CustomRace? {
+    guard let raceData = UserDefaults.standard.value(forKey:kCustomRaceKey) as? Data else { return nil }
+    guard let race = try? PropertyListDecoder().decode(CustomRace.self, from: raceData) else { return nil }
+    return race
 }
 
 private func storeRace(_ race: Race, _ time: FinishTime, _ isGoal: Bool) {
