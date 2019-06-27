@@ -85,7 +85,8 @@ public enum Race: Int, CaseIterable, Codable {
         case .marathon:
             return 26.2188
         case .custom:
-            return appState.customRace?.distance ?? 0.0
+            guard let customRace = appState.customRace else { return 0.0 }
+            return customRace.metric ? customRace.distance * 0.621371 : customRace.distance
         }
     }
 
