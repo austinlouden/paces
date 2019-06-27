@@ -15,6 +15,7 @@ public struct State {
     // paces
     var pace = 8
     var race = Race.marathon
+    var customRace: CustomRace?
     var expanded = false
     var selectingDistance = false
 
@@ -30,7 +31,8 @@ enum Action: Equatable {
     case decrementPace
     case toggleExpansion
     case toggleDistanceSelection
-    case saveCustomRace(race: CustomRace)
+    case selectCustomRace(race: CustomRace)
+    case getCustomRace
     
     // projections
     case presentProjectionsNUX
@@ -59,10 +61,14 @@ func reduce(action: Action, state: State?) {
         UIImpactFeedbackGenerator().impactOccurred()
         state.selectingDistance = !state.selectingDistance
         state.expanded = false
-    case .saveCustomRace(let race):
+    case .selectCustomRace(let race):
+        state.customRace = race
         saveCustomRace(race)
-        
-        
+    case .getCustomRace:
+        if let race = getCustomRace() {
+            state.customRace = race
+        }
+
     // projections
     case .presentProjectionsNUX:
         break
@@ -98,7 +104,7 @@ private func saveCustomRace(_ race: CustomRace) {
     UserDefaults.standard.set(try? PropertyListEncoder().encode(race), forKey:kCustomRaceKey)
 }
 
-func getCustomRace() -> CustomRace? {
+private func getCustomRace() -> CustomRace? {
     guard let raceData = UserDefaults.standard.value(forKey:kCustomRaceKey) as? Data else { return nil }
     guard let race = try? PropertyListDecoder().decode(CustomRace.self, from: raceData) else { return nil }
     return race

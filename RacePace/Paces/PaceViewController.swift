@@ -16,7 +16,7 @@ class PaceViewController: UIViewController {
 
     // Local state
     var data: [CellData]
-    let distanceData = Race.allCases.map({ $0.longString })
+    let distanceData = Race.allCases.map({ $0.longString }).dropLast() // don't include the custom race cell
     var expanded = false
     var selectingDistance = false
     var pace = 7
@@ -65,22 +65,31 @@ class PaceViewController: UIViewController {
     }
     
     @objc func stateDidChange(_ notification:Notification) {
-        if (selectingDistance != appState.selectingDistance) {
+        guard let action = notification.object as? Action else { return }
+        
+        switch action {
+        case .selectCustomRace:
+            tableView(tableView, didSelectRowAt: IndexPath(row: distanceData.count, section: 0))
+        case .selectRace:
+            race = appState.race
+            data = buildCellData(with: appState)
+            tableView.reloadData()
+        case .toggleDistanceSelection:
             selectingDistance = appState.selectingDistance
             footer.isHidden = !footer.isHidden
             expanded = false
             tableView.reloadData()
-        } else if (expanded != appState.expanded) {
+        case .toggleExpansion:
             expanded = appState.expanded
             tableView.reloadData()
-        } else if (pace != appState.pace) {
+        case .incrementPace:
+            fallthrough
+        case .decrementPace:
             pace = appState.pace
             data = buildCellData(with: appState)
             tableView.reloadData()
-        } else if (race != appState.race) {
-            race = appState.race
-            data = buildCellData(with: appState)
-            tableView.reloadData()
+        default:
+            break
         }
     }
 }

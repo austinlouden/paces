@@ -67,6 +67,7 @@ public enum Race: Int, CaseIterable, Codable {
     case tenK
     case halfMarathon
     case marathon
+    case custom
 
     var distance: Double {
         switch self {
@@ -78,6 +79,8 @@ public enum Race: Int, CaseIterable, Codable {
             return 13.1094
         case .marathon:
             return 26.2188
+        case .custom:
+            return appState.customRace?.distance ?? 0.0
         }
     }
 
@@ -91,6 +94,8 @@ public enum Race: Int, CaseIterable, Codable {
             return "13.1"
         case .marathon:
             return "26.2"
+        case .custom:
+            return appState.customRace?.distanceString() ?? ""
         }
     }
     
@@ -104,6 +109,8 @@ public enum Race: Int, CaseIterable, Codable {
             return "Half Marathon"
         case .marathon:
             return "Marathon"
+        case .custom:
+            return appState.customRace?.distanceString() ?? ""
         }
     }
 }

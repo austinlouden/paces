@@ -50,7 +50,8 @@ class CustomDistanceCell: UITableViewCell, UITextFieldDelegate {
         textField.delegate = self
         contentView.addSubview(textField)
 
-        if let customRace = getCustomRace() {
+        reduce(action: .getCustomRace, state: appState)
+        if let customRace = appState.customRace {
             metric = customRace.metric
             textField.text = customRace.distanceString()
 
@@ -97,9 +98,10 @@ class CustomDistanceCell: UITableViewCell, UITextFieldDelegate {
         if let s = textField.text, let d = Double(s) {
             textField.resignFirstResponder()
             toggleHiddenUI()
+            
             let customRace = CustomRace(distance: d, metric: metric)
-            reduce(action: .saveCustomRace(race: customRace), state: appState)
             textField.text = customRace.distanceString()
+            reduce(action: .selectCustomRace(race: customRace), state: appState)
         } else {
             UINotificationFeedbackGenerator().notificationOccurred(.error)
         }
