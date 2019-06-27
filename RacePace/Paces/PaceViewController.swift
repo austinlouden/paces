@@ -81,6 +81,8 @@ class PaceViewController: UIViewController {
             tableView.reloadData()
         case .toggleExpansion:
             expanded = appState.expanded
+            footer.increaseButton.isHidden = !footer.increaseButton.isHidden
+            footer.decreaseButton.isHidden = !footer.decreaseButton.isHidden
             tableView.reloadData()
         case .incrementPace:
             fallthrough
