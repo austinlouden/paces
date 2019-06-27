@@ -13,6 +13,11 @@ struct Event: Codable {
     let time: FinishTime
 }
 
+struct Settings: Codable {
+    let race: Race
+    let pace: Int
+}
+
 struct FinishTime: Equatable, Codable {
     let hours: Int
     let minutes: Int

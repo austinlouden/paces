@@ -19,10 +19,10 @@ class PaceViewController: UIViewController {
     let distanceData = Race.allCases.map({ $0.longString }).dropLast() // don't include the custom race cell
     var expanded = false
     var selectingDistance = false
-    var pace = 7
-    var race = Race.marathon
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        reduce(action: .loadSettings, state: appState)
+        reduce(action: .loadCustomRace, state: appState)
         data = buildCellData(with: appState)
         super.init(nibName: nil, bundle: nil)
         self.title = NSLocalizedString("Pace tables", comment: "Shows paces and finish times by race.")
@@ -42,7 +42,7 @@ class PaceViewController: UIViewController {
         view.backgroundColor = UIColor.white
         navigationController?.isNavigationBarHidden = true
         
-        header.distanceLabel.text = race.longString
+        header.distanceLabel.text = appState.race.longString
 
         tableView.sectionHeaderHeight = UITableView.automaticDimension
         tableView.estimatedSectionHeaderHeight = 80;
@@ -71,7 +71,6 @@ class PaceViewController: UIViewController {
         case .selectCustomRace:
             tableView(tableView, didSelectRowAt: IndexPath(row: distanceData.count, section: 0))
         case .selectRace:
-            race = appState.race
             data = buildCellData(with: appState)
             tableView.reloadData()
         case .toggleDistanceSelection:
@@ -87,7 +86,6 @@ class PaceViewController: UIViewController {
         case .incrementPace:
             fallthrough
         case .decrementPace:
-            pace = appState.pace
             data = buildCellData(with: appState)
             tableView.reloadData()
         default:
@@ -128,7 +126,7 @@ extension PaceViewController: UITableViewDataSource, UITableViewDelegate {
             cell.paceLabel.text = data[indexPath.row].pace.paceString()
             cell.raceLabel.text = data[indexPath.row].finishTime.finishTimeString()
             
-            if (data[indexPath.row].tags.count > 0 && race == .marathon) {
+            if (data[indexPath.row].tags.count > 0 && appState.race == .marathon) {
                 cell.tagButton.setTitle(data[indexPath.row].tags[0], for: .normal)
                 cell.tagButton.isHidden = false
             }

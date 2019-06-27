@@ -50,7 +50,6 @@ class CustomDistanceCell: UITableViewCell, UITextFieldDelegate {
         textField.delegate = self
         contentView.addSubview(textField)
 
-        reduce(action: .getCustomRace, state: appState)
         if let customRace = appState.customRace {
             metric = customRace.metric
             textField.text = customRace.distanceString()
