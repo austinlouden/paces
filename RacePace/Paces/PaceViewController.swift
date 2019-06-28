@@ -126,10 +126,12 @@ extension PaceViewController: UITableViewDataSource, UITableViewDelegate {
             cell.paceLabel.text = data[indexPath.row].pace.paceString()
             cell.raceLabel.text = data[indexPath.row].finishTime.finishTimeString()
             
+            /* HIDE TAGS FOR THIS VERSION
             if (data[indexPath.row].tags.count > 0 && appState.race == .marathon) {
                 cell.tagButton.setTitle(data[indexPath.row].tags[0], for: .normal)
                 cell.tagButton.isHidden = false
             }
+            */
             
             return cell
         }
