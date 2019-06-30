@@ -9,11 +9,10 @@
 import UIKit
 
 class Header: UIView {
-
-    //static let height: CGFloat = 72.0
-    
     let paceLabel = Label.titleLabel(with: "Pace")
+    let paceDetailLabel = Label.detailLabel(with: "mi/min")
     let distanceLabel = Label.titleLabel(with: "")
+    let distanceDetailLabel = Label.detailLabel(with: "Finish time")
     let tapRecognizer = UITapGestureRecognizer()
     let bottomBorder = UIView()
 
@@ -22,6 +21,7 @@ class Header: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        backgroundColor = UIColor.white
 
         paceLabel.font = UIFont.boldSystemFont(ofSize: extraLargeFontSize)
         addSubview(paceLabel)
@@ -29,6 +29,9 @@ class Header: UIView {
         distanceLabel.font = UIFont.boldSystemFont(ofSize: extraLargeFontSize)
         distanceLabel.textColor = UIColor.mediumTextColor
         addSubview(distanceLabel)
+        
+        addSubview(paceDetailLabel)
+        addSubview(distanceDetailLabel)
     
         tapRecognizer.addTarget(self, action: #selector(headerTapped))
         self.addGestureRecognizer(tapRecognizer)
@@ -36,11 +39,17 @@ class Header: UIView {
         NSLayoutConstraint.activate([
             paceLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: kAppMargin),
             paceLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: kAppMargin),
+            
+            paceDetailLabel.topAnchor.constraint(equalTo: paceLabel.bottomAnchor, constant: 0),
+            paceDetailLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: kAppMargin),
     
             distanceLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: kAppMargin),
             distanceLabel.leadingAnchor.constraint(equalTo: paceLabel.trailingAnchor, constant: kSpacing),
             
-            distanceLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -kSpacing)
+            distanceDetailLabel.topAnchor.constraint(equalTo: distanceLabel.bottomAnchor, constant: 0),
+            distanceDetailLabel.leadingAnchor.constraint(equalTo: paceLabel.trailingAnchor, constant: kSpacing),
+            
+            distanceDetailLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -kSpacing)
         ])
         
     }
