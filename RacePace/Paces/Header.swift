@@ -37,13 +37,13 @@ class Header: UIView {
         self.addGestureRecognizer(tapRecognizer)
 
         NSLayoutConstraint.activate([
-            paceLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: kAppMargin),
+            paceLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: kSpacing),
             paceLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: kAppMargin),
             
             paceDetailLabel.topAnchor.constraint(equalTo: paceLabel.bottomAnchor, constant: 0),
             paceDetailLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: kAppMargin),
     
-            distanceLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: kAppMargin),
+            distanceLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: kSpacing),
             distanceLabel.leadingAnchor.constraint(equalTo: paceLabel.trailingAnchor, constant: kSpacing),
             
             distanceDetailLabel.topAnchor.constraint(equalTo: distanceLabel.bottomAnchor, constant: 0),

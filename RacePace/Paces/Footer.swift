@@ -21,12 +21,15 @@ class Footer: UIView {
         addSubview(decreaseButton)
         
         NSLayoutConstraint.activate([
+            decreaseButton.topAnchor.constraint(equalTo: self.topAnchor, constant: kSpacing),
             decreaseButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: kAppMargin),
             decreaseButton.trailingAnchor.constraint(equalTo: self.centerXAnchor, constant: -kSpacing),
+            decreaseButton.heightAnchor.constraint(equalToConstant: 40),
             decreaseButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0),
             
             increaseButton.leadingAnchor.constraint(equalTo: self.centerXAnchor, constant: kSpacing),
             increaseButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -kAppMargin),
+            increaseButton.heightAnchor.constraint(equalToConstant: 40),
             increaseButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0)
         ])
     }
