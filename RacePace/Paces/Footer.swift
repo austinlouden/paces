@@ -14,6 +14,7 @@ class Footer: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        translatesAutoresizingMaskIntoConstraints = false
         
         increaseButton.addTarget(self, action: #selector(increment), for: .touchUpInside)
         decreaseButton.addTarget(self, action: #selector(decrement), for: .touchUpInside)
@@ -25,12 +26,12 @@ class Footer: UIView {
             decreaseButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: kAppMargin),
             decreaseButton.trailingAnchor.constraint(equalTo: self.centerXAnchor, constant: -kSpacing),
             decreaseButton.heightAnchor.constraint(equalToConstant: 40),
-            decreaseButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0),
+            decreaseButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -kSpacing),
             
             increaseButton.leadingAnchor.constraint(equalTo: self.centerXAnchor, constant: kSpacing),
             increaseButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -kAppMargin),
             increaseButton.heightAnchor.constraint(equalToConstant: 40),
-            increaseButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0)
+            increaseButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -kSpacing)
         ])
     }
 

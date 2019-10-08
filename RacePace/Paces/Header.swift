@@ -59,7 +59,11 @@ class Header: UIView {
     }
     
     @objc func headerTapped() {
-        reduce(action: .toggleDistanceSelection, state: appState)
+        if appState.selectingDistance {
+            reduce(action: .closeDistanceSelection, state: appState)
+        } else {
+            reduce(action: .openDistanceSelection, state: appState)
+        }
     }
     
 }

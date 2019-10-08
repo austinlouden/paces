@@ -17,15 +17,15 @@ class PaceViewController: UIViewController {
     // Local state
     var data: [CellData]
     let distanceData = Race.allCases.map({ $0.longString }).dropLast() // don't include the custom race cell
-    var expanded = false
-    var selectingDistance = false
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         reduce(action: .loadSettings, state: appState)
         reduce(action: .loadCustomRace, state: appState)
         data = buildCellData(with: appState)
+        
         super.init(nibName: nil, bundle: nil)
-        self.title = NSLocalizedString("Pace tables", comment: "Shows paces and finish times by race.")
+        title = "Paces"
+
         NotificationCenter.default.addObserver(self, selector: #selector(stateDidChange(_:)), name: .stateDidChange, object: nil)
     }
     
@@ -40,8 +40,7 @@ class PaceViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
-        navigationController?.isNavigationBarHidden = true
-        
+
         header.distanceLabel.text = appState.race.longString
 
         tableView.sectionHeaderHeight = UITableView.automaticDimension
@@ -55,13 +54,25 @@ class PaceViewController: UIViewController {
         tableView.register(DistanceCell.self, forCellReuseIdentifier: "distanceCellIdentifier")
         tableView.register(CustomDistanceCell.self, forCellReuseIdentifier: "customDistanceCellIdentifier")
         view.addSubview(tableView)
+        
+        view.addSubview(footer)
 
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            tableView.bottomAnchor.constraint(equalTo: footer.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            
+            footer.topAnchor.constraint(equalTo: tableView.bottomAnchor),
+            footer.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            footer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            footer.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = true
     }
     
     @objc func stateDidChange(_ notification:Notification) {
@@ -73,15 +84,11 @@ class PaceViewController: UIViewController {
         case .selectRace:
             data = buildCellData(with: appState)
             tableView.reloadData()
-        case .toggleDistanceSelection:
-            selectingDistance = appState.selectingDistance
-            footer.isHidden = !footer.isHidden
-            expanded = false
+        case .openDistanceSelection:
+            footer.isHidden = true
             tableView.reloadData()
-        case .toggleExpansion:
-            expanded = appState.expanded
-            footer.increaseButton.isHidden = !footer.increaseButton.isHidden
-            footer.decreaseButton.isHidden = !footer.decreaseButton.isHidden
+        case .closeDistanceSelection:
+            footer.isHidden = false
             tableView.reloadData()
         case .incrementPace:
             fallthrough
@@ -96,11 +103,11 @@ class PaceViewController: UIViewController {
 
 extension PaceViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return selectingDistance ? distanceData.count + 1 : data.count
+        return appState.selectingDistance ? distanceData.count + 1 : data.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if (selectingDistance) {
+        if (appState.selectingDistance) {
             if (indexPath.row == distanceData.count) {
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: "customDistanceCellIdentifier") as? CustomDistanceCell else {
                     fatalError("The dequeued cell instance is incorrect.")
@@ -144,29 +151,27 @@ extension PaceViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return header
     }
-    
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        return footer
-    }
-    
+
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        if selectingDistance && indexPath.row == distanceData.count {
+        if appState.selectingDistance && indexPath.row == distanceData.count {
             return nil
         }
 
         return indexPath
     }
-    
+ 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // https://developer.apple.com/library/archive/documentation/UserExperience/Conceptual/TableView_iPhone/ManageInsertDeleteRow/ManageInsertDeleteRow.html#//apple_ref/doc/uid/TP40007451-CH10-SW9
-        
-        if (selectingDistance) {
+        if (appState.selectingDistance) {
             if let race = Race(rawValue: indexPath.row) {
                 header.distanceLabel.text = race.longString
-                reduce(action: .toggleDistanceSelection, state: appState)
+                reduce(action: .closeDistanceSelection, state: appState)
                 reduce(action: .selectRace(race: race), state: appState)
             }
-        } else if (expanded) {
+        } else {
+            navigationController?.pushViewController(PaceDetailViewController(pace: Pace(minutes: 6, seconds: 40, name: nil), race: appState.race), animated: true)
+        }
+        /*
+        else if (expanded) {
             let firstRow = IndexPath(row: 0, section: 0)
             let lastRow = IndexPath(row: data.count - 1, section: 0)
     
@@ -219,8 +224,10 @@ extension PaceViewController: UITableViewDataSource, UITableViewDelegate {
             
             reduce(action: .toggleExpansion, state: appState)
         }
+         */
     }
     
+    /*
     func updateIntervalTable(_ indexPathsToRemove: [IndexPath]) {
         data = buildIntervalCellData(with: data, state: appState)
         let offset = data.count == 6 ? 1 : 0
@@ -234,5 +241,6 @@ extension PaceViewController: UITableViewDataSource, UITableViewDelegate {
         tableView.insertRows(at: indexPathsToAdd, with: .fade)
         tableView.endUpdates()
     }
+    */
 }
 

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		280EEC82234C456F007DE11A /* PaceDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280EEC81234C456F007DE11A /* PaceDetailViewController.swift */; };
 		283D2DFA226ECA220059773D /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283D2DF9226ECA220059773D /* State.swift */; };
 		283D2DFE2270B7650059773D /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283D2DFD2270B7650059773D /* Model.swift */; };
 		285B4F8422989BD40056B999 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285B4F8322989BD40056B999 /* Constants.swift */; };
@@ -30,6 +31,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		280EEC81234C456F007DE11A /* PaceDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaceDetailViewController.swift; sourceTree = "<group>"; };
 		283D2DF9226ECA220059773D /* State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
 		283D2DFD2270B7650059773D /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		285B4F8322989BD40056B999 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -149,6 +151,7 @@
 			isa = PBXGroup;
 			children = (
 				28F42D8822B4B40100381E2F /* PaceViewController.swift */,
+				280EEC81234C456F007DE11A /* PaceDetailViewController.swift */,
 				28F42D8022B4B3CC00381E2F /* Cell.swift */,
 				28F42D8322B4B3CC00381E2F /* DistanceCell.swift */,
 				28F42D8122B4B3CC00381E2F /* Footer.swift */,
@@ -235,6 +238,7 @@
 				285B4F882298DE930056B999 /* TabBarController.swift in Sources */,
 				28F42D8522B4B3CC00381E2F /* Footer.swift in Sources */,
 				285B4F9922A816F20056B999 /* Calculator.swift in Sources */,
+				280EEC82234C456F007DE11A /* PaceDetailViewController.swift in Sources */,
 				28F42D8622B4B3CC00381E2F /* Header.swift in Sources */,
 				285B4F9522A176240056B999 /* Components.swift in Sources */,
 				285B4F8F229928C80056B999 /* WelcomeView.swift in Sources */,

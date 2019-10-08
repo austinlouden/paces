@@ -31,7 +31,8 @@ enum Action: Equatable {
     case incrementPace
     case decrementPace
     case toggleExpansion
-    case toggleDistanceSelection
+    case openDistanceSelection
+    case closeDistanceSelection
     case selectCustomRace(race: CustomRace)
     case loadCustomRace
     
@@ -70,10 +71,13 @@ func reduce(action: Action, state: State?) {
     case .toggleExpansion:
         UIImpactFeedbackGenerator().impactOccurred()
         state.expanded = !state.expanded
-    case .toggleDistanceSelection:
+    case .openDistanceSelection:
         UIImpactFeedbackGenerator().impactOccurred()
-        state.selectingDistance = !state.selectingDistance
-        state.expanded = false
+        state.selectingDistance = true
+        //state.expanded = false
+    case .closeDistanceSelection:
+        UIImpactFeedbackGenerator().impactOccurred()
+        state.selectingDistance = false
     case .selectCustomRace(let race):
         state.customRace = race
         saveCustomRace(race)
