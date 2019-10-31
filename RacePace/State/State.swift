@@ -24,7 +24,7 @@ public struct State {
     var goalRace: Event?
 }
 
-enum Action: Equatable {
+enum AnAction: Equatable {
     // paces
     case loadSettings
     case selectRace(race: Race)
@@ -42,7 +42,7 @@ enum Action: Equatable {
     case getRaces
 }
 
-func reduce(action: Action, state: State?) {
+func reduce(action: AnAction, state: State?) {
     var state = state ?? State()
     
     switch action {

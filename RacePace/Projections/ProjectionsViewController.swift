@@ -105,7 +105,7 @@ class ProjectionsViewController: UIViewController {
     }
     
     @objc func stateDidChange(_ notification:Notification) {
-        guard let action = notification.object as? Action else {
+        guard let action = notification.object as? AnAction else {
             return
         }
         

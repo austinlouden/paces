@@ -6,6 +6,7 @@
 //  Copyright © 2019 Austin Louden. All rights reserved.
 //
 
+import ReSwift
 import UIKit
 
 class PaceViewController: UIViewController {
@@ -15,7 +16,7 @@ class PaceViewController: UIViewController {
     let footer = Footer()
 
     // Local state
-    var data: [CellData]
+    var data: [CellData] = []
     let distanceData = Race.allCases.map({ $0.longString }).dropLast() // don't include the custom race cell
     var expanded = false
     var selectingDistance = false
@@ -23,7 +24,6 @@ class PaceViewController: UIViewController {
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         reduce(action: .loadSettings, state: appState)
         reduce(action: .loadCustomRace, state: appState)
-        data = buildCellData(with: appState)
         super.init(nibName: nil, bundle: nil)
         self.title = NSLocalizedString("Pace tables", comment: "Shows paces and finish times by race.")
         NotificationCenter.default.addObserver(self, selector: #selector(stateDidChange(_:)), name: .stateDidChange, object: nil)
@@ -64,14 +64,24 @@ class PaceViewController: UIViewController {
         ])
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        store.subscribe(self)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        store.unsubscribe(self)
+        super.viewWillDisappear(animated)
+    }
+    
     @objc func stateDidChange(_ notification:Notification) {
-        guard let action = notification.object as? Action else { return }
+        guard let action = notification.object as? AnAction else { return }
         
         switch action {
         case .selectCustomRace:
             tableView(tableView, didSelectRowAt: IndexPath(row: distanceData.count, section: 0))
         case .selectRace:
-            data = buildCellData(with: appState)
+            //data = buildCellData(with: appState)
             tableView.reloadData()
         case .toggleDistanceSelection:
             selectingDistance = appState.selectingDistance
@@ -86,11 +96,20 @@ class PaceViewController: UIViewController {
         case .incrementPace:
             fallthrough
         case .decrementPace:
-            data = buildCellData(with: appState)
+            //data = buildCellData(with: appState)
             tableView.reloadData()
         default:
             break
         }
+    }
+}
+
+extension PaceViewController: StoreSubscriber {
+    typealias StoreSubscriberStateType = AppState
+
+    func newState(state: AppState) {
+        data = buildCellData(with: state.raceState)
+        tableView.reloadData()
     }
 }
 
@@ -174,7 +193,7 @@ extension PaceViewController: UITableViewDataSource, UITableViewDelegate {
                 .compactMap { tableView.indexPath(for: $0) }
                 .filter { $0 != firstRow && $0 != lastRow }
             
-             data = buildCellData(with: appState)
+             //data = buildCellData(with: appState)
             
             let newLastRow = IndexPath(row: data.count - 1, section: 0)
             

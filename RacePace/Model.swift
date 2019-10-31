@@ -137,7 +137,7 @@ struct CellData: Equatable {
     }
 }
 
-func buildCellData(with state: State) -> [CellData] {
+func buildCellData(with state: RaceState) -> [CellData] {
     return [Int](0..<12).map({ (i) -> CellData in
         let pace = Pace(minutes: state.pace, seconds: i * 5, name: nil)
         let finish = finishTime(with: pace, distance: state.race.distance)

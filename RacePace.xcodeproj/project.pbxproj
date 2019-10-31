@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -19,6 +19,7 @@
 		285B4F9522A176240056B999 /* Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285B4F9422A176240056B999 /* Components.swift */; };
 		285B4F9722A6BC680056B999 /* ProjectionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285B4F9622A6BC680056B999 /* ProjectionsView.swift */; };
 		285B4F9922A816F20056B999 /* Calculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285B4F9822A816F20056B999 /* Calculator.swift */; };
+		28937E66236AA5E800BF9B2E /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28937E65236AA5E800BF9B2E /* AppState.swift */; };
 		28A2BCFA226EB31E006CD3A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A2BCF9226EB31E006CD3A0 /* AppDelegate.swift */; };
 		28A2BD01226EB31F006CD3A0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 28A2BD00226EB31F006CD3A0 /* Assets.xcassets */; };
 		28A2BD04226EB31F006CD3A0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 28A2BD02226EB31F006CD3A0 /* LaunchScreen.storyboard */; };
@@ -43,6 +44,7 @@
 		285B4F9422A176240056B999 /* Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Components.swift; sourceTree = "<group>"; };
 		285B4F9622A6BC680056B999 /* ProjectionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectionsView.swift; sourceTree = "<group>"; };
 		285B4F9822A816F20056B999 /* Calculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calculator.swift; sourceTree = "<group>"; };
+		28937E65236AA5E800BF9B2E /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		28A2BCF6226EB31E006CD3A0 /* RacePace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RacePace.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		28A2BCF9226EB31E006CD3A0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		28A2BD00226EB31F006CD3A0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 			isa = PBXGroup;
 			children = (
 				283D2DF9226ECA220059773D /* State.swift */,
+				28937E65236AA5E800BF9B2E /* AppState.swift */,
 			);
 			path = State;
 			sourceTree = "<group>";
@@ -170,7 +173,6 @@
 				BE01F45C7E3A69645EACB166 /* Pods-RacePace.debug.xcconfig */,
 				A660B864BF8BC17258E2BB8F /* Pods-RacePace.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -298,6 +300,7 @@
 			files = (
 				285B4F92229F9ED70056B999 /* RaceTimeViewController.swift in Sources */,
 				285B4F8422989BD40056B999 /* Constants.swift in Sources */,
+				28937E66236AA5E800BF9B2E /* AppState.swift in Sources */,
 				28F42D8422B4B3CC00381E2F /* Cell.swift in Sources */,
 				285B4F8D229915EC0056B999 /* TrainingPaceCell.swift in Sources */,
 				285B4F8B2298DF1E0056B999 /* ProjectionsViewController.swift in Sources */,
