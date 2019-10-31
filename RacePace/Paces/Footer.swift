@@ -38,23 +38,12 @@ class Footer: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     @objc func increment() {
-        // TODO: make these buttons work in the expanded state
-        /*
-        if (!appState.expanded) {
-            reduce(action: .incrementPace, state: appState)
-        }
-        */
         store.dispatch(IncrementPace())
     }
     
     @objc func decrement() {
         store.dispatch(DecrementPace())
-        /*
-        if (!appState.expanded) {
-            reduce(action: .decrementPace, state: appState)
-        }
-         */
     }
 }

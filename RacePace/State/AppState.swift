@@ -28,6 +28,7 @@ func appReducer(action: Action, state: AppState?) -> AppState {
 
 struct IncrementPace: Action {}
 struct DecrementPace: Action {}
+struct SelectRace: Action { let race: Race }
 
 func raceReducer(action: Action, state: RaceState?) -> RaceState {
     var state = state ?? RaceState()
@@ -37,6 +38,8 @@ func raceReducer(action: Action, state: RaceState?) -> RaceState {
         state.pace += 1
     case _ as DecrementPace:
         state.pace -= 1
+    case let action as SelectRace:
+        state.race = action.race
     default:
         break
     }

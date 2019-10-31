@@ -144,14 +144,7 @@ extension PaceViewController: UITableViewDataSource, UITableViewDelegate {
             cell.selectionStyle = .none
             cell.paceLabel.text = data[indexPath.row].pace.paceString()
             cell.raceLabel.text = data[indexPath.row].finishTime.finishTimeString()
-            
-            /* HIDE TAGS FOR THIS VERSION
-            if (data[indexPath.row].tags.count > 0 && appState.race == .marathon) {
-                cell.tagButton.setTitle(data[indexPath.row].tags[0], for: .normal)
-                cell.tagButton.isHidden = false
-            }
-            */
-            
+
             return cell
         }
     }
@@ -183,7 +176,7 @@ extension PaceViewController: UITableViewDataSource, UITableViewDelegate {
             if let race = Race(rawValue: indexPath.row) {
                 header.distanceLabel.text = race.longString
                 reduce(action: .toggleDistanceSelection, state: appState)
-                reduce(action: .selectRace(race: race), state: appState)
+                store.dispatch(SelectRace(race: race))
             }
         } else if (expanded) {
             let firstRow = IndexPath(row: 0, section: 0)
