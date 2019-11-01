@@ -137,14 +137,30 @@ struct CellData: Equatable {
     }
 }
 
-func buildCellData(with state: RaceState) -> [CellData] {
-    return [Int](0..<12).map({ (i) -> CellData in
-        let pace = Pace(minutes: state.pace, seconds: i * 5, name: nil)
-        let finish = finishTime(with: pace, distance: state.race.distance)
-        let tags = landmarks[pace.paceString()] ?? []
+func buildCellData(with data: [CellData], state: AppState) -> [CellData] {
+    if (state.navigationState.expanded) {
+        var newData = [CellData]()
+        guard let first = data.first else { assertionFailure(); return data }
+        
+        let interval = data.count == 2 ? 5 : 4
 
-        return CellData(pace: pace, finishTime: finish, tags: tags)
-    })
+        newData += [Int](first.pace.seconds ... first.pace.seconds + interval).map { i -> CellData in
+            let pace = Pace(minutes: first.pace.minutes, seconds: i, name: nil)
+            let finish = finishTime(with: pace, distance: state.raceState.race.distance)
+            let tags = landmarks[pace.paceString()] ?? []
+            return CellData(pace: pace, finishTime: finish, tags: tags)
+        }
+
+        return newData
+    } else {
+        return [Int](0..<12).map({ (i) -> CellData in
+            let pace = Pace(minutes: state.raceState.pace, seconds: i * 5, name: nil)
+            let finish = finishTime(with: pace, distance: state.raceState.race.distance)
+            let tags = landmarks[pace.paceString()] ?? []
+
+            return CellData(pace: pace, finishTime: finish, tags: tags)
+        })
+    }
 }
 
 func buildIntervalCellData(with data: [CellData], state: State) -> [CellData] {

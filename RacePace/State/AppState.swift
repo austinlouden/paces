@@ -12,6 +12,7 @@ let store = Store(reducer: appReducer, state: nil)
 
 struct AppState: StateType {
     var raceState: RaceState
+    var navigationState: NavigationState
 }
 
 struct RaceState: StateType {
@@ -20,11 +21,18 @@ struct RaceState: StateType {
     var customRace: CustomRace?
 }
 
-func appReducer(action: Action, state: AppState?) -> AppState {
-    return AppState(raceState: raceReducer(action: action, state: state?.raceState))
+struct NavigationState: StateType {
+    var expanded: Bool = false
 }
 
-// TODO: Move into reducers later
+func appReducer(action: Action, state: AppState?) -> AppState {
+    return AppState(
+        raceState: raceReducer(action: action, state: state?.raceState),
+        navigationState: navigationReducer(action: action, state: state?.navigationState)
+    )
+}
+
+// RACE STATE
 
 struct IncrementPace: Action {}
 struct DecrementPace: Action {}
@@ -43,6 +51,26 @@ func raceReducer(action: Action, state: RaceState?) -> RaceState {
     default:
         break
     }
+
+    return state
+}
+
+// NAVIGATION STATE
+
+struct ExpandPaces: Action {}
+struct CollapsePaces: Action {}
+
+func navigationReducer(action: Action, state: NavigationState?) -> NavigationState {
+    var state = state ?? NavigationState()
     
+    switch action {
+    case _ as ExpandPaces:
+        state.expanded = true
+    case _ as CollapsePaces:
+        state.expanded = false
+    default:
+        break
+    }
+
     return state
 }

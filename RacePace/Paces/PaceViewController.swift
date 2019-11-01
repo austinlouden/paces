@@ -11,6 +11,8 @@ import UIKit
 
 class PaceViewController: UIViewController {
     
+    var expanded = false
+    
     let tableView = UITableView()
     let header = Header()
     let footer = Footer()
@@ -18,7 +20,6 @@ class PaceViewController: UIViewController {
     // Local state
     var data: [CellData] = []
     let distanceData = Race.allCases.map({ $0.longString }).dropLast() // don't include the custom race cell
-    var expanded = false
     var selectingDistance = false
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -86,10 +87,8 @@ class PaceViewController: UIViewController {
         case .toggleDistanceSelection:
             selectingDistance = appState.selectingDistance
             footer.isHidden = !footer.isHidden
-            expanded = false
             tableView.reloadData()
         case .toggleExpansion:
-            expanded = appState.expanded
             footer.increaseButton.isHidden = !footer.increaseButton.isHidden
             footer.decreaseButton.isHidden = !footer.decreaseButton.isHidden
             tableView.reloadData()
@@ -108,7 +107,8 @@ extension PaceViewController: StoreSubscriber {
     typealias StoreSubscriberStateType = AppState
 
     func newState(state: AppState) {
-        data = buildCellData(with: state.raceState)
+        data = buildCellData(with: data, state: state)
+        expanded = state.navigationState.expanded
         tableView.reloadData()
     }
 }
@@ -170,8 +170,6 @@ extension PaceViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // https://developer.apple.com/library/archive/documentation/UserExperience/Conceptual/TableView_iPhone/ManageInsertDeleteRow/ManageInsertDeleteRow.html#//apple_ref/doc/uid/TP40007451-CH10-SW9
-        
         if (selectingDistance) {
             if let race = Race(rawValue: indexPath.row) {
                 header.distanceLabel.text = race.longString
@@ -179,72 +177,22 @@ extension PaceViewController: UITableViewDataSource, UITableViewDelegate {
                 store.dispatch(SelectRace(race: race))
             }
         } else if (expanded) {
-            let firstRow = IndexPath(row: 0, section: 0)
-            let lastRow = IndexPath(row: data.count - 1, section: 0)
-    
-            let indexPathsToDelete = tableView.visibleCells
-                .compactMap { tableView.indexPath(for: $0) }
-                .filter { $0 != firstRow && $0 != lastRow }
-            
-             //data = buildCellData(with: appState)
-            
-            let newLastRow = IndexPath(row: data.count - 1, section: 0)
-            
-            let indexPathsToAdd = [Int](1 ..< data.count - 1).map {
-                IndexPath(row: $0, section: 0)
-            }
-
-            tableView.beginUpdates()
-            tableView.deleteRows(at: indexPathsToDelete, with: .fade)
-            tableView.insertRows(at: indexPathsToAdd, with: .fade)
-            tableView.endUpdates()
-            
-            tableView.beginUpdates()
-            tableView.reloadRows(at: [firstRow, newLastRow], with: .fade)
-            tableView.endUpdates()
-            
-            reduce(action: .toggleExpansion, state: appState)
+            store.dispatch(CollapsePaces())
         } else {
+            // table is in the default, collapsed state
             let currentCell = data[indexPath.row]
-            guard let currentRow = tableView.indexPathForSelectedRow else { return }
-            
+
             // selected the last cell
             if (indexPath.row == data.count - 1) {
                 data.removeAll { $0 != currentCell }
-
-                let indexPathsToDelete = tableView.visibleCells
-                    .compactMap { tableView.indexPath(for: $0) }
-                    .filter { $0 != currentRow }
-
-                updateIntervalTable(indexPathsToDelete)
             } else {
                 let nextCell = data[indexPath.row + 1]
                 data.removeAll { $0 != currentCell && $0 != nextCell }
-                
-                let nextRow = IndexPath(row: currentRow.row + 1, section: 0)
-                let indexPathsToDelete = tableView.visibleCells
-                    .compactMap { tableView.indexPath(for: $0) }
-                    .filter { $0 != currentRow && $0 != nextRow }
-
-                updateIntervalTable(indexPathsToDelete)
             }
-            
-            reduce(action: .toggleExpansion, state: appState)
+
+            store.dispatch(ExpandPaces())
         }
     }
     
-    func updateIntervalTable(_ indexPathsToRemove: [IndexPath]) {
-        data = buildIntervalCellData(with: data, state: appState)
-        let offset = data.count == 6 ? 1 : 0
-  
-        let indexPathsToAdd = [Int](1 ..< data.count - offset).map {
-            IndexPath(row: $0, section: 0)
-        }
-
-        tableView.beginUpdates()
-        tableView.deleteRows(at: indexPathsToRemove, with: .fade)
-        tableView.insertRows(at: indexPathsToAdd, with: .fade)
-        tableView.endUpdates()
-    }
 }
 
