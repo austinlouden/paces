@@ -23,6 +23,7 @@ struct RaceState: StateType {
 
 struct NavigationState: StateType {
     var expanded: Bool = false
+    var selectingDistance: Bool = false
 }
 
 func appReducer(action: Action, state: AppState?) -> AppState {
@@ -59,17 +60,20 @@ func raceReducer(action: Action, state: RaceState?) -> RaceState {
 
 struct ExpandPaces: Action {}
 struct CollapsePaces: Action {}
+struct ToggleDistanceSelector: Action {}
 
 func navigationReducer(action: Action, state: NavigationState?) -> NavigationState {
     var state = state ?? NavigationState()
-    
+
     switch action {
-    case _ as ExpandPaces:
-        state.expanded = true
-    case _ as CollapsePaces:
-        state.expanded = false
-    default:
-        break
+        case _ as ExpandPaces:
+            state.expanded = true
+        case _ as CollapsePaces:
+            state.expanded = false
+        case _ as ToggleDistanceSelector:
+            state.selectingDistance = !state.selectingDistance
+        default:
+            break
     }
 
     return state

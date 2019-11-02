@@ -6,6 +6,7 @@
 //  Copyright © 2019 Austin Louden. All rights reserved.
 //
 
+import ReSwift
 import UIKit
 
 class Header: UIView {
@@ -57,9 +58,10 @@ class Header: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     @objc func headerTapped() {
-        reduce(action: .toggleDistanceSelection, state: appState)
+        // TODO: migrate to ReSwift Thunk, ActionCreator
+        store.dispatch(ToggleDistanceSelector())
     }
     
 }

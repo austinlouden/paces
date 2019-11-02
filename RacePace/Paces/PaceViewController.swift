@@ -109,6 +109,7 @@ extension PaceViewController: StoreSubscriber {
     func newState(state: AppState) {
         data = buildCellData(with: data, state: state)
         expanded = state.navigationState.expanded
+        selectingDistance = state.navigationState.selectingDistance
         tableView.reloadData()
     }
 }
@@ -128,7 +129,7 @@ extension PaceViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.selectionStyle = .none
                 return cell
             }
-            
+
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "distanceCellIdentifier") as? DistanceCell else {
                 fatalError("The dequeued cell instance is incorrect.")
             }
@@ -173,7 +174,7 @@ extension PaceViewController: UITableViewDataSource, UITableViewDelegate {
         if (selectingDistance) {
             if let race = Race(rawValue: indexPath.row) {
                 header.distanceLabel.text = race.longString
-                reduce(action: .toggleDistanceSelection, state: appState)
+                store.dispatch(ToggleDistanceSelector())
                 store.dispatch(SelectRace(race: race))
             }
         } else if (expanded) {
