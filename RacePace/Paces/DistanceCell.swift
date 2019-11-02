@@ -6,6 +6,7 @@
 //  Copyright © 2019 Austin Louden. All rights reserved.
 //
 
+import ReSwift
 import UIKit
 
 class DistanceCell: UITableViewCell {
@@ -50,6 +51,7 @@ class CustomDistanceCell: UITableViewCell, UITextFieldDelegate {
         textField.delegate = self
         contentView.addSubview(textField)
 
+        // TODO: don't check the state here. Set this outside the cell being created (initializer).
         if let customRace = appState.customRace {
             metric = customRace.metric
             textField.text = customRace.distanceString()
@@ -100,7 +102,8 @@ class CustomDistanceCell: UITableViewCell, UITextFieldDelegate {
             
             let customRace = CustomRace(distance: d, metric: metric)
             textField.text = customRace.distanceString()
-            reduce(action: .selectCustomRace(race: customRace), state: appState)
+            store.dispatch(SelectCustomRace(customRace: customRace))
+            store.dispatch(ToggleDistanceSelector())
         } else {
             UINotificationFeedbackGenerator().notificationOccurred(.error)
         }

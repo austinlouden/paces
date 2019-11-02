@@ -23,19 +23,16 @@ class PaceViewController: UIViewController {
     var selectingDistance = false
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        reduce(action: .loadSettings, state: appState)
-        reduce(action: .loadCustomRace, state: appState)
+        if let raceState = Storage.loadRaceState() {
+            store.dispatch(LoadRaceState(state: raceState))
+        }
+
         super.init(nibName: nil, bundle: nil)
         self.title = NSLocalizedString("Pace tables", comment: "Shows paces and finish times by race.")
-        NotificationCenter.default.addObserver(self, selector: #selector(stateDidChange(_:)), name: .stateDidChange, object: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self, name: .stateDidChange, object: nil)
     }
 
     override func viewDidLoad() {
@@ -74,33 +71,6 @@ class PaceViewController: UIViewController {
         store.unsubscribe(self)
         super.viewWillDisappear(animated)
     }
-    
-    @objc func stateDidChange(_ notification:Notification) {
-        guard let action = notification.object as? AnAction else { return }
-        
-        switch action {
-        case .selectCustomRace:
-            tableView(tableView, didSelectRowAt: IndexPath(row: distanceData.count, section: 0))
-        case .selectRace:
-            //data = buildCellData(with: appState)
-            tableView.reloadData()
-        case .toggleDistanceSelection:
-            selectingDistance = appState.selectingDistance
-            footer.isHidden = !footer.isHidden
-            tableView.reloadData()
-        case .toggleExpansion:
-            footer.increaseButton.isHidden = !footer.increaseButton.isHidden
-            footer.decreaseButton.isHidden = !footer.decreaseButton.isHidden
-            tableView.reloadData()
-        case .incrementPace:
-            fallthrough
-        case .decrementPace:
-            //data = buildCellData(with: appState)
-            tableView.reloadData()
-        default:
-            break
-        }
-    }
 }
 
 extension PaceViewController: StoreSubscriber {
@@ -110,6 +80,8 @@ extension PaceViewController: StoreSubscriber {
         data = buildCellData(with: data, state: state)
         expanded = state.navigationState.expanded
         selectingDistance = state.navigationState.selectingDistance
+        // TODO: Fix this check — we shouldn't need to care about this here. Custom Race should move inside Race somehow, e.g. make Race a protocol.
+        header.distanceLabel.text = state.raceState.race == .custom ? state.raceState.customRace?.distanceString() : state.raceState.race.longString
         tableView.reloadData()
     }
 }
@@ -176,6 +148,8 @@ extension PaceViewController: UITableViewDataSource, UITableViewDelegate {
                 header.distanceLabel.text = race.longString
                 store.dispatch(ToggleDistanceSelector())
                 store.dispatch(SelectRace(race: race))
+            } else {
+                print("couldnt create race")
             }
         } else if (expanded) {
             store.dispatch(CollapsePaces())

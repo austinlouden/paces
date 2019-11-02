@@ -13,11 +13,6 @@ struct Event: Codable {
     let time: FinishTime
 }
 
-struct Settings: Codable {
-    let race: Race
-    let pace: Int
-}
-
 struct FinishTime: Equatable, Codable {
     let hours: Int
     let minutes: Int
@@ -153,9 +148,12 @@ func buildCellData(with data: [CellData], state: AppState) -> [CellData] {
 
         return newData
     } else {
+        // TODO: Fix this distance check
+        let distance = state.raceState.race == .custom ? state.raceState.customRace?.distance : state.raceState.race.distance
+
         return [Int](0..<12).map({ (i) -> CellData in
             let pace = Pace(minutes: state.raceState.pace, seconds: i * 5, name: nil)
-            let finish = finishTime(with: pace, distance: state.raceState.race.distance)
+            let finish = finishTime(with: pace, distance: distance ?? 0.0)
             let tags = landmarks[pace.paceString()] ?? []
 
             return CellData(pace: pace, finishTime: finish, tags: tags)
