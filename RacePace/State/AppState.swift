@@ -65,11 +65,16 @@ func raceReducer(action: Action, state: RaceState?) -> RaceState {
 // NAVIGATION STATE
 
 struct NavigationState: StateType {
-    var expanded: Bool = false
+    // if -1, the table is its default state. Otherwise, this represents the row to expand on.
+    var expansion: Int = -1
     var selectingDistance: Bool = false
+    
+    func expanded() -> Bool {
+        return self.expansion != -1
+    }
 }
 
-struct ExpandPaces: Action {}
+struct ExpandPaces: Action { let expansion: Int }
 struct CollapsePaces: Action {}
 struct ToggleDistanceSelector: Action {}
 
@@ -77,10 +82,10 @@ func navigationReducer(action: Action, state: NavigationState?) -> NavigationSta
     var state = state ?? NavigationState()
 
     switch action {
-        case _ as ExpandPaces:
-            state.expanded = true
+        case let action as ExpandPaces:
+            state.expansion = action.expansion
         case _ as CollapsePaces:
-            state.expanded = false
+            state.expansion = -1
         case _ as ToggleDistanceSelector:
             state.selectingDistance = !state.selectingDistance
         default:

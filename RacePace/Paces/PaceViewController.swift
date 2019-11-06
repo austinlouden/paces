@@ -10,14 +10,13 @@ import ReSwift
 import UIKit
 
 class PaceViewController: UIViewController {
-    
-    var expanded = false
-    
+        
     let tableView = UITableView()
     let header = Header()
     let footer = Footer()
 
     // Local state
+    var expanded = false
     var data: [CellData] = []
     let distanceData = Race.allCases.map({ $0.longString }).dropLast() // don't include the custom race cell
     var selectingDistance = false
@@ -77,11 +76,12 @@ extension PaceViewController: StoreSubscriber {
 
     func newState(state: AppState) {
         data = buildCellData(with: data, state: state)
-        expanded = state.navigationState.expanded
+        expanded = state.navigationState.expanded()
         selectingDistance = state.navigationState.selectingDistance
         customRace = state.raceState.customRace
         // TODO: Fix this check — we shouldn't need to care about this here. Custom Race should move inside Race somehow, e.g. make Race a protocol.
         header.distanceLabel.text = state.raceState.race == .custom ? state.raceState.customRace?.distanceString() : state.raceState.race.longString
+        footer.isHidden = expanded
         tableView.reloadData()
     }
 }
@@ -175,7 +175,7 @@ extension PaceViewController: UITableViewDataSource, UITableViewDelegate {
                 data.removeAll { $0 != currentCell && $0 != nextCell }
             }
 
-            store.dispatch(ExpandPaces())
+            store.dispatch(ExpandPaces(expansion: indexPath.row))
         }
     }
     

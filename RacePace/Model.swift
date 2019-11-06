@@ -137,7 +137,7 @@ struct CellData: Equatable {
 }
 
 func buildCellData(with data: [CellData], state: AppState) -> [CellData] {
-    if (state.navigationState.expanded) {
+    if (state.navigationState.expanded()) {
         var newData = [CellData]()
         guard let first = data.first else { assertionFailure(); return data }
         
