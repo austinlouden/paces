@@ -136,21 +136,23 @@ struct CellData: Equatable {
     }
 }
 
-func buildCellData(with data: [CellData], state: AppState) -> [CellData] {
+func buildCellData(with state: AppState) -> [CellData] {
     if (state.navigationState.expanded()) {
-        var newData = [CellData]()
-        guard let first = data.first else { assertionFailure(); return data }
-        
-        let interval = data.count == 2 ? 5 : 4
+        let distance = state.raceState.race == .custom ? state.raceState.customRace?.distance() : state.raceState.race.distance
+        let start = state.navigationState.expansion * 5
+        let end = start + 5
 
-        newData += [Int](first.pace.seconds ... first.pace.seconds + interval).map { i -> CellData in
-            let pace = Pace(minutes: first.pace.minutes, seconds: i, name: nil)
-            let finish = finishTime(with: pace, distance: state.raceState.race.distance)
+        return [Int](start...end).map({ (i) -> CellData in
+            
+            let p = i == 60 ? state.raceState.pace + 1 : state.raceState.pace
+            let s = i == 60 ? 0 : i
+
+            let pace = Pace(minutes: p, seconds: s, name: nil)
+            let finish = finishTime(with: pace, distance: distance ?? 0.0)
             let tags = landmarks[pace.paceString()] ?? []
-            return CellData(pace: pace, finishTime: finish, tags: tags)
-        }
 
-        return newData
+            return CellData(pace: pace, finishTime: finish, tags: tags)
+        })
     } else {
         // TODO: Fix this distance check
         let distance = state.raceState.race == .custom ? state.raceState.customRace?.distance() : state.raceState.race.distance

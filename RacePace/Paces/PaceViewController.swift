@@ -75,7 +75,7 @@ extension PaceViewController: StoreSubscriber {
     typealias StoreSubscriberStateType = AppState
 
     func newState(state: AppState) {
-        data = buildCellData(with: data, state: state)
+        data = buildCellData(with: state)
         expanded = state.navigationState.expanded()
         selectingDistance = state.navigationState.selectingDistance
         customRace = state.raceState.customRace
@@ -158,23 +158,10 @@ extension PaceViewController: UITableViewDataSource, UITableViewDelegate {
                 header.distanceLabel.text = race.longString
                 store.dispatch(ToggleDistanceSelector())
                 store.dispatch(SelectRace(race: race))
-            } else {
-                print("couldnt create race")
             }
         } else if (expanded) {
             store.dispatch(CollapsePaces())
         } else {
-            // table is in the default, collapsed state
-            let currentCell = data[indexPath.row]
-
-            // selected the last cell
-            if (indexPath.row == data.count - 1) {
-                data.removeAll { $0 != currentCell }
-            } else {
-                let nextCell = data[indexPath.row + 1]
-                data.removeAll { $0 != currentCell && $0 != nextCell }
-            }
-
             store.dispatch(ExpandPaces(expansion: indexPath.row))
         }
     }
