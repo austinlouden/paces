@@ -34,7 +34,6 @@ class CustomDistanceCell: UITableViewCell, UITextFieldDelegate {
     let textField = UITextField()
     let unitSwitch = UISwitch()
     let saveButton = Button.button(with: "Select")
-    
     let unitLabel = Label.detailLabel(with: "miles")
     
     var metric = false
@@ -50,17 +49,6 @@ class CustomDistanceCell: UITableViewCell, UITextFieldDelegate {
         textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         textField.delegate = self
         contentView.addSubview(textField)
-
-        // TODO: don't check the state here. Set this outside the cell being created (initializer).
-        if let customRace = appState.customRace {
-            metric = customRace.metric
-            textField.text = customRace.distanceString()
-
-            if metric {
-                unitSwitch.isOn = true
-                unitLabel.text = customRace.unitString()
-            }
-        }
         
         unitLabel.isHidden = true
         contentView.addSubview(unitLabel)

@@ -21,6 +21,7 @@ class PaceViewController: UIViewController {
     var data: [CellData] = []
     let distanceData = Race.allCases.map({ $0.longString }).dropLast() // don't include the custom race cell
     var selectingDistance = false
+    var customRace: CustomRace?
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         if let raceState = Storage.loadRaceState() {
@@ -80,6 +81,7 @@ extension PaceViewController: StoreSubscriber {
         data = buildCellData(with: data, state: state)
         expanded = state.navigationState.expanded
         selectingDistance = state.navigationState.selectingDistance
+        customRace = state.raceState.customRace
         // TODO: Fix this check — we shouldn't need to care about this here. Custom Race should move inside Race somehow, e.g. make Race a protocol.
         header.distanceLabel.text = state.raceState.race == .custom ? state.raceState.customRace?.distanceString() : state.raceState.race.longString
         tableView.reloadData()
@@ -96,6 +98,15 @@ extension PaceViewController: UITableViewDataSource, UITableViewDelegate {
             if (indexPath.row == distanceData.count) {
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: "customDistanceCellIdentifier") as? CustomDistanceCell else {
                     fatalError("The dequeued cell instance is incorrect.")
+                }
+                
+                if let race = customRace {
+                    cell.textField.text = race.distanceString()
+                    
+                    if race.metric {
+                        cell.unitSwitch.isOn = true
+                        cell.unitLabel.text = race.unitString()
+                    }
                 }
                 
                 cell.selectionStyle = .none
