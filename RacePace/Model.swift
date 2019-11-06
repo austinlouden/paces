@@ -50,11 +50,15 @@ struct Pace {
 }
 
 struct CustomRace: Codable, Equatable {
-    let distance: Double
+    let rawDistance: Double
     let metric: Bool
     
+    func distance() -> Double {
+        return self.metric ? self.rawDistance * 0.621371 : self.rawDistance
+    }
+    
     func distanceString() -> String {
-        return "\(String(distance)) " + (metric ? "km" : "mi")
+        return "\(String(rawDistance)) " + (metric ? "km" : "mi")
     }
     
     func unitString() -> String {
@@ -80,8 +84,8 @@ public enum Race: Int, CaseIterable, Codable {
         case .marathon:
             return 26.2188
         case .custom:
-            guard let customRace = appState.customRace else { return 0.0 }
-            return customRace.metric ? customRace.distance * 0.621371 : customRace.distance
+            guard let customRace = store.state.raceState.customRace else { return 0.0 }
+            return customRace.distance()
         }
     }
 
@@ -96,7 +100,7 @@ public enum Race: Int, CaseIterable, Codable {
         case .marathon:
             return "26.2"
         case .custom:
-            return appState.customRace?.distanceString() ?? ""
+            return store.state.raceState.customRace?.distanceString() ?? ""
         }
     }
     
@@ -111,7 +115,7 @@ public enum Race: Int, CaseIterable, Codable {
         case .marathon:
             return "Marathon"
         case .custom:
-            return appState.customRace?.distanceString() ?? ""
+            return store.state.raceState.customRace?.distanceString() ?? ""
         }
     }
 }
@@ -149,7 +153,7 @@ func buildCellData(with data: [CellData], state: AppState) -> [CellData] {
         return newData
     } else {
         // TODO: Fix this distance check
-        let distance = state.raceState.race == .custom ? state.raceState.customRace?.distance : state.raceState.race.distance
+        let distance = state.raceState.race == .custom ? state.raceState.customRace?.distance() : state.raceState.race.distance
 
         return [Int](0..<12).map({ (i) -> CellData in
             let pace = Pace(minutes: state.raceState.pace, seconds: i * 5, name: nil)
@@ -159,22 +163,6 @@ func buildCellData(with data: [CellData], state: AppState) -> [CellData] {
             return CellData(pace: pace, finishTime: finish, tags: tags)
         })
     }
-}
-
-func buildIntervalCellData(with data: [CellData], state: State) -> [CellData] {
-    var newData = [CellData]()
-    guard let first = data.first else { assertionFailure(); return data }
-    
-    let interval = data.count == 2 ? 5 : 4
-
-    newData += [Int](first.pace.seconds ... first.pace.seconds + interval).map { i -> CellData in
-        let pace = Pace(minutes: first.pace.minutes, seconds: i, name: nil)
-        let finish = finishTime(with: pace, distance: state.race.distance)
-        let tags = landmarks[pace.paceString()] ?? []
-        return CellData(pace: pace, finishTime: finish, tags: tags)
-    }
-
-    return newData
 }
 
 func buildDataForRaces() -> [String] {

@@ -40,8 +40,6 @@ class PaceViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
         navigationController?.isNavigationBarHidden = true
-        
-        header.distanceLabel.text = appState.race.longString
 
         tableView.sectionHeaderHeight = UITableView.automaticDimension
         tableView.estimatedSectionHeaderHeight = 80;
@@ -102,6 +100,7 @@ extension PaceViewController: UITableViewDataSource, UITableViewDelegate {
                 
                 if let race = customRace {
                     cell.textField.text = race.distanceString()
+                    cell.metric = race.metric
                     
                     if race.metric {
                         cell.unitSwitch.isOn = true

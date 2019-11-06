@@ -42,20 +42,23 @@ func raceReducer(action: Action, state: RaceState?) -> RaceState {
     switch action {
     case _ as IncrementPace:
         state.pace += 1
+        Storage.storeRaceState(state)
     case _ as DecrementPace:
         state.pace -= 1
+        Storage.storeRaceState(state)
     case let action as SelectRace:
         state.race = action.race
+        Storage.storeRaceState(state)
     case let action as SelectCustomRace:
         state.customRace = action.customRace
         state.race = .custom
+        Storage.storeRaceState(state)
     case let action as LoadRaceState:
         state = action.state
     default:
         break
     }
 
-    Storage.storeRaceState(state)
     return state
 }
 

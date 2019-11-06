@@ -9,8 +9,6 @@
 import Foundation
 import UIKit
 
-fileprivate(set) public var appState = State()
-
 public struct State {
     // paces
     var pace = 8
@@ -77,7 +75,7 @@ func reduce(action: AnAction, state: State?) {
         }
     }
     
-    appState = state
+    //appState = state
     NotificationCenter.default.post(name: .stateDidChange, object: action)
 }
 

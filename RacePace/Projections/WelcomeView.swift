@@ -57,6 +57,6 @@ class WelcomeView: UIView {
     }
     
     @objc func getStartedTapped() {
-        reduce(action: .presentProjectionsNUX, state: appState)
+        //reduce(action: .presentProjectionsNUX, state: appState)
     }
 }

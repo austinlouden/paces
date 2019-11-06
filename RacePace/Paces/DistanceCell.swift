@@ -88,7 +88,7 @@ class CustomDistanceCell: UITableViewCell, UITextFieldDelegate {
             textField.resignFirstResponder()
             toggleHiddenUI()
             
-            let customRace = CustomRace(distance: d, metric: metric)
+            let customRace = CustomRace(rawDistance: d, metric: metric)
             textField.text = customRace.distanceString()
             store.dispatch(SelectCustomRace(customRace: customRace))
             store.dispatch(ToggleDistanceSelector())

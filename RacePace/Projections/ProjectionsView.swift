@@ -82,6 +82,6 @@ class ProjectionsView: UIView {
     }
     
     @objc func settingsTapped() {
-        reduce(action: .presentProjectionsNUX, state: appState)
+        //reduce(action: .presentProjectionsNUX, state: appState)
     }
 }
