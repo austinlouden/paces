@@ -89,7 +89,7 @@ extension PaceViewController: StoreSubscriber {
         customRace = state.raceState.customRace
         // TODO: Fix this check — we shouldn't need to care about this here. Custom Race should move inside Race somehow, e.g. make Race a protocol.
         header.distanceLabel.text = state.raceState.race == .custom ? state.raceState.customRace?.distanceString() : state.raceState.race.longString
-        tableView.reloadData()
+        tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
     }
 }
 

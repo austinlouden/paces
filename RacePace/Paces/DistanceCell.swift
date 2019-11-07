@@ -15,6 +15,7 @@ class DistanceCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        backgroundColor = UIColor.white
 
         contentView.addSubview(distanceLabel)
         
@@ -40,6 +41,7 @@ class CustomDistanceCell: UITableViewCell, UITextFieldDelegate {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        backgroundColor = UIColor.white
 
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = NSLocalizedString("Custom", comment: "Choose a custom distance.")
