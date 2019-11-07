@@ -7,6 +7,7 @@
 //
 
 import ReSwift
+import UIKit
 
 let store = Store(reducer: appReducer, state: nil)
 
@@ -42,9 +43,11 @@ func raceReducer(action: Action, state: RaceState?) -> RaceState {
     switch action {
     case _ as IncrementPace:
         state.pace += 1
+        UIImpactFeedbackGenerator().impactOccurred()
         Storage.storeRaceState(state)
     case _ as DecrementPace:
         state.pace -= 1
+        UIImpactFeedbackGenerator().impactOccurred()
         Storage.storeRaceState(state)
     case let action as SelectRace:
         state.race = action.race
@@ -83,10 +86,13 @@ func navigationReducer(action: Action, state: NavigationState?) -> NavigationSta
 
     switch action {
         case let action as ExpandPaces:
+            UIImpactFeedbackGenerator().impactOccurred()
             state.expansion = action.expansion
         case _ as CollapsePaces:
+            UIImpactFeedbackGenerator().impactOccurred()
             state.expansion = -1
         case _ as ToggleDistanceSelector:
+            UIImpactFeedbackGenerator().impactOccurred()
             state.selectingDistance = !state.selectingDistance
         default:
             break
