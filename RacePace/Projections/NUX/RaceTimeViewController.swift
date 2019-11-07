@@ -23,7 +23,7 @@ final class LastRaceViewController: RaceTimeViewController {
     }
     
     @objc func continuePressed(_ sender: UIButton) {
-        reduce(action: .setLastRace(race: race, time: FinishTime(hours: hours, minutes: minutes, seconds: seconds)), state: appState)
+        //reduce(action: .setLastRace(race: race, time: FinishTime(hours: hours, minutes: minutes, seconds: seconds)), state: appState)
         navigationController?.pushViewController(GoalViewController(), animated: true)
     }
 }
@@ -49,7 +49,7 @@ final class GoalViewController: RaceTimeViewController {
     }
 
     @objc func completePressed(_ sender: UIButton) {
-        reduce(action: .setGoalRace(race: race, time: FinishTime(hours: hours, minutes: minutes, seconds: seconds)), state: appState)
+        //reduce(action: .setGoalRace(race: race, time: FinishTime(hours: hours, minutes: minutes, seconds: seconds)), state: appState)
         navigationController?.dismiss(animated: true, completion: nil)
     }
 }

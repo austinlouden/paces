@@ -86,8 +86,9 @@ class ProjectionsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        reduce(action: .getRaces, state: appState)
+        //reduce(action: .getRaces, state: appState)
 
+        /*
         if let lastRace = appState.lastRace, let goalRace = appState.goalRace {
             welcomeView.isHidden = true
 
@@ -102,10 +103,11 @@ class ProjectionsViewController: UIViewController {
             self.tableView.reloadData()
             
         }
+         */
     }
     
     @objc func stateDidChange(_ notification:Notification) {
-        guard let action = notification.object as? Action else {
+        guard let action = notification.object as? AnAction else {
             return
         }
         

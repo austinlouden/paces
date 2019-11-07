@@ -30,6 +30,7 @@ vendor/
 compiler_commands.json
 *.ipa
 .clang-format
+Pods/
 
 # Fastlane
 Preview.html

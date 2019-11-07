@@ -6,43 +6,39 @@
 //  Copyright © 2019 Austin Louden. All rights reserved.
 //
 
+import ReSwift
 import UIKit
 
 class PaceViewController: UIViewController {
-    
+        
     let tableView = UITableView()
     let header = Header()
     let footer = Footer()
 
     // Local state
-    var data: [CellData]
-    let distanceData = Race.allCases.map({ $0.longString }).dropLast() // don't include the custom race cell
     var expanded = false
+    var data: [CellData] = []
+    let distanceData = Race.allCases.map({ $0.longString }).dropLast() // don't include the custom race cell
     var selectingDistance = false
+    var customRace: CustomRace?
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        reduce(action: .loadSettings, state: appState)
-        reduce(action: .loadCustomRace, state: appState)
-        data = buildCellData(with: appState)
+        if let raceState = Storage.loadRaceState() {
+            store.dispatch(LoadRaceState(state: raceState))
+        }
+
         super.init(nibName: nil, bundle: nil)
         self.title = NSLocalizedString("Pace tables", comment: "Shows paces and finish times by race.")
-        NotificationCenter.default.addObserver(self, selector: #selector(stateDidChange(_:)), name: .stateDidChange, object: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self, name: .stateDidChange, object: nil)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
         navigationController?.isNavigationBarHidden = true
-        
-        header.distanceLabel.text = appState.race.longString
 
         tableView.sectionHeaderHeight = UITableView.automaticDimension
         tableView.estimatedSectionHeaderHeight = 80;
@@ -55,42 +51,45 @@ class PaceViewController: UIViewController {
         tableView.register(DistanceCell.self, forCellReuseIdentifier: "distanceCellIdentifier")
         tableView.register(CustomDistanceCell.self, forCellReuseIdentifier: "customDistanceCellIdentifier")
         view.addSubview(tableView)
+        
+        footer.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(footer)
 
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            tableView.bottomAnchor.constraint(equalTo: footer.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+
+            footer.topAnchor.constraint(equalTo: tableView.bottomAnchor),
+            footer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            footer.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            footer.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -kSpacing * 2)
         ])
     }
     
-    @objc func stateDidChange(_ notification:Notification) {
-        guard let action = notification.object as? Action else { return }
-        
-        switch action {
-        case .selectCustomRace:
-            tableView(tableView, didSelectRowAt: IndexPath(row: distanceData.count, section: 0))
-        case .selectRace:
-            data = buildCellData(with: appState)
-            tableView.reloadData()
-        case .toggleDistanceSelection:
-            selectingDistance = appState.selectingDistance
-            footer.isHidden = !footer.isHidden
-            expanded = false
-            tableView.reloadData()
-        case .toggleExpansion:
-            expanded = appState.expanded
-            footer.increaseButton.isHidden = !footer.increaseButton.isHidden
-            footer.decreaseButton.isHidden = !footer.decreaseButton.isHidden
-            tableView.reloadData()
-        case .incrementPace:
-            fallthrough
-        case .decrementPace:
-            data = buildCellData(with: appState)
-            tableView.reloadData()
-        default:
-            break
-        }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        store.subscribe(self)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        store.unsubscribe(self)
+        super.viewWillDisappear(animated)
+    }
+}
+
+extension PaceViewController: StoreSubscriber {
+    typealias StoreSubscriberStateType = AppState
+
+    func newState(state: AppState) {
+        data = buildCellData(with: state)
+        expanded = state.navigationState.expanded()
+        selectingDistance = state.navigationState.selectingDistance
+        customRace = state.raceState.customRace
+        // TODO: Fix this check — we shouldn't need to care about this here. Custom Race should move inside Race somehow, e.g. make Race a protocol.
+        header.distanceLabel.text = state.raceState.race == .custom ? state.raceState.customRace?.distanceString() : state.raceState.race.longString
+        tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
     }
 }
 
@@ -106,10 +105,20 @@ extension PaceViewController: UITableViewDataSource, UITableViewDelegate {
                     fatalError("The dequeued cell instance is incorrect.")
                 }
                 
+                if let race = customRace {
+                    cell.textField.text = race.distanceString()
+                    cell.metric = race.metric
+                    
+                    if race.metric {
+                        cell.unitSwitch.isOn = true
+                        cell.unitLabel.text = race.unitString()
+                    }
+                }
+                
                 cell.selectionStyle = .none
                 return cell
             }
-            
+
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "distanceCellIdentifier") as? DistanceCell else {
                 fatalError("The dequeued cell instance is incorrect.")
             }
@@ -125,28 +134,17 @@ extension PaceViewController: UITableViewDataSource, UITableViewDelegate {
             cell.selectionStyle = .none
             cell.paceLabel.text = data[indexPath.row].pace.paceString()
             cell.raceLabel.text = data[indexPath.row].finishTime.finishTimeString()
-            
-            /* HIDE TAGS FOR THIS VERSION
-            if (data[indexPath.row].tags.count > 0 && appState.race == .marathon) {
-                cell.tagButton.setTitle(data[indexPath.row].tags[0], for: .normal)
-                cell.tagButton.isHidden = false
-            }
-            */
-            
+
             return cell
         }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return (self.view.bounds.size.height - 100 - view.safeAreaInsets.top - view.safeAreaInsets.bottom) / 12.0
+        return tableView.bounds.size.height / 13.0
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return header
-    }
-    
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        return footer
     }
     
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
@@ -158,81 +156,18 @@ extension PaceViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // https://developer.apple.com/library/archive/documentation/UserExperience/Conceptual/TableView_iPhone/ManageInsertDeleteRow/ManageInsertDeleteRow.html#//apple_ref/doc/uid/TP40007451-CH10-SW9
-        
         if (selectingDistance) {
             if let race = Race(rawValue: indexPath.row) {
                 header.distanceLabel.text = race.longString
-                reduce(action: .toggleDistanceSelection, state: appState)
-                reduce(action: .selectRace(race: race), state: appState)
+                store.dispatch(ToggleDistanceSelector())
+                store.dispatch(SelectRace(race: race))
             }
         } else if (expanded) {
-            let firstRow = IndexPath(row: 0, section: 0)
-            let lastRow = IndexPath(row: data.count - 1, section: 0)
-    
-            let indexPathsToDelete = tableView.visibleCells
-                .compactMap { tableView.indexPath(for: $0) }
-                .filter { $0 != firstRow && $0 != lastRow }
-            
-             data = buildCellData(with: appState)
-            
-            let newLastRow = IndexPath(row: data.count - 1, section: 0)
-            
-            let indexPathsToAdd = [Int](1 ..< data.count - 1).map {
-                IndexPath(row: $0, section: 0)
-            }
-
-            tableView.beginUpdates()
-            tableView.deleteRows(at: indexPathsToDelete, with: .fade)
-            tableView.insertRows(at: indexPathsToAdd, with: .fade)
-            tableView.endUpdates()
-            
-            tableView.beginUpdates()
-            tableView.reloadRows(at: [firstRow, newLastRow], with: .fade)
-            tableView.endUpdates()
-            
-            reduce(action: .toggleExpansion, state: appState)
+            store.dispatch(CollapsePaces())
         } else {
-            let currentCell = data[indexPath.row]
-            guard let currentRow = tableView.indexPathForSelectedRow else { return }
-            
-            // selected the last cell
-            if (indexPath.row == data.count - 1) {
-                data.removeAll { $0 != currentCell }
-
-                let indexPathsToDelete = tableView.visibleCells
-                    .compactMap { tableView.indexPath(for: $0) }
-                    .filter { $0 != currentRow }
-
-                updateIntervalTable(indexPathsToDelete)
-            } else {
-                let nextCell = data[indexPath.row + 1]
-                data.removeAll { $0 != currentCell && $0 != nextCell }
-                
-                let nextRow = IndexPath(row: currentRow.row + 1, section: 0)
-                let indexPathsToDelete = tableView.visibleCells
-                    .compactMap { tableView.indexPath(for: $0) }
-                    .filter { $0 != currentRow && $0 != nextRow }
-
-                updateIntervalTable(indexPathsToDelete)
-            }
-            
-            reduce(action: .toggleExpansion, state: appState)
+            store.dispatch(ExpandPaces(expansion: indexPath.row))
         }
     }
     
-    func updateIntervalTable(_ indexPathsToRemove: [IndexPath]) {
-        data = buildIntervalCellData(with: data, state: appState)
-        let offset = data.count == 6 ? 1 : 0
-  
-        let indexPathsToAdd = [Int](1 ..< data.count - offset).map {
-            IndexPath(row: $0, section: 0)
-        }
-
-        tableView.beginUpdates()
-        tableView.deleteRows(at: indexPathsToRemove, with: .fade)
-        tableView.insertRows(at: indexPathsToAdd, with: .fade)
-        tableView.endUpdates()
-    }
 }
 

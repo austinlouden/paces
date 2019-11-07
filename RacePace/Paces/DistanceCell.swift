@@ -6,6 +6,7 @@
 //  Copyright © 2019 Austin Louden. All rights reserved.
 //
 
+import ReSwift
 import UIKit
 
 class DistanceCell: UITableViewCell {
@@ -14,6 +15,7 @@ class DistanceCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        backgroundColor = UIColor.white
 
         contentView.addSubview(distanceLabel)
         
@@ -33,13 +35,13 @@ class CustomDistanceCell: UITableViewCell, UITextFieldDelegate {
     let textField = UITextField()
     let unitSwitch = UISwitch()
     let saveButton = Button.button(with: "Select")
-    
     let unitLabel = Label.detailLabel(with: "miles")
     
     var metric = false
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        backgroundColor = UIColor.white
 
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = NSLocalizedString("Custom", comment: "Choose a custom distance.")
@@ -49,16 +51,6 @@ class CustomDistanceCell: UITableViewCell, UITextFieldDelegate {
         textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         textField.delegate = self
         contentView.addSubview(textField)
-
-        if let customRace = appState.customRace {
-            metric = customRace.metric
-            textField.text = customRace.distanceString()
-
-            if metric {
-                unitSwitch.isOn = true
-                unitLabel.text = customRace.unitString()
-            }
-        }
         
         unitLabel.isHidden = true
         contentView.addSubview(unitLabel)
@@ -98,9 +90,10 @@ class CustomDistanceCell: UITableViewCell, UITextFieldDelegate {
             textField.resignFirstResponder()
             toggleHiddenUI()
             
-            let customRace = CustomRace(distance: d, metric: metric)
+            let customRace = CustomRace(rawDistance: d, metric: metric)
             textField.text = customRace.distanceString()
-            reduce(action: .selectCustomRace(race: customRace), state: appState)
+            store.dispatch(SelectCustomRace(customRace: customRace))
+            store.dispatch(ToggleDistanceSelector())
         } else {
             UINotificationFeedbackGenerator().notificationOccurred(.error)
         }
