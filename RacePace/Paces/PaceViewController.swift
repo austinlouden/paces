@@ -51,12 +51,20 @@ class PaceViewController: UIViewController {
         tableView.register(DistanceCell.self, forCellReuseIdentifier: "distanceCellIdentifier")
         tableView.register(CustomDistanceCell.self, forCellReuseIdentifier: "customDistanceCellIdentifier")
         view.addSubview(tableView)
+        
+        footer.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(footer)
 
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            tableView.bottomAnchor.constraint(equalTo: footer.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+
+            footer.topAnchor.constraint(equalTo: tableView.bottomAnchor),
+            footer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            footer.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            footer.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -kSpacing * 2)
         ])
     }
     
@@ -81,7 +89,6 @@ extension PaceViewController: StoreSubscriber {
         customRace = state.raceState.customRace
         // TODO: Fix this check — we shouldn't need to care about this here. Custom Race should move inside Race somehow, e.g. make Race a protocol.
         header.distanceLabel.text = state.raceState.race == .custom ? state.raceState.customRace?.distanceString() : state.raceState.race.longString
-        footer.isHidden = expanded
         tableView.reloadData()
     }
 }
@@ -133,15 +140,11 @@ extension PaceViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return (self.view.bounds.size.height - 100 - view.safeAreaInsets.top - view.safeAreaInsets.bottom) / 12.0
+        return tableView.bounds.size.height / 13.0
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return header
-    }
-    
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        return footer
     }
     
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
