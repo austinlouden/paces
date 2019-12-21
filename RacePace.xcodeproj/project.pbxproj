@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		283D2DFA226ECA220059773D /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283D2DF9226ECA220059773D /* State.swift */; };
 		283D2DFE2270B7650059773D /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283D2DFD2270B7650059773D /* Model.swift */; };
+		2854EB7923AEDA6C003C0FEF /* SplitsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2854EB7823AEDA6C003C0FEF /* SplitsViewController.swift */; };
 		285B4F8422989BD40056B999 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285B4F8322989BD40056B999 /* Constants.swift */; };
 		285B4F8622989C200056B999 /* Landmarks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285B4F8522989C200056B999 /* Landmarks.swift */; };
 		285B4F882298DE930056B999 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285B4F872298DE930056B999 /* TabBarController.swift */; };
@@ -35,6 +36,7 @@
 /* Begin PBXFileReference section */
 		283D2DF9226ECA220059773D /* State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
 		283D2DFD2270B7650059773D /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		2854EB7823AEDA6C003C0FEF /* SplitsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitsViewController.swift; sourceTree = "<group>"; };
 		285B4F8322989BD40056B999 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		285B4F8522989C200056B999 /* Landmarks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Landmarks.swift; sourceTree = "<group>"; };
 		285B4F872298DE930056B999 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				28F42D8822B4B40100381E2F /* PaceViewController.swift */,
+				2854EB7823AEDA6C003C0FEF /* SplitsViewController.swift */,
 				28F42D8022B4B3CC00381E2F /* Cell.swift */,
 				28F42D8322B4B3CC00381E2F /* DistanceCell.swift */,
 				28F42D8122B4B3CC00381E2F /* Footer.swift */,
@@ -306,6 +309,7 @@
 				28937E66236AA5E800BF9B2E /* AppState.swift in Sources */,
 				28F42D8422B4B3CC00381E2F /* Cell.swift in Sources */,
 				285B4F8D229915EC0056B999 /* TrainingPaceCell.swift in Sources */,
+				2854EB7923AEDA6C003C0FEF /* SplitsViewController.swift in Sources */,
 				28937E68236D0F8500BF9B2E /* Storage.swift in Sources */,
 				285B4F8B2298DF1E0056B999 /* ProjectionsViewController.swift in Sources */,
 				285B4F882298DE930056B999 /* TabBarController.swift in Sources */,

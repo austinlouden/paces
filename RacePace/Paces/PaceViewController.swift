@@ -40,6 +40,10 @@ class PaceViewController: UIViewController {
         view.backgroundColor = UIColor.white
         navigationController?.isNavigationBarHidden = true
 
+        if traitCollection.forceTouchCapability == .available {
+            registerForPreviewing(with: self, sourceView: view)
+        }
+
         tableView.sectionHeaderHeight = UITableView.automaticDimension
         tableView.estimatedSectionHeaderHeight = 80;
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -168,6 +172,21 @@ extension PaceViewController: UITableViewDataSource, UITableViewDelegate {
             store.dispatch(ExpandPaces(expansion: indexPath.row))
         }
     }
-    
 }
 
+extension PaceViewController: UIViewControllerPreviewingDelegate {
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        
+        guard let indexPath = tableView.indexPathForRow(at: location) else { return nil }
+        guard let cell = tableView.cellForRow(at: indexPath) else { return nil }
+        previewingContext.sourceRect = cell.frame
+        
+        let splitsController = SplitsViewController()
+        splitsController.preferredContentSize = CGSize(width: 0.0, height: 300)
+        return splitsController
+    }
+    
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+        self.show(viewControllerToCommit, sender: nil)
+    }
+}
