@@ -1,5 +1,5 @@
 //
-//  Footer.swift
+//  PaceFooter.swift
 //  RacePace
 //
 //  Created by Austin Louden on 6/14/19.
@@ -9,7 +9,7 @@
 import ReSwift
 import UIKit
 
-class Footer: UIView {
+class PaceFooter: UIView {
     let increaseButton = Button.button(with: "+1m")
     let decreaseButton = Button.button(with: "-1m")
     

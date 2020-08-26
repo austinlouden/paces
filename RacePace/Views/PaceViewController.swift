@@ -12,8 +12,8 @@ import UIKit
 class PaceViewController: UIViewController {
         
     let tableView = UITableView()
-    let header = Header()
-    let footer = Footer()
+    let header = PaceHeader()
+    let footer = PaceFooter()
 
     // Local state
     var expanded = false
@@ -51,7 +51,7 @@ class PaceViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.showsVerticalScrollIndicator = false
-        tableView.register(Cell.self, forCellReuseIdentifier: "cellIdentifier")
+        tableView.register(PaceCell.self, forCellReuseIdentifier: "cellIdentifier")
         tableView.register(DistanceCell.self, forCellReuseIdentifier: "distanceCellIdentifier")
         tableView.register(CustomDistanceCell.self, forCellReuseIdentifier: "customDistanceCellIdentifier")
         view.addSubview(tableView)
@@ -131,7 +131,7 @@ extension PaceViewController: UITableViewDataSource, UITableViewDelegate {
             cell.selectionStyle = .none
             return cell
         } else {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "cellIdentifier") as? Cell else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "cellIdentifier") as? PaceCell else {
                 fatalError("The dequeued cell instance is incorrect.")
             }
             

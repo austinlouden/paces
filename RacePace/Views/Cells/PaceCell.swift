@@ -1,5 +1,5 @@
 //
-//  Cell.swift
+//  PaceCell.swift
 //  Process
 //
 //  Created by Austin Louden on 4/22/19.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Cell: UITableViewCell {
+class PaceCell: UITableViewCell {
     
     let paceLabel = UILabel()
     let raceLabel = UILabel()

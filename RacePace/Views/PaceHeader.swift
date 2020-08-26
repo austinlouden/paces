@@ -1,5 +1,5 @@
 //
-//  Header.swift
+//  PaceHeader.swift
 //  RacePace
 //
 //  Created by Austin Louden on 4/22/19.
@@ -9,7 +9,7 @@
 import ReSwift
 import UIKit
 
-class Header: UIView {
+class PaceHeader: UIView {
     let paceLabel = Label.titleLabel(with: "Pace")
     let paceDetailLabel = Label.detailLabel(with: "mi/min")
     let distanceLabel = Label.titleLabel(with: "")

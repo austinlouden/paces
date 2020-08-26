@@ -9,25 +9,18 @@
 /* Begin PBXBuildFile section */
 		283D2DFA226ECA220059773D /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283D2DF9226ECA220059773D /* State.swift */; };
 		283D2DFE2270B7650059773D /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283D2DFD2270B7650059773D /* Model.swift */; };
-		2854EB7923AEDA6C003C0FEF /* SplitsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2854EB7823AEDA6C003C0FEF /* SplitsViewController.swift */; };
 		285B4F8422989BD40056B999 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285B4F8322989BD40056B999 /* Constants.swift */; };
 		285B4F8622989C200056B999 /* Landmarks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285B4F8522989C200056B999 /* Landmarks.swift */; };
-		285B4F882298DE930056B999 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285B4F872298DE930056B999 /* TabBarController.swift */; };
-		285B4F8B2298DF1E0056B999 /* ProjectionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285B4F8A2298DF1E0056B999 /* ProjectionsViewController.swift */; };
-		285B4F8D229915EC0056B999 /* TrainingPaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285B4F8C229915EC0056B999 /* TrainingPaceCell.swift */; };
-		285B4F8F229928C80056B999 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285B4F8E229928C80056B999 /* WelcomeView.swift */; };
-		285B4F92229F9ED70056B999 /* RaceTimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285B4F91229F9ED70056B999 /* RaceTimeViewController.swift */; };
 		285B4F9522A176240056B999 /* Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285B4F9422A176240056B999 /* Components.swift */; };
-		285B4F9722A6BC680056B999 /* ProjectionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285B4F9622A6BC680056B999 /* ProjectionsView.swift */; };
-		285B4F9922A816F20056B999 /* Calculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285B4F9822A816F20056B999 /* Calculator.swift */; };
 		28937E66236AA5E800BF9B2E /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28937E65236AA5E800BF9B2E /* AppState.swift */; };
 		28937E68236D0F8500BF9B2E /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28937E67236D0F8500BF9B2E /* Storage.swift */; };
 		28A2BCFA226EB31E006CD3A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A2BCF9226EB31E006CD3A0 /* AppDelegate.swift */; };
 		28A2BD01226EB31F006CD3A0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 28A2BD00226EB31F006CD3A0 /* Assets.xcassets */; };
 		28A2BD04226EB31F006CD3A0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 28A2BD02226EB31F006CD3A0 /* LaunchScreen.storyboard */; };
-		28F42D8422B4B3CC00381E2F /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28F42D8022B4B3CC00381E2F /* Cell.swift */; };
-		28F42D8522B4B3CC00381E2F /* Footer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28F42D8122B4B3CC00381E2F /* Footer.swift */; };
-		28F42D8622B4B3CC00381E2F /* Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28F42D8222B4B3CC00381E2F /* Header.swift */; };
+		28AD0C8F24F6095600BF15CB /* SplitsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28AD0C8E24F6095500BF15CB /* SplitsViewController.swift */; };
+		28F42D8422B4B3CC00381E2F /* PaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28F42D8022B4B3CC00381E2F /* PaceCell.swift */; };
+		28F42D8522B4B3CC00381E2F /* PaceFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28F42D8122B4B3CC00381E2F /* PaceFooter.swift */; };
+		28F42D8622B4B3CC00381E2F /* PaceHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28F42D8222B4B3CC00381E2F /* PaceHeader.swift */; };
 		28F42D8722B4B3CC00381E2F /* DistanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28F42D8322B4B3CC00381E2F /* DistanceCell.swift */; };
 		28F42D8922B4B40100381E2F /* PaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28F42D8822B4B40100381E2F /* PaceViewController.swift */; };
 		9F81441CAA9168CA59A6AE9E /* Pods_RacePace.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C342FB741C6E6504492B6D77 /* Pods_RacePace.framework */; };
@@ -36,17 +29,9 @@
 /* Begin PBXFileReference section */
 		283D2DF9226ECA220059773D /* State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
 		283D2DFD2270B7650059773D /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
-		2854EB7823AEDA6C003C0FEF /* SplitsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitsViewController.swift; sourceTree = "<group>"; };
 		285B4F8322989BD40056B999 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		285B4F8522989C200056B999 /* Landmarks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Landmarks.swift; sourceTree = "<group>"; };
-		285B4F872298DE930056B999 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
-		285B4F8A2298DF1E0056B999 /* ProjectionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectionsViewController.swift; sourceTree = "<group>"; };
-		285B4F8C229915EC0056B999 /* TrainingPaceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingPaceCell.swift; sourceTree = "<group>"; };
-		285B4F8E229928C80056B999 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
-		285B4F91229F9ED70056B999 /* RaceTimeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceTimeViewController.swift; sourceTree = "<group>"; };
 		285B4F9422A176240056B999 /* Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Components.swift; sourceTree = "<group>"; };
-		285B4F9622A6BC680056B999 /* ProjectionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectionsView.swift; sourceTree = "<group>"; };
-		285B4F9822A816F20056B999 /* Calculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calculator.swift; sourceTree = "<group>"; };
 		28937E65236AA5E800BF9B2E /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		28937E67236D0F8500BF9B2E /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		28A2BCF6226EB31E006CD3A0 /* RacePace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RacePace.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -54,9 +39,10 @@
 		28A2BD00226EB31F006CD3A0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		28A2BD03226EB31F006CD3A0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		28A2BD05226EB31F006CD3A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		28F42D8022B4B3CC00381E2F /* Cell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cell.swift; sourceTree = "<group>"; };
-		28F42D8122B4B3CC00381E2F /* Footer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Footer.swift; sourceTree = "<group>"; };
-		28F42D8222B4B3CC00381E2F /* Header.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Header.swift; sourceTree = "<group>"; };
+		28AD0C8E24F6095500BF15CB /* SplitsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplitsViewController.swift; sourceTree = "<group>"; };
+		28F42D8022B4B3CC00381E2F /* PaceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaceCell.swift; sourceTree = "<group>"; };
+		28F42D8122B4B3CC00381E2F /* PaceFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaceFooter.swift; sourceTree = "<group>"; };
+		28F42D8222B4B3CC00381E2F /* PaceHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaceHeader.swift; sourceTree = "<group>"; };
 		28F42D8322B4B3CC00381E2F /* DistanceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DistanceCell.swift; sourceTree = "<group>"; };
 		28F42D8822B4B40100381E2F /* PaceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaceViewController.swift; sourceTree = "<group>"; };
 		A660B864BF8BC17258E2BB8F /* Pods-RacePace.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RacePace.release.xcconfig"; path = "Target Support Files/Pods-RacePace/Pods-RacePace.release.xcconfig"; sourceTree = "<group>"; };
@@ -85,34 +71,13 @@
 			path = Constants;
 			sourceTree = "<group>";
 		};
-		285B4F892298DF0D0056B999 /* Projections */ = {
+		285B4F9322A175F40056B999 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				285B4F90229F9E780056B999 /* NUX */,
-				285B4F8A2298DF1E0056B999 /* ProjectionsViewController.swift */,
-				285B4F8E229928C80056B999 /* WelcomeView.swift */,
-				285B4F9622A6BC680056B999 /* ProjectionsView.swift */,
-				285B4F8C229915EC0056B999 /* TrainingPaceCell.swift */,
-				285B4F9822A816F20056B999 /* Calculator.swift */,
-			);
-			path = Projections;
-			sourceTree = "<group>";
-		};
-		285B4F90229F9E780056B999 /* NUX */ = {
-			isa = PBXGroup;
-			children = (
-				285B4F91229F9ED70056B999 /* RaceTimeViewController.swift */,
-			);
-			path = NUX;
-			sourceTree = "<group>";
-		};
-		285B4F9322A175F40056B999 /* Core */ = {
-			isa = PBXGroup;
-			children = (
-				285B4F9422A176240056B999 /* Components.swift */,
+				28B33CD0228BC6CE00C5120C /* State */,
 				28937E67236D0F8500BF9B2E /* Storage.swift */,
 			);
-			path = Core;
+			path = Models;
 			sourceTree = "<group>";
 		};
 		28A2BCED226EB31E006CD3A0 = {
@@ -136,19 +101,25 @@
 		28A2BCF8226EB31E006CD3A0 /* RacePace */ = {
 			isa = PBXGroup;
 			children = (
-				28F42D7F22B4B39200381E2F /* Paces */,
-				285B4F9322A175F40056B999 /* Core */,
-				285B4F892298DF0D0056B999 /* Projections */,
-				28B33CD0228BC6CE00C5120C /* State */,
+				28F42D7F22B4B39200381E2F /* Views */,
+				285B4F9322A175F40056B999 /* Models */,
 				285B4F8222989BBB0056B999 /* Constants */,
 				28A2BCF9226EB31E006CD3A0 /* AppDelegate.swift */,
-				285B4F872298DE930056B999 /* TabBarController.swift */,
 				283D2DFD2270B7650059773D /* Model.swift */,
 				28A2BD00226EB31F006CD3A0 /* Assets.xcassets */,
 				28A2BD02226EB31F006CD3A0 /* LaunchScreen.storyboard */,
 				28A2BD05226EB31F006CD3A0 /* Info.plist */,
 			);
 			path = RacePace;
+			sourceTree = "<group>";
+		};
+		28AD0C8D24F608BA00BF15CB /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				28F42D8022B4B3CC00381E2F /* PaceCell.swift */,
+				28F42D8322B4B3CC00381E2F /* DistanceCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		28B33CD0228BC6CE00C5120C /* State */ = {
@@ -160,17 +131,17 @@
 			path = State;
 			sourceTree = "<group>";
 		};
-		28F42D7F22B4B39200381E2F /* Paces */ = {
+		28F42D7F22B4B39200381E2F /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				28AD0C8D24F608BA00BF15CB /* Cells */,
+				285B4F9422A176240056B999 /* Components.swift */,
 				28F42D8822B4B40100381E2F /* PaceViewController.swift */,
-				2854EB7823AEDA6C003C0FEF /* SplitsViewController.swift */,
-				28F42D8022B4B3CC00381E2F /* Cell.swift */,
-				28F42D8322B4B3CC00381E2F /* DistanceCell.swift */,
-				28F42D8122B4B3CC00381E2F /* Footer.swift */,
-				28F42D8222B4B3CC00381E2F /* Header.swift */,
+				28F42D8122B4B3CC00381E2F /* PaceFooter.swift */,
+				28F42D8222B4B3CC00381E2F /* PaceHeader.swift */,
+				28AD0C8E24F6095500BF15CB /* SplitsViewController.swift */,
 			);
-			path = Paces;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		4006E2F0FCA1E581568BCD20 /* Pods */ = {
@@ -304,23 +275,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				285B4F92229F9ED70056B999 /* RaceTimeViewController.swift in Sources */,
 				285B4F8422989BD40056B999 /* Constants.swift in Sources */,
 				28937E66236AA5E800BF9B2E /* AppState.swift in Sources */,
-				28F42D8422B4B3CC00381E2F /* Cell.swift in Sources */,
-				285B4F8D229915EC0056B999 /* TrainingPaceCell.swift in Sources */,
-				2854EB7923AEDA6C003C0FEF /* SplitsViewController.swift in Sources */,
+				28F42D8422B4B3CC00381E2F /* PaceCell.swift in Sources */,
 				28937E68236D0F8500BF9B2E /* Storage.swift in Sources */,
-				285B4F8B2298DF1E0056B999 /* ProjectionsViewController.swift in Sources */,
-				285B4F882298DE930056B999 /* TabBarController.swift in Sources */,
-				28F42D8522B4B3CC00381E2F /* Footer.swift in Sources */,
-				285B4F9922A816F20056B999 /* Calculator.swift in Sources */,
-				28F42D8622B4B3CC00381E2F /* Header.swift in Sources */,
+				28F42D8522B4B3CC00381E2F /* PaceFooter.swift in Sources */,
+				28AD0C8F24F6095600BF15CB /* SplitsViewController.swift in Sources */,
+				28F42D8622B4B3CC00381E2F /* PaceHeader.swift in Sources */,
 				285B4F9522A176240056B999 /* Components.swift in Sources */,
-				285B4F8F229928C80056B999 /* WelcomeView.swift in Sources */,
 				28F42D8722B4B3CC00381E2F /* DistanceCell.swift in Sources */,
 				28F42D8922B4B40100381E2F /* PaceViewController.swift in Sources */,
-				285B4F9722A6BC680056B999 /* ProjectionsView.swift in Sources */,
 				283D2DFE2270B7650059773D /* Model.swift in Sources */,
 				28A2BCFA226EB31E006CD3A0 /* AppDelegate.swift in Sources */,
 				285B4F8622989C200056B999 /* Landmarks.swift in Sources */,
