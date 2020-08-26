@@ -31,7 +31,8 @@ class PaceViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         self.title = NSLocalizedString("Pace tables", comment: "Shows paces and finish times by race.")
     }
-    
+
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -44,17 +45,7 @@ class PaceViewController: UIViewController {
         setupTableView()
         setupHierarchy()
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        store.subscribe(self)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        store.unsubscribe(self)
-        super.viewWillDisappear(animated)
-    }
-    
+
     override func updateViewConstraints() {
         if constraints.isEmpty {
             constraints = [
@@ -71,6 +62,16 @@ class PaceViewController: UIViewController {
             NSLayoutConstraint.activate(constraints)
         }
         super.updateViewConstraints()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        store.subscribe(self)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        store.unsubscribe(self)
+        super.viewWillDisappear(animated)
     }
 }
 
