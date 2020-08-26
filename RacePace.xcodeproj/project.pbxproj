@@ -77,7 +77,6 @@
 			isa = PBXGroup;
 			children = (
 				283D2DFD2270B7650059773D /* Model.swift */,
-				28937E67236D0F8500BF9B2E /* Storage.swift */,
 				28B33CD0228BC6CE00C5120C /* State */,
 			);
 			path = Models;
@@ -108,6 +107,7 @@
 				28F42D7F22B4B39200381E2F /* Views */,
 				28AD0C9024F610B200BF15CB /* Controllers */,
 				285B4F8222989BBB0056B999 /* Constants */,
+				28AD0C9324F6123800BF15CB /* Service */,
 				28A2BCF9226EB31E006CD3A0 /* AppDelegate.swift */,
 				28A2BD00226EB31F006CD3A0 /* Assets.xcassets */,
 				28A2BD02226EB31F006CD3A0 /* LaunchScreen.storyboard */,
@@ -131,6 +131,14 @@
 				28AD0C9124F610D700BF15CB /* PaceController.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		28AD0C9324F6123800BF15CB /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				28937E67236D0F8500BF9B2E /* Storage.swift */,
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 		28B33CD0228BC6CE00C5120C /* State */ = {
