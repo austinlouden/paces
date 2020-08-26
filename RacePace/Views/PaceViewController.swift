@@ -18,7 +18,7 @@ class PaceViewController: UIViewController {
     // Local state
     var constraints = [NSLayoutConstraint]()
     var expanded = false
-    var data: [CellData] = []
+    var data: [RaceResult] = []
     var selectingDistance = false
     var customRace: CustomRace?
 
@@ -43,6 +43,7 @@ class PaceViewController: UIViewController {
 
         setupTableView()
         setupHierarchy()
+        setupDataSource()
     }
 
     override func updateViewConstraints() {
@@ -93,6 +94,9 @@ extension PaceViewController {
         view.addSubview(footer)
     }
     
+    func setupDataSource() {
+        
+    }
 }
 
 extension PaceViewController: StoreSubscriber {

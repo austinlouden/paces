@@ -13,6 +13,15 @@ struct Event: Codable {
     let time: FinishTime
 }
 
+struct RaceResult: Equatable {
+    let pace: Pace
+    let finishTime: FinishTime
+    
+    static func ==(lhs: RaceResult, rhs: RaceResult) -> Bool {
+        return lhs.pace.minutes == rhs.pace.minutes && lhs.pace.seconds == rhs.pace.seconds
+    }
+}
+
 struct FinishTime: Equatable, Codable {
     let hours: Int
     let minutes: Int
@@ -124,14 +133,4 @@ func finishTime(with pace:Pace, distance: Double) -> FinishTime {
     let paceInSeconds = 60 * pace.minutes + pace.seconds
     let finishTimeInSeconds = Int(round(distance * Double(paceInSeconds)))
     return FinishTime.finishTime(with: finishTimeInSeconds)
-}
-
-struct CellData: Equatable {
-    let pace: Pace
-    let finishTime: FinishTime
-    let tags: [String]
-    
-    static func ==(lhs: CellData, rhs: CellData) -> Bool {
-        return lhs.pace.minutes == rhs.pace.minutes && lhs.pace.seconds == rhs.pace.seconds
-    }
 }
