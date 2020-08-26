@@ -10,6 +10,8 @@ import Foundation
 
 class PaceController {
     
+    static let distanceData = Race.allCases.map({ $0.longString }).dropLast()
+    
     static func buildCellData(with state: AppState) -> [CellData] {
         if (state.navigationState.expanded()) {
             let distance = state.raceState.race == .custom ? state.raceState.customRace?.distance() : state.raceState.race.distance

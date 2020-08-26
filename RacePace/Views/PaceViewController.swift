@@ -19,7 +19,6 @@ class PaceViewController: UIViewController {
     var constraints = [NSLayoutConstraint]()
     var expanded = false
     var data: [CellData] = []
-    let distanceData = Race.allCases.map({ $0.longString }).dropLast() // don't include the custom race cell
     var selectingDistance = false
     var customRace: CustomRace?
 
@@ -84,9 +83,9 @@ extension PaceViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.showsVerticalScrollIndicator = false
-        tableView.register(PaceCell.self, forCellReuseIdentifier: "cellIdentifier")
-        tableView.register(DistanceCell.self, forCellReuseIdentifier: "distanceCellIdentifier")
-        tableView.register(CustomDistanceCell.self, forCellReuseIdentifier: "customDistanceCellIdentifier")
+        tableView.register(PaceCell.self, forCellReuseIdentifier: PaceCell.cellIdentifier)
+        tableView.register(DistanceCell.self, forCellReuseIdentifier: DistanceCell.cellIdentifier)
+        tableView.register(CustomDistanceCell.self, forCellReuseIdentifier: CustomDistanceCell.cellIdentifier)
     }
     
     func setupHierarchy() {
@@ -112,13 +111,13 @@ extension PaceViewController: StoreSubscriber {
 
 extension PaceViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return selectingDistance ? distanceData.count + 1 : data.count
+        return selectingDistance ? PaceController.distanceData.count + 1 : data.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if (selectingDistance) {
-            if (indexPath.row == distanceData.count) {
-                guard let cell = tableView.dequeueReusableCell(withIdentifier: "customDistanceCellIdentifier") as? CustomDistanceCell else {
+            if (indexPath.row == PaceController.distanceData.count) {
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: CustomDistanceCell.cellIdentifier) as? CustomDistanceCell else {
                     fatalError("The dequeued cell instance is incorrect.")
                 }
                 
@@ -136,15 +135,15 @@ extension PaceViewController: UITableViewDataSource, UITableViewDelegate {
                 return cell
             }
 
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "distanceCellIdentifier") as? DistanceCell else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: DistanceCell.cellIdentifier) as? DistanceCell else {
                 fatalError("The dequeued cell instance is incorrect.")
             }
 
-            cell.distanceLabel.text = distanceData[indexPath.row]
+            cell.distanceLabel.text = PaceController.distanceData[indexPath.row]
             cell.selectionStyle = .none
             return cell
         } else {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "cellIdentifier") as? PaceCell else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: PaceCell.cellIdentifier) as? PaceCell else {
                 fatalError("The dequeued cell instance is incorrect.")
             }
             
@@ -165,7 +164,7 @@ extension PaceViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        if selectingDistance && indexPath.row == distanceData.count {
+        if selectingDistance && indexPath.row == PaceController.distanceData.count {
             return nil
         }
 

@@ -10,6 +10,8 @@ import UIKit
 
 class PaceCell: UITableViewCell {
     
+    static let cellIdentifier = "paceCellIdentifier"
+    
     let paceLabel = UILabel()
     let raceLabel = UILabel()
     let tagButton = UIButton()

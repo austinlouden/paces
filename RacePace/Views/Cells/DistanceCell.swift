@@ -11,6 +11,8 @@ import UIKit
 
 class DistanceCell: UITableViewCell {
 
+    static let cellIdentifier = "distanceCellIdentifier"
+
     let distanceLabel = Label.titleLabel(with: "")
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -31,6 +33,8 @@ class DistanceCell: UITableViewCell {
 }
 
 class CustomDistanceCell: UITableViewCell, UITextFieldDelegate {
+    
+    static let cellIdentifier = "customDistanceCellIdentifier"
     
     let textField = UITextField()
     let unitSwitch = UISwitch()
