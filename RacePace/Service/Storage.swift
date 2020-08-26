@@ -8,6 +8,12 @@
 
 import ReSwift
 
+struct RaceState: Codable {
+    var pace: Int = 8
+    var race: Race = Race.marathon
+    var customRace: CustomRace?
+}
+
 class Storage {
     public static func storeRaceState(_ raceState: RaceState) {
         UserDefaults.standard.set(try? PropertyListEncoder().encode(raceState), forKey:kRaceStateDefaultsKey)

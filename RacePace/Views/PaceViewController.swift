@@ -6,25 +6,28 @@
 //  Copyright © 2019 Austin Louden. All rights reserved.
 //
 
-import ReSwift
 import UIKit
 
 class PaceViewController: UIViewController {
-        
+    
+    enum Section: CaseIterable {
+        case main
+    }
+
     let tableView = UITableView()
     let header = PaceHeader()
     let footer = PaceFooter()
 
-    // Local state
     var constraints = [NSLayoutConstraint]()
-    var expanded = false
-    var data: [RaceResult] = []
+    var dataSource: UITableViewDiffableDataSource<Section, RaceResult>! = nil
+    let controller = PaceController()
+
     var selectingDistance = false
     var customRace: CustomRace?
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         if let raceState = Storage.loadRaceState() {
-            store.dispatch(LoadRaceState(state: raceState))
+
         }
 
         super.init(nibName: nil, bundle: nil)
@@ -44,6 +47,7 @@ class PaceViewController: UIViewController {
         setupTableView()
         setupHierarchy()
         setupDataSource()
+        updateUI(animated: false)
     }
 
     override func updateViewConstraints() {
@@ -63,16 +67,6 @@ class PaceViewController: UIViewController {
         }
         super.updateViewConstraints()
     }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        store.subscribe(self)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        store.unsubscribe(self)
-        super.viewWillDisappear(animated)
-    }
 }
 
 extension PaceViewController {
@@ -82,7 +76,6 @@ extension PaceViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.backgroundColor = UIColor(displayP3Red: 0, green: 0, blue: 0, alpha: 0)
         tableView.delegate = self
-        tableView.dataSource = self
         tableView.showsVerticalScrollIndicator = false
         tableView.register(PaceCell.self, forCellReuseIdentifier: PaceCell.cellIdentifier)
         tableView.register(DistanceCell.self, forCellReuseIdentifier: DistanceCell.cellIdentifier)
@@ -95,25 +88,35 @@ extension PaceViewController {
     }
     
     func setupDataSource() {
-        
+        dataSource = UITableViewDiffableDataSource<Section, RaceResult>(tableView: tableView,
+                                                                        cellProvider: { (tableView, indexPath, raceResult) -> UITableViewCell? in
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: PaceCell.cellIdentifier) as? PaceCell else {
+                fatalError("The dequeued cell instance is incorrect.")
+            }
+
+            cell.selectionStyle = .none
+            cell.paceLabel.text = raceResult.pace.paceString()
+            cell.raceLabel.text = raceResult.finishTime.finishTimeString()
+            return cell
+        })
+        dataSource.defaultRowAnimation = .fade
     }
-}
+    
+    func updateUI(animated: Bool = true) {
+        var snapshot = NSDiffableDataSourceSnapshot<Section, RaceResult>()
+        snapshot.appendSections([.main])
+        snapshot.appendItems(controller.generateResults())
+        dataSource.apply(snapshot, animatingDifferences: animated)
 
-extension PaceViewController: StoreSubscriber {
-    typealias StoreSubscriberStateType = AppState
-
-    func newState(state: AppState) {
-        data = PaceController.buildCellData(with: state)
-        expanded = state.navigationState.expanded()
-        selectingDistance = state.navigationState.selectingDistance
-        customRace = state.raceState.customRace
+        //selectingDistance = state.navigationState.selectingDistance
+        //customRace = state.raceState.customRace
         // TODO: Fix this check — we shouldn't need to care about this here. Custom Race should move inside Race somehow, e.g. make Race a protocol.
-        header.distanceLabel.text = state.raceState.race == .custom ? state.raceState.customRace?.distanceString() : state.raceState.race.longString
-        tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+        header.distanceLabel.text = controller.raceState.race == .custom ? controller.raceState.customRace?.distanceString() : controller.raceState.race.longString
     }
 }
 
-extension PaceViewController: UITableViewDataSource, UITableViewDelegate {
+extension PaceViewController: UITableViewDelegate {
+    /*
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return selectingDistance ? PaceController.distanceData.count + 1 : data.count
     }
@@ -158,6 +161,7 @@ extension PaceViewController: UITableViewDataSource, UITableViewDelegate {
             return cell
         }
     }
+     */
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return tableView.bounds.size.height / 13.0
@@ -182,10 +186,9 @@ extension PaceViewController: UITableViewDataSource, UITableViewDelegate {
                 store.dispatch(ToggleDistanceSelector())
                 store.dispatch(SelectRace(race: race))
             }
-        } else if (expanded) {
-            store.dispatch(CollapsePaces())
         } else {
-            store.dispatch(ExpandPaces(expansion: indexPath.row))
+            controller.toggleExpansion()
+            updateUI()
         }
     }
 }

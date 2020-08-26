@@ -23,14 +23,6 @@ func appReducer(action: Action, state: AppState?) -> AppState {
     )
 }
 
-// RACE STATE
-
-struct RaceState: StateType, Codable {
-    var pace: Int = 8
-    var race: Race = Race.marathon
-    var customRace: CustomRace?
-}
-
 struct IncrementPace: Action {}
 struct DecrementPace: Action {}
 struct SelectRace: Action { let race: Race }
@@ -77,20 +69,12 @@ struct NavigationState: StateType {
     }
 }
 
-struct ExpandPaces: Action { let expansion: Int }
-struct CollapsePaces: Action {}
 struct ToggleDistanceSelector: Action {}
 
 func navigationReducer(action: Action, state: NavigationState?) -> NavigationState {
     var state = state ?? NavigationState()
 
     switch action {
-        case let action as ExpandPaces:
-            UIImpactFeedbackGenerator().impactOccurred()
-            state.expansion = action.expansion
-        case _ as CollapsePaces:
-            UIImpactFeedbackGenerator().impactOccurred()
-            state.expansion = -1
         case _ as ToggleDistanceSelector:
             UIImpactFeedbackGenerator().impactOccurred()
             state.selectingDistance = !state.selectingDistance

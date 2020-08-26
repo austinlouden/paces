@@ -9,18 +9,40 @@
 import Foundation
 
 class PaceController {
-    
+
+    enum TableState {
+        case expanded
+        case collapsed
+    }
+
     static let distanceData = Race.allCases.map({ $0.longString }).dropLast()
+
+    private (set) public var tableState: TableState = .collapsed
+    private (set) public var raceState = RaceState()
     
-    static func buildCellData(with state: AppState) -> [RaceResult] {
-        if (state.navigationState.expanded()) {
-            let distance = state.raceState.race == .custom ? state.raceState.customRace?.distance() : state.raceState.race.distance
-            let start = state.navigationState.expansion * 5
+    init() {
+        if let savedState = Storage.loadRaceState() {
+            raceState = savedState
+        }
+    }
+    
+    func toggleExpansion() {
+        if tableState == .collapsed {
+            tableState = .expanded
+        } else {
+            tableState = .collapsed
+        }
+    }
+
+    func generateResults() -> [RaceResult] {
+        if tableState == .expanded {
+            let distance = raceState.race == .custom ? raceState.customRace?.distance() : raceState.race.distance
+            let start = 1 // TODO: fix expansion on values
             let end = start + 5
 
             return [Int](start...end).map({ (i) -> RaceResult in
                 
-                let p = i == 60 ? state.raceState.pace + 1 : state.raceState.pace
+                let p = i == 60 ? raceState.pace + 1 : raceState.pace
                 let s = i == 60 ? 0 : i
 
                 let pace = Pace(minutes: p, seconds: s, name: nil)
@@ -30,10 +52,10 @@ class PaceController {
             })
         } else {
             // TODO: Fix this distance check
-            let distance = state.raceState.race == .custom ? state.raceState.customRace?.distance() : state.raceState.race.distance
+            let distance = raceState.race == .custom ? raceState.customRace?.distance() : raceState.race.distance
 
             return [Int](0..<12).map({ (i) -> RaceResult in
-                let pace = Pace(minutes: state.raceState.pace, seconds: i * 5, name: nil)
+                let pace = Pace(minutes: raceState.pace, seconds: i * 5, name: nil)
                 let finish = finishTime(with: pace, distance: distance ?? 0.0)
 
                 return RaceResult(pace: pace, finishTime: finish)

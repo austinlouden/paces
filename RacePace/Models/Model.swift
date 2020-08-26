@@ -13,12 +13,17 @@ struct Event: Codable {
     let time: FinishTime
 }
 
-struct RaceResult: Equatable {
+struct RaceResult: Hashable {
+    let identifier = UUID()
     let pace: Pace
     let finishTime: FinishTime
-    
-    static func ==(lhs: RaceResult, rhs: RaceResult) -> Bool {
-        return lhs.pace.minutes == rhs.pace.minutes && lhs.pace.seconds == rhs.pace.seconds
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(identifier)
+    }
+
+    static func == (lhs: RaceResult, rhs: RaceResult) -> Bool {
+        return lhs.identifier == rhs.identifier
     }
 }
 
