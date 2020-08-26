@@ -74,8 +74,9 @@
 		285B4F9322A175F40056B999 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				28B33CD0228BC6CE00C5120C /* State */,
+				283D2DFD2270B7650059773D /* Model.swift */,
 				28937E67236D0F8500BF9B2E /* Storage.swift */,
+				28B33CD0228BC6CE00C5120C /* State */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -105,7 +106,6 @@
 				285B4F9322A175F40056B999 /* Models */,
 				285B4F8222989BBB0056B999 /* Constants */,
 				28A2BCF9226EB31E006CD3A0 /* AppDelegate.swift */,
-				283D2DFD2270B7650059773D /* Model.swift */,
 				28A2BD00226EB31F006CD3A0 /* Assets.xcassets */,
 				28A2BD02226EB31F006CD3A0 /* LaunchScreen.storyboard */,
 				28A2BD05226EB31F006CD3A0 /* Info.plist */,
