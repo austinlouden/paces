@@ -16,6 +16,7 @@ class PaceViewController: UIViewController {
     let footer = PaceFooter()
 
     // Local state
+    var constraints = [NSLayoutConstraint]()
     var expanded = false
     var data: [CellData] = []
     let distanceData = Race.allCases.map({ $0.longString }).dropLast() // don't include the custom race cell
@@ -37,39 +38,11 @@ class PaceViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.white
+        view.backgroundColor = UIColor.systemBackground
         navigationController?.isNavigationBarHidden = true
 
-        if traitCollection.forceTouchCapability == .available {
-            registerForPreviewing(with: self, sourceView: view)
-        }
-
-        tableView.sectionHeaderHeight = UITableView.automaticDimension
-        tableView.estimatedSectionHeaderHeight = 80;
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.backgroundColor = UIColor(displayP3Red: 0, green: 0, blue: 0, alpha: 0)
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.showsVerticalScrollIndicator = false
-        tableView.register(PaceCell.self, forCellReuseIdentifier: "cellIdentifier")
-        tableView.register(DistanceCell.self, forCellReuseIdentifier: "distanceCellIdentifier")
-        tableView.register(CustomDistanceCell.self, forCellReuseIdentifier: "customDistanceCellIdentifier")
-        view.addSubview(tableView)
-        
-        footer.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(footer)
-
-        NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: footer.topAnchor),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-
-            footer.topAnchor.constraint(equalTo: tableView.bottomAnchor),
-            footer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            footer.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            footer.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -kSpacing * 2)
-        ])
+        setupTableView()
+        setupHierarchy()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -81,6 +54,45 @@ class PaceViewController: UIViewController {
         store.unsubscribe(self)
         super.viewWillDisappear(animated)
     }
+    
+    override func updateViewConstraints() {
+        if constraints.isEmpty {
+            constraints = [
+                tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+                tableView.bottomAnchor.constraint(equalTo: footer.topAnchor),
+                tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                
+                footer.topAnchor.constraint(equalTo: tableView.bottomAnchor),
+                footer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                footer.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                footer.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -kSpacing * 2)
+            ]
+            NSLayoutConstraint.activate(constraints)
+        }
+        super.updateViewConstraints()
+    }
+}
+
+extension PaceViewController {
+    func setupTableView() {
+        tableView.sectionHeaderHeight = UITableView.automaticDimension
+        tableView.estimatedSectionHeaderHeight = 80;
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.backgroundColor = UIColor(displayP3Red: 0, green: 0, blue: 0, alpha: 0)
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.showsVerticalScrollIndicator = false
+        tableView.register(PaceCell.self, forCellReuseIdentifier: "cellIdentifier")
+        tableView.register(DistanceCell.self, forCellReuseIdentifier: "distanceCellIdentifier")
+        tableView.register(CustomDistanceCell.self, forCellReuseIdentifier: "customDistanceCellIdentifier")
+    }
+    
+    func setupHierarchy() {
+        view.addSubview(tableView)
+        view.addSubview(footer)
+    }
+    
 }
 
 extension PaceViewController: StoreSubscriber {
@@ -174,6 +186,8 @@ extension PaceViewController: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
+/*
+ TODO: Implement force touch to show splits.
 extension PaceViewController: UIViewControllerPreviewingDelegate {
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
         
@@ -190,3 +204,4 @@ extension PaceViewController: UIViewControllerPreviewingDelegate {
         self.show(viewControllerToCommit, sender: nil)
     }
 }
+*/

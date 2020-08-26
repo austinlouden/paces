@@ -15,6 +15,7 @@ class PaceFooter: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        translatesAutoresizingMaskIntoConstraints = false
         
         increaseButton.addTarget(self, action: #selector(increment), for: .touchUpInside)
         decreaseButton.addTarget(self, action: #selector(decrement), for: .touchUpInside)
