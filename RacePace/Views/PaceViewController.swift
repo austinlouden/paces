@@ -99,7 +99,7 @@ extension PaceViewController: StoreSubscriber {
     typealias StoreSubscriberStateType = AppState
 
     func newState(state: AppState) {
-        data = buildCellData(with: state)
+        data = PaceController.buildCellData(with: state)
         expanded = state.navigationState.expanded()
         selectingDistance = state.navigationState.selectingDistance
         customRace = state.raceState.customRace
