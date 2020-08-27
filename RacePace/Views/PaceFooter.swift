@@ -6,10 +6,17 @@
 //  Copyright © 2019 Austin Louden. All rights reserved.
 //
 
-import ReSwift
 import UIKit
 
+protocol PaceFooterDelegate: AnyObject {
+    func paceFooterDidIncrementPace()
+    func paceFooterDidDecrementPace()
+}
+
 class PaceFooter: UIView {
+    
+    weak var delegate: PaceFooterDelegate?
+
     let increaseButton = Button.button(with: "+1m")
     let decreaseButton = Button.button(with: "-1m")
     
@@ -41,10 +48,10 @@ class PaceFooter: UIView {
     }
 
     @objc func increment() {
-        store.dispatch(IncrementPace())
+        self.delegate?.paceFooterDidIncrementPace()
     }
-    
+
     @objc func decrement() {
-        store.dispatch(DecrementPace())
+        self.delegate?.paceFooterDidDecrementPace()
     }
 }

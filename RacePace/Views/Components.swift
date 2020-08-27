@@ -35,7 +35,7 @@ class Button {
     static func button(with title: String) -> UIButton {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = UIColor.lightTextColor
+        button.backgroundColor = UIColor.secondarySystemBackground
         button.setTitleColor(UIColor.textColor, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: standardFontSize)
         button.setTitle(title, for: .normal)

@@ -62,4 +62,16 @@ class PaceController {
             })
         }
     }
+
+    func incrementPace() {
+        if raceState.pace < 30 {
+            raceState.pace += 1
+        }
+    }
+    
+    func decrementPace() {
+        if raceState.pace > 1 {
+            raceState.pace -= 1
+        }
+    }
 }

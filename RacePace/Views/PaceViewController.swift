@@ -26,10 +26,6 @@ class PaceViewController: UIViewController {
     var customRace: CustomRace?
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        if let raceState = Storage.loadRaceState() {
-
-        }
-
         super.init(nibName: nil, bundle: nil)
         self.title = NSLocalizedString("Pace tables", comment: "Shows paces and finish times by race.")
     }
@@ -84,6 +80,8 @@ extension PaceViewController {
     
     func setupHierarchy() {
         view.addSubview(tableView)
+
+        footer.delegate = self
         view.addSubview(footer)
     }
     
@@ -180,6 +178,7 @@ extension PaceViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        UIImpactFeedbackGenerator().impactOccurred()
         if (selectingDistance) {
             if let race = Race(rawValue: indexPath.row) {
                 header.distanceLabel.text = race.longString
@@ -193,22 +192,16 @@ extension PaceViewController: UITableViewDelegate {
     }
 }
 
-/*
- TODO: Implement force touch to show splits.
-extension PaceViewController: UIViewControllerPreviewingDelegate {
-    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
-        
-        guard let indexPath = tableView.indexPathForRow(at: location) else { return nil }
-        guard let cell = tableView.cellForRow(at: indexPath) else { return nil }
-        previewingContext.sourceRect = cell.frame
-        
-        let splitsController = SplitsViewController()
-        splitsController.preferredContentSize = CGSize(width: 0.0, height: 300)
-        return splitsController
+extension PaceViewController: PaceFooterDelegate {
+    func paceFooterDidIncrementPace() {
+        UIImpactFeedbackGenerator().impactOccurred()
+        controller.incrementPace()
+        updateUI()
     }
     
-    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
-        self.show(viewControllerToCommit, sender: nil)
+    func paceFooterDidDecrementPace() {
+        UIImpactFeedbackGenerator().impactOccurred()
+        controller.decrementPace()
+        updateUI()
     }
 }
-*/
