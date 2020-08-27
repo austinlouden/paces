@@ -9,16 +9,19 @@
 import ReSwift
 import UIKit
 
+protocol PaceHeaderDelegate: AnyObject {
+    func paceHeaderDidTapSettingsButton()
+}
+
 class PaceHeader: UIView {
     let paceLabel = Label.titleLabel(with: "Pace")
     let paceDetailLabel = Label.detailLabel(with: "mi/min")
     let distanceLabel = Label.titleLabel(with: "")
     let distanceDetailLabel = Label.detailLabel(with: "Finish time")
-    let tapRecognizer = UITapGestureRecognizer()
+    let settingsButton = UIButton(type: .roundedRect)
     let bottomBorder = UIView()
-
-    let increaseButton = Button.button(with: "+1m")
-    let decreaseButton = Button.button(with: "-1m")
+    
+    weak var delegate: PaceHeaderDelegate?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -33,9 +36,11 @@ class PaceHeader: UIView {
         
         addSubview(paceDetailLabel)
         addSubview(distanceDetailLabel)
-    
-        tapRecognizer.addTarget(self, action: #selector(headerTapped))
-        self.addGestureRecognizer(tapRecognizer)
+
+        settingsButton.translatesAutoresizingMaskIntoConstraints = false
+        settingsButton.setTitle("Settings", for: .normal)
+        settingsButton.addTarget(self, action: #selector(self.settingsButtonPressed), for: .touchUpInside)
+        addSubview(settingsButton)
 
         NSLayoutConstraint.activate([
             paceLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: kSpacing),
@@ -50,18 +55,21 @@ class PaceHeader: UIView {
             distanceDetailLabel.topAnchor.constraint(equalTo: distanceLabel.bottomAnchor, constant: 0),
             distanceDetailLabel.leadingAnchor.constraint(equalTo: paceLabel.trailingAnchor, constant: kSpacing),
             
-            distanceDetailLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -kSpacing)
+            distanceDetailLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -kSpacing),
+
+            settingsButton.topAnchor.constraint(equalTo: self.topAnchor, constant: kSpacing),
+            settingsButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -kAppMargin)
         ])
         
     }
-    
+
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    @objc func headerTapped() {
-        // TODO: migrate to ReSwift Thunk, ActionCreator
-        store.dispatch(ToggleDistanceSelector())
+    @objc func settingsButtonPressed() {
+        self.delegate?.paceHeaderDidTapSettingsButton()
     }
     
 }

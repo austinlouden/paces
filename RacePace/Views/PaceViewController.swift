@@ -79,9 +79,9 @@ extension PaceViewController {
     }
     
     func setupHierarchy() {
-        view.addSubview(tableView)
-
+        header.delegate = self
         footer.delegate = self
+        view.addSubview(tableView)
         view.addSubview(footer)
     }
     
@@ -192,7 +192,11 @@ extension PaceViewController: UITableViewDelegate {
     }
 }
 
-extension PaceViewController: PaceFooterDelegate {
+extension PaceViewController: PaceHeaderDelegate, PaceFooterDelegate {
+    func paceHeaderDidTapSettingsButton() {
+        self.present(SettingsViewController(), animated: true, completion: nil)
+    }
+    
     func paceFooterDidIncrementPace() {
         UIImpactFeedbackGenerator().impactOccurred()
         controller.incrementPace()

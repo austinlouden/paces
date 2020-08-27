@@ -19,6 +19,7 @@
 		28A2BD04226EB31F006CD3A0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 28A2BD02226EB31F006CD3A0 /* LaunchScreen.storyboard */; };
 		28AD0C8F24F6095600BF15CB /* SplitsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28AD0C8E24F6095500BF15CB /* SplitsViewController.swift */; };
 		28AD0C9224F610D700BF15CB /* PaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28AD0C9124F610D700BF15CB /* PaceController.swift */; };
+		28BDAB4124F821AB0075025A /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28BDAB4024F821AB0075025A /* SettingsViewController.swift */; };
 		28F42D8422B4B3CC00381E2F /* PaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28F42D8022B4B3CC00381E2F /* PaceCell.swift */; };
 		28F42D8522B4B3CC00381E2F /* PaceFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28F42D8122B4B3CC00381E2F /* PaceFooter.swift */; };
 		28F42D8622B4B3CC00381E2F /* PaceHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28F42D8222B4B3CC00381E2F /* PaceHeader.swift */; };
@@ -42,6 +43,7 @@
 		28A2BD05226EB31F006CD3A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		28AD0C8E24F6095500BF15CB /* SplitsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplitsViewController.swift; sourceTree = "<group>"; };
 		28AD0C9124F610D700BF15CB /* PaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaceController.swift; sourceTree = "<group>"; };
+		28BDAB4024F821AB0075025A /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		28F42D8022B4B3CC00381E2F /* PaceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaceCell.swift; sourceTree = "<group>"; };
 		28F42D8122B4B3CC00381E2F /* PaceFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaceFooter.swift; sourceTree = "<group>"; };
 		28F42D8222B4B3CC00381E2F /* PaceHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaceHeader.swift; sourceTree = "<group>"; };
@@ -67,6 +69,7 @@
 		285B4F8222989BBB0056B999 /* Constants */ = {
 			isa = PBXGroup;
 			children = (
+				285B4F9422A176240056B999 /* Components.swift */,
 				285B4F8322989BD40056B999 /* Constants.swift */,
 				285B4F8522989C200056B999 /* Landmarks.swift */,
 			);
@@ -154,10 +157,10 @@
 			isa = PBXGroup;
 			children = (
 				28AD0C8D24F608BA00BF15CB /* Cells */,
-				285B4F9422A176240056B999 /* Components.swift */,
 				28F42D8822B4B40100381E2F /* PaceViewController.swift */,
 				28F42D8122B4B3CC00381E2F /* PaceFooter.swift */,
 				28F42D8222B4B3CC00381E2F /* PaceHeader.swift */,
+				28BDAB4024F821AB0075025A /* SettingsViewController.swift */,
 				28AD0C8E24F6095500BF15CB /* SplitsViewController.swift */,
 			);
 			path = Views;
@@ -302,6 +305,7 @@
 				28F42D8522B4B3CC00381E2F /* PaceFooter.swift in Sources */,
 				28AD0C8F24F6095600BF15CB /* SplitsViewController.swift in Sources */,
 				28F42D8622B4B3CC00381E2F /* PaceHeader.swift in Sources */,
+				28BDAB4124F821AB0075025A /* SettingsViewController.swift in Sources */,
 				285B4F9522A176240056B999 /* Components.swift in Sources */,
 				28F42D8722B4B3CC00381E2F /* DistanceCell.swift in Sources */,
 				28F42D8922B4B40100381E2F /* PaceViewController.swift in Sources */,
