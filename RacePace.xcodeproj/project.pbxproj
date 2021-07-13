@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		283D2DFA226ECA220059773D /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283D2DF9226ECA220059773D /* State.swift */; };
+		283D2DFA226ECA220059773D /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283D2DF9226ECA220059773D /* Environment.swift */; };
 		283D2DFE2270B7650059773D /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283D2DFD2270B7650059773D /* Model.swift */; };
 		285B4F8422989BD40056B999 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285B4F8322989BD40056B999 /* Constants.swift */; };
 		285B4F8622989C200056B999 /* Landmarks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285B4F8522989C200056B999 /* Landmarks.swift */; };
@@ -19,7 +19,6 @@
 		28A2BD04226EB31F006CD3A0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 28A2BD02226EB31F006CD3A0 /* LaunchScreen.storyboard */; };
 		28AD0C8F24F6095600BF15CB /* SplitsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28AD0C8E24F6095500BF15CB /* SplitsViewController.swift */; };
 		28AD0C9224F610D700BF15CB /* PaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28AD0C9124F610D700BF15CB /* PaceController.swift */; };
-		28BDAB4124F821AB0075025A /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28BDAB4024F821AB0075025A /* SettingsViewController.swift */; };
 		28F42D8422B4B3CC00381E2F /* PaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28F42D8022B4B3CC00381E2F /* PaceCell.swift */; };
 		28F42D8522B4B3CC00381E2F /* PaceFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28F42D8122B4B3CC00381E2F /* PaceFooter.swift */; };
 		28F42D8622B4B3CC00381E2F /* PaceHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28F42D8222B4B3CC00381E2F /* PaceHeader.swift */; };
@@ -30,7 +29,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		283D2DF9226ECA220059773D /* State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
+		283D2DF9226ECA220059773D /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		283D2DFD2270B7650059773D /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		285B4F8322989BD40056B999 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		285B4F8522989C200056B999 /* Landmarks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Landmarks.swift; sourceTree = "<group>"; };
@@ -44,7 +43,6 @@
 		28A2BD05226EB31F006CD3A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		28AD0C8E24F6095500BF15CB /* SplitsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplitsViewController.swift; sourceTree = "<group>"; };
 		28AD0C9124F610D700BF15CB /* PaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaceController.swift; sourceTree = "<group>"; };
-		28BDAB4024F821AB0075025A /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		28F42D8022B4B3CC00381E2F /* PaceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaceCell.swift; sourceTree = "<group>"; };
 		28F42D8122B4B3CC00381E2F /* PaceFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaceFooter.swift; sourceTree = "<group>"; };
 		28F42D8222B4B3CC00381E2F /* PaceHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaceHeader.swift; sourceTree = "<group>"; };
@@ -144,7 +142,7 @@
 		28B33CD0228BC6CE00C5120C /* State */ = {
 			isa = PBXGroup;
 			children = (
-				283D2DF9226ECA220059773D /* State.swift */,
+				283D2DF9226ECA220059773D /* Environment.swift */,
 				28937E65236AA5E800BF9B2E /* AppState.swift */,
 			);
 			path = State;
@@ -157,7 +155,6 @@
 				28F42D8822B4B40100381E2F /* PaceViewController.swift */,
 				28F42D8122B4B3CC00381E2F /* PaceFooter.swift */,
 				28F42D8222B4B3CC00381E2F /* PaceHeader.swift */,
-				28BDAB4024F821AB0075025A /* SettingsViewController.swift */,
 				28AD0C8E24F6095500BF15CB /* SplitsViewController.swift */,
 				89F0DA4C269D4E9500A0DC33 /* SettingsView.swift */,
 			);
@@ -171,6 +168,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 28A2BD08226EB31F006CD3A0 /* Build configuration list for PBXNativeTarget "RacePace" */;
 			buildPhases = (
+				89F0DA4E269D56B500A0DC33 /* Swift Format */,
 				28A2BCF2226EB31E006CD3A0 /* Sources */,
 				28A2BCF3226EB31E006CD3A0 /* Frameworks */,
 				28A2BCF4226EB31E006CD3A0 /* Resources */,
@@ -236,6 +234,27 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		89F0DA4E269D56B500A0DC33 /* Swift Format */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Swift Format";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${SRCROOT}/scripts/swift-format/swift-format --ignore-unparsable-files --in-place --recursive --configuration ${SRCROOT}/scripts/swift-format/config.json ${SRCROOT}/RacePace/\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		28A2BCF2226EB31E006CD3A0 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -249,7 +268,6 @@
 				89F0DA4D269D4E9500A0DC33 /* SettingsView.swift in Sources */,
 				28AD0C8F24F6095600BF15CB /* SplitsViewController.swift in Sources */,
 				28F42D8622B4B3CC00381E2F /* PaceHeader.swift in Sources */,
-				28BDAB4124F821AB0075025A /* SettingsViewController.swift in Sources */,
 				285B4F9522A176240056B999 /* Components.swift in Sources */,
 				28F42D8722B4B3CC00381E2F /* DistanceCell.swift in Sources */,
 				28F42D8922B4B40100381E2F /* PaceViewController.swift in Sources */,
@@ -257,7 +275,7 @@
 				28A2BCFA226EB31E006CD3A0 /* AppDelegate.swift in Sources */,
 				28AD0C9224F610D700BF15CB /* PaceController.swift in Sources */,
 				285B4F8622989C200056B999 /* Landmarks.swift in Sources */,
-				283D2DFA226ECA220059773D /* State.swift in Sources */,
+				283D2DFA226ECA220059773D /* Environment.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -326,7 +344,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -381,7 +398,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -399,7 +415,6 @@
 				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = ADSL89GH89;
 				INFOPLIST_FILE = RacePace/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -422,7 +437,6 @@
 				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = ADSL89GH89;
 				INFOPLIST_FILE = RacePace/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -19,10 +19,11 @@ let standardFontSize: CGFloat = 14.0
 let kRaceStateDefaultsKey = "kRaceStateDefaultsKey"
 
 extension UIColor {
-    static let buttonColor = UIColor(white: 229.0/255.0, alpha: 1.0)
-    static let textColor = UIColor.label
-    static let mediumTextColor = UIColor.secondaryLabel
-    static let lightTextColor = UIColor.tertiaryLabel
+  static let buttonColor = UIColor(white: 229.0 / 255.0, alpha: 1.0)
+  static let textColor = UIColor.label
+  static let mediumTextColor = UIColor.secondaryLabel
+  static let lightTextColor = UIColor.tertiaryLabel
 
-    static let bostonBlue = UIColor(displayP3Red: 26.0/255.0, green: 49.0/255.0, blue: 115/255.0, alpha: 1.0)
+  static let bostonBlue = UIColor(
+    displayP3Red: 26.0 / 255.0, green: 49.0 / 255.0, blue: 115 / 255.0, alpha: 1.0)
 }
