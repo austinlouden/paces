@@ -11,12 +11,14 @@ import SwiftUI
 struct SettingsView: View {
   @State private var showingAdvancedOptions = false
   @State private var customDistance = ""
-  @State private var distance = Race.fiveK
+  @State private var distance = Race.custom
+
+  @State private var unit = 0
 
   var body: some View {
     NavigationView {
       Form {
-        Section {
+        Section(header: Text("Distance")) {
           Picker("Distance", selection: $distance) {
             Text(Race.fiveK.longString).tag(Race.fiveK)
             Text(Race.tenK.longString).tag(Race.tenK)
@@ -27,9 +29,16 @@ struct SettingsView: View {
           if distance == .custom {
             TextField("Custom distance", text: $customDistance)
               .keyboardType(.decimalPad)
+            Picker("Custom distance units", selection: $unit) {
+              Text("Miles")
+              Text("Kilometers")
+              Text("Meters")
+              Text("Laps (400m)")
+            }
           }
-          Toggle("Use metric distances (e.g. km)", isOn: $showingAdvancedOptions.animation())
-
+        }
+        Section(header: Text("Pace")) {
+          Toggle("Use metric pace (km)", isOn: $showingAdvancedOptions.animation())
         }
       }.navigationTitle("Settings")
     }
