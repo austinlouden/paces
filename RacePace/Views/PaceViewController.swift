@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 class PaceViewController: UIViewController {
     
@@ -194,7 +195,8 @@ extension PaceViewController: UITableViewDelegate {
 
 extension PaceViewController: PaceHeaderDelegate, PaceFooterDelegate {
     func paceHeaderDidTapSettingsButton() {
-        self.present(SettingsViewController(), animated: true, completion: nil)
+      let controller = UIHostingController(rootView: SettingsView())
+        self.present(controller, animated: true, completion: nil)
     }
     
     func paceFooterDidIncrementPace() {

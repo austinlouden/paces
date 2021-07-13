@@ -6,6 +6,7 @@
 //  Copyright © 2019 Austin Louden. All rights reserved.
 //
 
+import Foundation
 import ReSwift
 
 struct RaceState: Codable {
